@@ -225,7 +225,23 @@ const SCENES = {
       {char:"kujyou", pose:"serious", pos:"right"}
     ],
     se:"chime",
-    text:"放課後の校門は雨上がりの匂いで満ちていた。黒い手袋の男が、濡れたアスファルトの境目に立つ。九条 煌はまっすぐこちらを見て、微かに顎を引いた。「柊 澪さん。——少し、お時間をいただけますか」(また“症状”の話だ。けれど、逃げても追いつく気配がする)",
+    text:"放課後の校門は雨上がりの匂いで満ちていた。\n黒い手袋の男が、濡れたアスファルトの境目に立つ。\n男はまっすぐこちらを見て、微かに顎を引いた。",
+    autoNext:"KW_1",   // ←これを追加
+    autoDelay: 0              // ←ミリ秒。省略可（デフォルト0）
+  };
+  
+  SCENES["KW_1"] = {
+    name:"？",
+    bg:"library",
+    music:"calm_day",
+    text:"「柊 澪さん。——少し、お時間をいただけますか」",
+    autoNext:"KMW_1",   // ←これを追加
+    autoDelay: 0              // ←ミリ秒。省略可（デフォルト0）
+  };
+
+  SCENES["KMW_1"] = {
+    name:"澪",
+    text:" (また“症状”の話だ。けれど、逃げても追いつく気配がする)",
     choices:[
       {label:"立ち止まり、話を聞く", next:"K1_listen", setAffection:{"九条":+1}},
       {label:"無言で通り過ぎる", next:"K1_ignore", setFlags:{defendedByKanade:true}},
@@ -239,7 +255,7 @@ const SCENES = {
       {char:"mio", pose:"think", pos:"center"},
       {char:"kujyou", pose:"neutral", pos:"right"}
     ],
-    text:"歩道の端。九条は鞄から透明なクリアファイルを出し、端を丁寧に揃えた。表紙には『神ノ原 記憶消失事件』の文字。「十年前の資料です。あなたの名は被験者M-0として記録されている」(胸の奥に冷たい指が入ってくるような感じ)「確認させてください。最近、夢や聴覚に異常は」",
+    text:"歩道の端。\n男は鞄から透明なクリアファイルを出し、端を丁寧に揃えた。\n表紙には『神ノ原 記憶消失事件』の文字。「十年前の資料です。あなたの名は被験者M-0として記録されている」(胸の奥に冷たい指が入ってくるような感じ)「確認させてください。最近、夢や聴覚に異常は」",
     choices:[{label:"図書館で続きを聞くことを提案する", next:"K2_prelude"}]
   };
   SCENES["K1_ignore"] = {
@@ -2041,7 +2057,17 @@ function render(){
   // 表示
   showText(sc.name||"", sc.text||"", buildChoices(sc));
   applyVisual(sc);
-  
+
+  // --- 追加：選択肢が無い＆autoNext指定なら自動遷移 ---
+  if ((!sc.choices || sc.choices.length === 0) && sc.autoNext) {
+    const delay = typeof sc.autoDelay === "number" ? sc.autoDelay : 0;
+    setTimeout(()=>{
+      state.history.push(state.sceneId);
+      state.sceneId = sc.autoNext;
+      render();
+    }, delay);
+  }
+    
   // 既読表示
   elReadmark.innerHTML = wasSeen ? "既読" : '<span class="unread">未読</span>';
 
