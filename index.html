@@ -226,7 +226,7 @@ const SCENES = {
       { label: "藤堂 理久の研究室へ", next: "R1", req:(s)=> (s.affection["藤堂"]||0) >= 2 || s.flags.repliedMail || s.flags.agreedResearch },
       { label: "篠宮 奏と過ごす（友情）", next: "N1", req:(s)=> true }
     ]
-  },
+}; 
 
 SCENES["K1"] = {
   name:"",
@@ -1880,14 +1880,12 @@ SCENES["H6b"] = {
   choices:[{label:"タイトルへ", next:"title"}]
 };
 
-
-  // ───────── ED記録・メニュー復帰 ─────────
-  "ED_Collector": {
-    name:"",
-    text:"【ED記録を更新】必要条件を満たすと、タイトルに『静寂の声』が出現します。",
-    choices:[{label:"タイトルへ戻る", next:"title"}]
-  }
-};
+// ───────── ED記録・メニュー復帰 ─────────
+SCENES["ED_Collector"] = {
+  name:"",
+  text:"【ED記録を更新】必要条件を満たすと、タイトルに『静寂の声』が出現します。",
+  choices:[{label:"タイトルへ戻る", next:"title"}]
+}; 
 
 // 隠し解放条件：朝倉/九条/湊/藤堂の恋愛ED ＋ 欠片3つ以上
 function isHiddenUnlocked(s){
