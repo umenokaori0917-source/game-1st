@@ -24,6 +24,7 @@
   #ui button,#ui .seg{background:#263146;border:1px solid #2f3950;color:var(--ink);padding:8px 10px;border-radius:8px}
   #ui .seg{display:flex;align-items:center;gap:8px}
   #ui input[type="range"]{width:140px}
+  <button id="btnJournal">📜 軌跡</button>
   #log{margin-top:12px;color:var(--sub);background:#12141a;border-radius:10px;padding:10px;max-height:160px;overflow:auto;font-size:13px}
   #badges{margin-top:8px;font-size:12px;color:var(--sub)}
   .pill{display:inline-block;border:1px solid #2f3950;border-radius:999px;padding:2px 8px;margin:2px}
@@ -53,6 +54,31 @@
 </style>
 </head>
 <body>
+<div id="journalBackdrop"></div>
+<div id="journalModal" role="dialog" aria-modal="true" aria-label="軌跡">
+  <div class="row" style="margin-bottom:8px">
+    <h2>軌跡</h2>
+    <button class="close" id="btnJournalClose">閉じる ✕</button>
+  </div>
+  <div class="grid">
+    <section>
+      <div class="row"><strong>隠しキャラ</strong><span id="jrHidden"></span></div>
+      <div class="row"><strong>ED達成状況</strong><span id="jrEDCount"></span></div>
+    </section>
+    <section>
+      <strong>入手した「記憶の欠片」</strong>
+      <ul id="jrFragments"></ul>
+    </section>
+    <section>
+      <strong>キャラ別好感度</strong>
+      <table id="jrAffection"></table>
+    </section>
+    <section>
+      <strong>ログ</strong>
+      <ul id="jrLogs" style="max-height:260px;overflow:auto;margin-top:6px"></ul>
+    </section>
+  </div>
+</div>
 <div id="app">
   <header>
     <h1>記憶交錯<span class="mini"> — 効果非表示／Web分岐ノベル</span></h1>
