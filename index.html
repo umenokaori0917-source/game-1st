@@ -231,7 +231,8 @@ const SCENES = {
       { label: "藤堂 理久の研究室へ", next: "R1", req:(s)=> (s.affection["藤堂"]||0) >= 2 || s.flags.repliedMail || s.flags.agreedResearch },
       { label: "篠宮 奏と過ごす（友情）", next: "N1", req:(s)=> true }
     ]
-  };
+  },
+};
 
   SCENES["K1"] = {
     name:"",
