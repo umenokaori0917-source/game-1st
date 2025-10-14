@@ -231,1658 +231,1659 @@ const SCENES = {
       { label: "藤堂 理久の研究室へ", next: "R1", req:(s)=> (s.affection["藤堂"]||0) >= 2 || s.flags.repliedMail || s.flags.agreedResearch },
       { label: "篠宮 奏と過ごす（友情）", next: "N1", req:(s)=> true }
     ]
-}; 
-
-SCENES["K1"] = {
-  name:"",
-  bg:"school_gate_rain", music:"rain_walk", sprite:[
-    {char:"mio", pose:"neutral", pos:"center"},
-    {char:"kujyou", pose:"serious", pos:"right"}
-  ],
-  se:"chime",
-  text:"放課後の校門は雨上がりの匂いで満ちていた。黒い手袋の男が、濡れたアスファルトの境目に立つ。九条 煌はまっすぐこちらを見て、微かに顎を引いた。「柊 澪さん。——少し、お時間をいただけますか」(また“症状”の話だ。けれど、逃げても追いつく気配がする)",
-  choices:[
-    {label:"立ち止まり、話を聞く", next:"K1_listen", setAffection:{"九条":+1}},
-    {label:"無言で通り過ぎる", next:"K1_ignore", setFlags:{defendedByKanade:true}},
-    {label:"距離を保って「少しだけ」と答える", next:"K1_cautious"}
-  ]
-};
-
-SCENES["K1_listen"] = {
-  name:"",
-  bg:"school_gate_rain", music:"suspense", sprite:[
-    {char:"mio", pose:"think", pos:"center"},
-    {char:"kujyou", pose:"neutral", pos:"right"}
-  ],
-  text:"歩道の端。九条は鞄から透明なクリアファイルを出し、端を丁寧に揃えた。表紙には『神ノ原 記憶消失事件』の文字。「十年前の資料です。あなたの名は被験者M-0として記録されている」(胸の奥に冷たい指が入ってくるような感じ)「確認させてください。最近、夢や聴覚に異常は」",
-  choices:[{label:"図書館で続きを聞くことを提案する", next:"K2_prelude"}]
-};
-SCENES["K1_ignore"] = {
-  name:"",
-  bg:"school_gate_rain", music:"rain_walk", sprite:[
-    {char:"mio", pose:"neutral", pos:"center"}
-  ],
-  text:"踵を返した瞬間、肩にそっと影が差す。「無理に応じなくていい」振り向くと、そこには篠宮 奏。彼女は私と九条の間に一歩入った。「彼女は疲れてます」九条は短く頷く。「では、別の機会に」(助かった——けど、これで終わる気はしない)",
-  choices:[{label:"少し落ち着いてから向き合う決意をする", next:"K2_prelude"}]
-};
-SCENES["K1_cautious"] = {
-  name:"",
-  bg:"school_gate_rain", music:"suspense", sprite:[
-    {char:"mio", pose:"neutral", pos:"center"},
-    {char:"kujyou", pose:"serious", pos:"right"}
-  ],
-  text:"二人分の距離を保ったまま、校門脇の屋根の下へ移動する。雨粒が看板から落ちる音が規則正しい。「仮説は一つ。あなたの“欠落”は誘発型の可能性がある」(誘発……私のせいで誰かに何かが起こる？)九条は言葉を選ぶように続けた。「安全のため、記録を取りたい」",
-  choices:[{label:"人通りの少ない図書館へ移動する", next:"K2_prelude"}]
-};
-
-SCENES["K2_prelude"] = {
-  name:"",
-  bg:"library", music:"calm_day", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"kujyou", pose:"neutral", pos:"right"}
-  ],
-  text:"放課後の図書館は空調の音だけが低く響いていた。窓際の机に向かい合って座る。九条は手袋を外さない。「質問します。昨夜の夢、覚えていますか」",
-  choices:[
-    {label:"「声がした。『誰かの代わりに生きろ』って」正直に話す", next:"K2_honest", setAffection:{"九条":+1}},
-    {label:"(言いたくない)話をぼかす", next:"K2_avoid", setFlags:{avoidant:true}},
-    {label:"「九条さんは、私を信じますか」と聞き返す", next:"K2_asktrust", setFlags:{askedTrust:true}}
-  ]
-};
-
-SCENES["K2_honest"] = {
-  name:"",
-  bg:"library", music:"calm_day", sprite:[
-    {char:"mio", pose:"speak", pos:"left"},
-    {char:"kujyou", pose:"serious", pos:"right"}
-  ],
-  text:"「——『誰かの代わりに生きろ』」言葉にした瞬間、胸の奥で砂が落ちる音がした。九条は短く息を整える。「誘導ではありません。あなたの記述です」ノートに走るペン先は一定のリズム。(観測、じゃない。これは救命の手順みたいだ)",
-  choices:[{label:"さらに詳しく——夢の風景や温度を語る", next:"K2_detail"}]
-};
-SCENES["K2_detail"] = {
-  name:"",
-  bg:"library", music:"truth", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"kujyou", pose:"neutral", pos:"right"}
-  ],
-  text:"「水の匂いがして、床は冷たいコンクリート。誰かが窓の外で笑ってるのに、顔が思い出せない」九条は目を伏せ、静かに頷いた。「確認できました。あなたは“つぎ目”に触れている」(つぎ目？)「世界の記録が継ぎ合わされた箇所、という意味です」",
-  choices:[{label:"意味を飲み込み、続きを促す", next:"K3"}]
-};
-
-SCENES["K2_avoid"] = {
-  name:"",
-  bg:"library", music:"melancholy", sprite:[
-    {char:"mio", pose:"neutral", pos:"left"},
-    {char:"kujyou", pose:"soft", pos:"right"}
-  ],
-  text:"「……断片的で」曖昧な返事をすると、九条はそれ以上追及しなかった。「分かりました。強要はしません」彼はノートを閉じ、窓の外に視線を逸らす。その横顔は、思ったより年相応だった。(優しいというより、距離の取り方が上手い人だ)",
-  choices:[{label:"沈黙のまま席を立つ", next:"K3"}]
-};
-
-SCENES["K2_asktrust"] = {
-  name:"",
-  bg:"library", music:"calm_day", sprite:[
-    {char:"mio", pose:"speak", pos:"left"},
-    {char:"kujyou", pose:"serious", pos:"right"}
-  ],
-  text:"「九条さんは、私を信じますか」問いかけに、彼は一拍置いてから「信じる/信じないは任務に含まれない」と答えた。「ただ、記録には責任がある」(それは、私を守るって意味？)彼は答えず、窓の外の雲を見た。",
-  choices:[{label:"言葉の意味を考えながら席を立つ", next:"K3", setAffection:{"九条":+1}}]
-};
-
-SCENES["K3"] = {
-  name:"",
-  bg:"street_rain", music:"rain_walk", sprite:[
-    {char:"mio", pose:"shock", pos:"center"},
-    {char:"kujyou", pose:"serious", pos:"right"}
-  ],
-  se:"whoosh",
-  text:"帰り道、空は再び降り出した。曲がり角の向こうから黒いバンが近づく。スライドドアが開き、無機質な光が路面を舐めた。九条が前に出る。「乗らないで。——危険です」(選ばなきゃ)",
-  choices:[
-    {label:"言われるままに車へ乗る", next:"K3_car"},
-    {label:"九条の手を掴んで走る", next:"K3_run", setAffection:{"九条":+1}},
-    {label:"「信じていいの？」と立ち止まる", next:"K3_trust", setFlags:{trustTalk:true}}
-  ]
-};
-
-SCENES["K3_car"] = {
-  name:"",
-  bg:"car_dark", music:"suspense", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"kujyou", pose:"neutral", pos:"right"}
-  ],
-  text:"車内の空気は冷たく乾いていた。九条は私の隣に座り、手袋越しにシートベルトを確認する。「一時的な保護です」(守られてるのか、監視されてるのか)フロントガラスを叩く雨が、会話の隙間を埋めた。",
-  choices:[{label:"保護先へ向かう", next:"K4"}]
-};
-SCENES["K3_run"] = {
-  name:"",
-  bg:"alley_rain", music:"run", sprite:[
-    {char:"mio", pose:"shock", pos:"center"},
-    {char:"kujyou", pose:"serious", pos:"right"}
-  ],
-  se:"run",
-  text:"私は九条の手を掴み、濡れた商店街を駆けた。彼は規則正しく息を吐き、私の歩幅に合わせて速度を調整する。「この選択は、報告書に書かれません」(つまり、彼は今、規則を破っている)",
-  choices:[{label:"路地を抜け、人気のない施設へ", next:"K4"}]
-};
-SCENES["K3_trust"] = {
-  name:"",
-  bg:"street_rain", music:"rain_walk", sprite:[
-    {char:"mio", pose:"think", pos:"center"},
-    {char:"kujyou", pose:"soft", pos:"right"}
-  ],
-  text:"「信じていいの？」問いは雨に紛れず届いた。九条は短く頷く。「私を信じる必要はない。状況判断だけでいい」(それ、ずるい)でも、その言い方は、私に選ぶ自由を返した。",
-  choices:[{label:"九条に任せる", next:"K4", setAffection:{"九条":+1}}]
-};
-
-SCENES["K4"] = {
-  name:"",
-  bg:"public_hall", music:"tender", sprite:[
-    {char:"mio", pose:"neutral", pos:"left"},
-    {char:"kujyou", pose:"neutral", pos:"right"}
-  ],
-  text:"辿り着いたのは閉鎖中の公民館。非常灯だけが薄く床を照らす。九条は備品室から毛布を出し、机の端に並べた。「触れ方について、先に伝えておきます」彼は手袋を少し持ち上げる。「私が素手であなたに触れると、あなたの記憶へ侵入する可能性がある」",
-  choices:[
-    {label:"「それでもいい」手を差し出す", next:"K4_touch"},
-    {label:"「今は距離を置こう」告げる", next:"K4_distance"},
-    {label:"「安全なテスト方法は？」と相談する", next:"K4_test"}
-  ]
-};
-
-SCENES["K4_touch"] = {
-  name:"",
-  bg:"public_hall_dim", music:"tender", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"kujyou", pose:"serious", pos:"right"}
-  ],
-  se:"breath",
-  text:"毛布の上で向き合う。私が手を差し出すと、九条は長い沈黙ののち、手袋を外した。白い指先が震えている。「——儀式です。過去を赦すための」(赦すのは、私？それとも彼自身？)",
-  choices:[{label:"指先を重ねる", next:"K5a_prelude"}]
-};
-SCENES["K4_distance"] = {
-  name:"",
-  bg:"public_hall", music:"truth", sprite:[
-    {char:"mio", pose:"neutral", pos:"left"},
-    {char:"kujyou", pose:"serious", pos:"right"}
-  ],
-  text:"「今は距離を置こう」そう告げると、九条はわずかに目尻を緩めた。「分別ある判断です」彼は封筒を差し出す。「局の不正に関する記録。もしあなたが望むなら——終わらせられる」",
-  choices:[{label:"封筒を受け取り、決意を固める", next:"K5b_prelude"}]
-};
-SCENES["K4_test"] = {
-  name:"",
-  bg:"public_hall", music:"suspense", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"kujyou", pose:"serious", pos:"right"}
-  ],
-  text:"「安全なテスト方法は？」九条はハンカチを取り出し、手のひらに二重に重ねた。「布越しに、三秒だけ。無理ならすぐ離れてください」(こわい。でも知りたい)",
-  choices:[
-    {label:"テストを実行する", next:"K5c_trigger"},
-    {label:"やはりやめる", next:"K4_distance"}
-  ]
-};
-
-SCENES["K5a_prelude"] = {
-  name:"",
-  bg:"public_hall_dim", music:"warmth", sprite:[
-    {char:"mio", pose:"smile", pos:"left"},
-    {char:"kujyou", pose:"soft", pos:"right"}
-  ],
-  text:"素肌が触れ合った瞬間、微かな熱が往復する。遠い笑い声、濡れた廊下、誰かの靴音——断片が波のように押し寄せた。九条の睫毛が震える。「……あなたは、よく頑張りました」(涙が出そう)彼は私の手を包む力を、そっと強くした。",
-  choices:[
-    {label:"目を閉じて、その温度を受け入れる", next:"K6a", setFlags:{ED_Kujou_Love:true}},
-    {label:"恥ずかしくて手を離す", next:"K5a_hesitate"}
-  ]
-};
-SCENES["K5a_hesitate"] = {
-  name:"",
-  bg:"public_hall", music:"tender", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"kujyou", pose:"soft", pos:"right"}
-  ],
-  text:"指が離れた途端、音が遠のく。「すみません、急ぎすぎましたね」九条は手袋を戻さず、距離だけを戻した。「時間をかけてもいい」(それでも、もう分かってしまった。私はこの人のそばにいたい)",
-  choices:[{label:"意を決して、もう一度触れる", next:"K6a", setFlags:{ED_Kujou_Love:true}}]
-};
-
-SCENES["K5b_prelude"] = {
-  name:"",
-  bg:"public_hall", music:"truth", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"kujyou", pose:"serious", pos:"right"}
-  ],
-  text:"封筒の中には、改竄ログと署名の写しが綴じられていた。ページの端に『M-0』のインデックス。(私の名前は、この書類の中で記号だった)九条は言う。「内部告発の窓口に出すなら、私が前に立つ」",
-  choices:[
-    {label:"正面から闘う（実名で告発）", next:"K6b", setFlags:{ED_Kujou_Truth:true}},
-    {label:"匿名で投函する", next:"K5b_anon"}
-  ]
-};
-SCENES["K5b_anon"] = {
-  name:"",
-  bg:"post_night", music:"melancholy", sprite:[
-    {char:"mio", pose:"think", pos:"center"}
-  ],
-  text:"夜のポストに封筒が吸い込まれる音は、思ったよりも軽い。「——ありがとう」九条の声は、ほとんど聞こえないほど小さかった。(終わりの始まり)　そして私たちは、別々の道順で同じ駅へ歩いた。",
-  choices:[{label:"それでも前を向くと決める", next:"K6b", setFlags:{ED_Kujou_Truth:true}}]
-};
-
-SCENES["K5c_trigger"] = {
-  name:"",
-  bg:"public_hall_dim", music:"suspense", sprite:[
-    {char:"mio", pose:"shock", pos:"left"},
-    {char:"kujyou", pose:"serious", pos:"right"}
-  ],
-  se:"pulse",
-  text:"布越しの三秒。視界が反転し、過去と現在が互いの輪郭を侵食する。誰かの泣き声、手術灯の眩しさ、笑っているのに泣いている自分——九条の指先が強張った。「戻ってこい。……柊」",
-  choices:[
-    {label:"「九条、離れて！」と叫ぶ", next:"K5c_pullback"},
-    {label:"(このまま任せるしかない)と目を閉じる", next:"K6c", setFlags:{ED_Kujou_Collapse:true}}
-  ]
-};
-SCENES["K5c_pullback"] = {
-  name:"",
-  bg:"public_hall", music:"tender", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"kujyou", pose:"soft", pos:"right"}
-  ],
-  text:"互いに跳ね退く。布が床に落ち、重たい呼吸が部屋に残る。「——無理は、しないでください」九条は額に汗をにじませ、しかし微笑んだ。(危なかった。でも、彼は最後まで私を呼んでいた)",
-  choices:[
-    {label:"距離を選び、告発の準備に移る", next:"K5b_prelude"},
-    {label:"勇気を出して、もう一度だけ触れる", next:"K5a_prelude"}
-  ]
-};
-
-/* ED */
-SCENES["K6a"] = {
-  name:"",
-  bg:"public_hall_dim", music:"warmth", sprite:[
-    {char:"mio", pose:"smile", pos:"left"},
-    {char:"kujyou", pose:"soft", pos:"right"}
-  ],
-  text:"【恋愛ED：赦し】非常灯の薄い明かりの下、二人は練習するように何度も指を確かめた。触れるたび、過去のざらつきが細かく砕けていく。「これからも、あなたの現在を記録させてください」「……はい」(世界は急に優しくならない。でも、呼吸は確かに軽い)",
-  choices:[{label:"記録してタイトルへ", next:"ED_Collector", setFlags:{ED_Kujou_Love:true}}]
-};
-SCENES["K6b"] = {
-  name:"",
-  bg:"press", music:"truth", sprite:[
-    {char:"mio", pose:"neutral", pos:"left"},
-    {char:"kujyou", pose:"serious", pos:"right"}
-  ],
-  text:"【真実ED：終止報告】提出印の押された紙は、やけに薄く見えた。記者会見で九条は「個人より倫理を守る」と短く語る。私は客席から拍手をした。(私たちは同じ方向を見て歩く。でも並び方は選べる)帰り道、彼は遠慮がちに微笑む。「いつか、仕事抜きでコーヒーでも」「考えておきます」",
-  choices:[{label:"記録してタイトルへ", next:"ED_Collector", setFlags:{ED_Kujou_Truth:true}}]
-};
-SCENES["K6c"] = {
-  name:"",
-  bg:"public_hall_dark", music:"melancholy", sprite:[
-    {char:"mio", pose:"think", pos:"center"}
-  ],
-  text:"【崩壊ED：共鳴】境界は破れ、九条は私の“つぎ目”に沈んだ。朝、テーブルには黒い手袋だけが残る。触れると、微かな熱がまだ宿っている。(赦しは届いたのかもしれない。ただ、もう確かめる方法がない)窓の外で、昨日と同じ雨が降り始めた。",
-  choices:[{label:"記録してタイトルへ", next:"ED_Collector", setFlags:{ED_Kujou_Collapse:true}}]
-};
-
-SCENES["A1"] = {
-  name:"",
-  bg:"cafe_day", music:"calm_day", sprite:[
-    {char:"mio", pose:"neutral", pos:"left"},
-    {char:"asakura", pose:"smile", pos:"right"}
-  ],
-  text:"放課後のカフェは曇天の明るさで満ちていた。窓ガラスの外を薄い雨が斜めに走る。朝倉 晃は、カップを指先で回しながらこちらを見上げる。「相変わらず目の下、赤いね。——眠れてない？」(からかう声色なのに、目だけが真面目だ)",
-  choices:[
-    {label:"「大丈夫。コーヒーで治る」軽口を返す", next:"A1_banter", setAffection:{"朝倉":+1}},
-    {label:"「実は、変な夢ばかり見るの」正直に話す", next:"A1_honest", setAffection:{"朝倉":+1}},
-    {label:"話題をそらして外を眺める", next:"A1_avoid"}
-  ]
-};
-
-SCENES["A1_banter"] = {
-  name:"",
-  bg:"cafe_day", music:"calm_day", sprite:[
-    {char:"mio", pose:"smile", pos:"left"},
-    {char:"asakura", pose:"smile", pos:"right"}
-  ],
-  text:"「じゃあお代わりもらおうか。——二杯分の元気」軽口に合わせると、朝倉は笑い皺をつくった。「いいね。元気の相場、今日だけ割引」ミルの音が丸く響き、空気の粒が揃っていく。(この人の冗談は、音量がやさしい)",
-  choices:[{label:"冗談の流れで、夢の話を少し漏らす", next:"A2_hook"}]
-};
-SCENES["A1_honest"] = {
-  name:"",
-  bg:"cafe_day", music:"calm_day", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"asakura", pose:"serious", pos:"right"}
-  ],
-  text:"「……雨のにおいがして、冷たいコンクリートの床に寝てるの。誰かの笑い声が、遠くで」言い切ると、朝倉は視線を落とし、指でテーブルの木目をなぞった。「そっか」それ以上は追わず、代わりに砂糖を一個、私のほうへ滑らせる。(聞き出さない、って優しさもある)",
-  choices:[{label:"少し気が緩んだ。もう少しだけ話す", next:"A2_hook"}]
-};
-SCENES["A1_avoid"] = {
-  name:"",
-  bg:"cafe_day", music:"calm_day", sprite:[
-    {char:"mio", pose:"neutral", pos:"left"},
-    {char:"asakura", pose:"smile", pos:"right"}
-  ],
-  text:"窓の外で、傘の骨が光った。話題を変えて天気のことを言うと、朝倉は笑って肩をすくめる。「天気はいつだって正直」(私が正直じゃないこと、気づいてる？)「ねえ、図書室寄らない？写真、見せたいのがある」",
-  choices:[{label:"図書室へ向かう", next:"A2_library"}]
-};
-
-SCENES["A2_hook"] = {
-  name:"",
-  bg:"cafe_day", music:"calm_day", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"asakura", pose:"serious", pos:"right"}
-  ],
-  text:"朝倉は声量を落とした。「言いにくいこと、無理に言わなくていいよ。——代わりに、俺がひとつ言う」彼は自分の胸を軽く叩く。「俺、嘘が光って見えるんだ」(嘘が……光る？)カップの縁で小さな音が鳴った。",
-  choices:[
-    {label:"「そんなこと、あるの？」と笑う", next:"A2_deny"},
-    {label:"「私の今の言葉は……？」と試す", next:"A2_test", setFlags:{testedByAsakura:true}},
-    {label:"「信じる。たぶん、そういう世界だと思う」", next:"A2_believe", setAffection:{"朝倉":+1}}
-  ]
-};
-
-SCENES["A2_deny"] = {
-  name:"",
-  bg:"cafe_day", music:"calm_day", sprite:[
-    {char:"mio", pose:"neutral", pos:"left"},
-    {char:"asakura", pose:"smile", pos:"right"}
-  ],
-  text:"「あるよ。残酷なくらいね」彼は冗談みたいに言って、冗談みたいに笑わなかった。「だから俺、守るための嘘は肯定派」(守るための嘘)窓辺の光が、彼の横顔の輪郭を溶かす。",
-  choices:[{label:"図書室で続きを聞く", next:"A2_library"}]
-};
-SCENES["A2_test"] = {
-  name:"",
-  bg:"cafe_day", music:"calm_day", sprite:[
-    {char:"mio", pose:"speak", pos:"left"},
-    {char:"asakura", pose:"serious", pos:"right"}
-  ],
-  text:"「私の今の言葉は……？」試すように尋ねると、朝倉は少しだけ目を細める。「“強がり”が淡く光ってる」(見透かされるのは怖い。けど、嫌じゃない)「でもね、君が嘘をつくとき、光は弱い。誰かを守るときの嘘だって、分かる」",
-  choices:[{label:"図書室へ移動する", next:"A2_library"}]
-};
-SCENES["A2_believe"] = {
-  name:"",
-  bg:"cafe_day", music:"warmth", sprite:[
-    {char:"mio", pose:"smile", pos:"left"},
-    {char:"asakura", pose:"smile", pos:"right"}
-  ],
-  text:"「ありがとう。信じてくれるの、楽になる」肩の力を落として笑うその顔は、いつもより少し幼い。「じゃあ、証拠を見せる」",
-  choices:[{label:"図書室へ移動する", next:"A2_library"}]
-};
-
-SCENES["A2_library"] = {
-  name:"",
-  bg:"library", music:"calm_day", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"asakura", pose:"serious", pos:"right"}
-  ],
-  text:"放課後の図書室。朝倉は手を洗ってから丁寧にアルバムを開いた。「見て。これ、君の学年」集合写真の右下が、器用に切り取られている。(右下……誰かの顔だけ、抜けている)",
-  choices:[
-    {label:"「どうして、ここだけ？」と訊く", next:"A2_photowhy"},
-    {label:"切れ目の断面を指で確かめる", next:"A2_phototouch"},
-    {label:"胸騒ぎがしてページを閉じる", next:"A3_exit"}
-  ]
-};
-
-SCENES["A2_photowhy"] = {
-  name:"",
-  bg:"library", music:"truth", sprite:[
-    {char:"mio", pose:"shock", pos:"left"},
-    {char:"asakura", pose:"serious", pos:"right"}
-  ],
-  text:"「この空白、光るんだ。——嘘の色で」朝倉は静かに言った。「元の世界ではここに“誰か”がいた。でも、上書きされた記録はそれを飲み込んでる」(誰……？)喉が乾く音が、やけに大きい。",
-  choices:[{label:"写真を持ち帰り、調べることを提案", next:"A3_invest", addFragment:"欠片A_学級写真(右下欠け)"}]
-};
-SCENES["A2_phototouch"] = {
-  name:"",
-  bg:"library", music:"calm_day", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"asakura", pose:"serious", pos:"right"}
-  ],
-  text:"断面は新しくも古くもない。時間の匂いが混ざって、判別できない。朝倉は言葉を選ぶ。「君が見てる夢、多分この空白と繋がってる。無理はしてほしくないけど」(逃げ続けたら、空白の方から追ってくる気がする)",
-  choices:[{label:"写真を借りて持ち帰る", next:"A3_invest", addFragment:"欠片A_学級写真(右下欠け)"}]
-};
-
-SCENES["A3_exit"] = {
-  name:"",
-  bg:"library", music:"melancholy", sprite:[
-    {char:"mio", pose:"neutral", pos:"left"},
-    {char:"asakura", pose:"soft", pos:"right"}
-  ],
-  text:"ページを閉じると、埃の匂いが舞い上がった。足元が少しだけふらつく。朝倉はすかさず距離を詰め、転ばないように背を支える。「大丈夫？」(支え方が、うまい。甘やかしじゃなく、必要な量だけ)",
-  choices:[{label:"「平気」笑って見せる", next:"A3_invest"}]
-};
-
-SCENES["A3_invest"] = {
-  name:"",
-  bg:"arcade_rain", music:"rain_walk", sprite:[
-    {char:"mio", pose:"neutral", pos:"left"},
-    {char:"asakura", pose:"smile", pos:"right"}
-  ],
-  text:"帰り道。アーケードの看板が、薄い雨の糸を青く染める。朝倉は歩幅を合わせながら言う。「俺、君の嘘が嫌いじゃないよ。嘘って盾だから」(盾)「ただ——俺は、自分の盾も外せない。そういうときは言って。『本音を見せて』って」",
-  choices:[
-    {label:"「今、本音が見たい」", next:"A3_truthnow", setFlags:{askTruthNow:true}},
-    {label:"「今日は盾ごとでいい」", next:"A3_maskok"},
-    {label:"「本音は、怖い。でも逃げない」", next:"A3_brave", setAffection:{"朝倉":+1}}
-  ]
-};
-
-SCENES["A3_truthnow"] = {
-  name:"",
-  bg:"arcade_rain", music:"warmth", sprite:[
-    {char:"mio", pose:"shock", pos:"left"},
-    {char:"asakura", pose:"serious", pos:"right"}
-  ],
-  text:"立ち止まると、風の粒だけが先に歩いていく。朝倉は息を吸い直し、真正面から見た。「俺は君が好き。守るための嘘ごと」(言葉が、簡単だ)「でも君が苦しいなら、友達でいい。どっちでも君を守る」",
-  choices:[{label:"言葉の重さを受け止める", next:"A4"}]
-};
-SCENES["A3_maskok"] = {
-  name:"",
-  bg:"arcade_rain", music:"calm_day", sprite:[
-    {char:"mio", pose:"smile", pos:"left"},
-    {char:"asakura", pose:"smile", pos:"right"}
-  ],
-  text:"「了解。盾ごと守る」軽い返事に笑った顔は、でも冗談になっていない。「じゃあ今日は、君の疲れを減らすための嘘だけ使う」(そんなモードがあるの……器用だな)",
-  choices:[{label:"肩の力が抜けたまま歩く", next:"A4"}]
-};
-SCENES["A3_brave"] = {
-  name:"",
-  bg:"arcade_rain", music:"melancholy", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"asakura", pose:"serious", pos:"right"}
-  ],
-  text:"「逃げないって、いちばん勇気いるよね」朝倉は前を見たまま言った。「俺も怖い。光るものを見てると、ときどき全部が嘘に見えるから」(それでも、隣で歩いてくれる)",
-  choices:[{label:"並んでアーケードを抜ける", next:"A4"}]
-};
-
-SCENES["A4"] = {
-  name:"",
-  bg:"photo_shop_closed", music:"calm_day", sprite:[
-    {char:"mio", pose:"neutral", pos:"left"},
-    {char:"asakura", pose:"think", pos:"right"}
-  ],
-  text:"夜。商店街の端にある古い写真屋のシャッターは半分降りたまま。風鈴だけが働いている。「ここ、明日なら開いてる。ネガの保管を聞けるかも」朝倉はスマホで営業時間を見せた。画面の光が顔の輪郭を薄くする。",
-  choices:[
-    {label:"「明日、一緒に来て」", next:"A4_together", setAffection:{"朝倉":+1}},
-    {label:"「一人で行ってみる」", next:"A4_alone"},
-    {label:"「今日はもう無理。休みたい」", next:"A4_rest", setFlags:{needRest:true}}
-  ]
-};
-
-SCENES["A4_together"] = {
-  name:"",
-  bg:"photo_shop_closed", music:"warmth", sprite:[
-    {char:"mio", pose:"smile", pos:"left"},
-    {char:"asakura", pose:"smile", pos:"right"}
-  ],
-  text:"「もちろん」即答の速さは、安心と同じ速度だった。「君が望む距離で歩くよ」(距離を、私に選ばせてくれる)",
-  choices:[{label:"翌日、写真屋へ", next:"A5_shop"}]
-};
-SCENES["A4_alone"] = {
-  name:"",
-  bg:"photo_shop_closed", music:"calm_day", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"asakura", pose:"smile", pos:"right"}
-  ],
-  text:"「分かった。終わったら連絡して」彼は無理に同行を申し出ない。「君が自分で届く強さ、俺は信じてる」(この言い方、ずるい。頑張れるに決まってる)",
-  choices:[{label:"翌日、写真屋へ", next:"A5_shop"}]
-};
-SCENES["A4_rest"] = {
-  name:"",
-  bg:"photo_shop_closed", music:"melancholy", sprite:[
-    {char:"mio", pose:"neutral", pos:"left"},
-    {char:"asakura", pose:"soft", pos:"right"}
-  ],
-  text:"「じゃあ、今日は撤退。撤退は立派な戦術」彼は笑って、駅までの最短ルートを示す。「帰ったら、温かい飲み物」(指示が具体的で、助かる)",
-  choices:[{label:"翌日、写真屋へ", next:"A5_shop"}]
-};
-
-SCENES["A5_shop"] = {
-  name:"",
-  bg:"photo_shop", music:"calm_day", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"asakura", pose:"serious", pos:"right"}
-  ],
-  text:"写真屋のガラスには古いフィルムの箱が山のように飾られていた。店主は事情を聞くと、奥の棚から埃を払って紙箱を出す。「学級写真ならネガがあるよ」緊張で喉が鳴る。朝倉が後ろでそっと息を合わせる。「開けてみよう」",
-  choices:[
-    {label:"ネガを光にかざす", next:"A5_negs"},
-    {label:"店主にスキャンを頼む", next:"A5_scan"},
-    {label:"胸騒ぎがして、やめる", next:"A5_abort"}
-  ]
-};
-
-SCENES["A5_negs"] = {
-  name:"",
-  bg:"photo_shop", music:"truth", sprite:[
-    {char:"mio", pose:"shock", pos:"left"},
-    {char:"asakura", pose:"serious", pos:"right"}
-  ],
-  text:"逆さの世界に、右下の輪郭が“いる”。誰かの肩、笑い皺、ペンのキャップ。(やっぱり、ここに誰かいた)朝倉は小さく息を飲む。「光ってる。——嘘の上に、ほんとの像が」",
-  choices:[{label:"像の正体を確かめる決意をする", next:"A5_bridge"}]
-};
-SCENES["A5_scan"] = {
-  name:"",
-  bg:"photo_shop", music:"truth", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"asakura", pose:"serious", pos:"right"}
-  ],
-  text:"スキャナの光がゆっくり走る。プリントされた写真には、右下の人物だけ薄く滲んで写った。店主が目を丸くする。「機械の癖かな」(癖じゃない。世界の継ぎ目だ)",
-  choices:[{label:"像の正体を確かめる決意をする", next:"A5_bridge"}]
-};
-SCENES["A5_abort"] = {
-  name:"",
-  bg:"photo_shop", music:"melancholy", sprite:[
-    {char:"mio", pose:"neutral", pos:"left"},
-    {char:"asakura", pose:"soft", pos:"right"}
-  ],
-  text:"店を出る。風鈴が小さく鳴って、すぐ黙る。朝倉は追いかけも説得もしない。ただ横に立った。「無理しない選択、俺は好きだよ」(でも、私はここで止まれない)",
-  choices:[{label:"やっぱり確かめに戻る", next:"A5_shop"}]
-};
-
-SCENES["A5_bridge"] = {
-  name:"",
-  bg:"arcade_evening", music:"calm_day", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"asakura", pose:"serious", pos:"right"}
-  ],
-  text:"アーケードの端で立ち止まる。夕方のライトが、道路に細い橋をかけたみたいに連なる。「ここから先は、選ぶことになる」朝倉はまっすぐ言う。「嘘を受け入れて守るか、本音を求めて痛むか」(どちらも、私の選択だ)",
-  choices:[
-    {label:"嘘を受け入れる（恋愛ED導線）", next:"A6a"},
-    {label:"本音を求める（友情ED導線）", next:"A6b"},
-    {label:"「君の嘘も、見たい」と踏み込む", next:"A5_seehis", setFlags:{seeHisMask:true}}
-  ]
-};
-
-SCENES["A5_seehis"] = {
-  name:"",
-  bg:"arcade_evening", music:"warmth", sprite:[
-    {char:"mio", pose:"neutral", pos:"left"},
-    {char:"asakura", pose:"serious", pos:"right"}
-  ],
-  text:"「俺の？」朝倉は少し黙って、うなずく。「俺はね——“大丈夫”って言葉を使いすぎる。光らせないための癖」(守るための嘘)「でも今日は控える。君が選ぶ瞬間を、照らさないために」",
-  choices:[
-    {label:"嘘を受け入れる（恋愛ED導線）", next:"A6a", setAffection:{"朝倉":+1}},
-    {label:"本音を求める（友情ED導線）", next:"A6b"}
-  ]
-};
-
-/* ED */
-SCENES["A6a"] = {
-  name:"",
-  bg:"cafe_night", music:"warmth", sprite:[
-    {char:"mio", pose:"smile", pos:"left"},
-    {char:"asakura", pose:"smile", pos:"right"}
-  ],
-  text:"【恋愛ED：守るための嘘】夜更けのカフェ。二人で同じ嘘を共有する練習を始めた。「今日は大丈夫、の意味は“今は息ができる”で統一」彼が笑う。「了解。じゃあ、合言葉」テーブルの下で指先が触れ、そっと離れる。(世界は急に優しくならない。でも二人なら、温度の配分を学べる)",
-  choices:[{label:"EDを記録してタイトルへ", next:"ED_Collector", setFlags:{ED_Asakura_Love:true}}]
-};
-SCENES["A6b"] = {
-  name:"",
-  bg:"arcade_night", music:"melancholy", sprite:[
-    {char:"mio", pose:"smile", pos:"left"},
-    {char:"asakura", pose:"serious", pos:"right"}
-  ],
-  text:"【友情ED：素顔の交換】アーケードの灯りが一つずつ消える頃、私たちは互いの“盾”を机に置いた。「君の『平気』は、頑張る合図だったんだね」「あなたの『大丈夫』は、引き返してほしいサイン」——笑って、覚える。(恋に急がず、でも誰より深く) 私たちは、これからの嘘と本音を二人で管理していく。",
-  choices:[{label:"EDを記録してタイトルへ", next:"ED_Collector", setFlags:{ED_Asakura_Friend:true}}]
-};
-
-/* ───────── 湊ルート：詳細＋演出 ───────── */
-
-SCENES["M1"] = {
-  name:"",
-  bg:"alley_back", music:"melancholy", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"minato", pose:"hurt", pos:"right"}
-  ],
-  text:"路地裏で肩を庇う彼の手は、血の匂いと洗剤の匂いが混じっていた。「見んな。平気」(平気じゃない) 雨水が軒先から落ち、濡れた段ボールを叩く。彼はダンボールを足で押しやり、視線だけこちらに寄越した。",
-  choices:[
-    {label:"「止血させて」袖を裂いて手当てする", next:"M1_help", setAffection:{"湊":+1}},
-    {label:"「救急箱はどこ？」店に入れてもらう", next:"M1_inside"},
-    {label:"(怖い) いったん離れて様子を見る", next:"M1_leave", setFlags:{keptDistance:true}}
-  ]
-};
-
-SCENES["M1_help"] = {
-  name:"",
-  bg:"alley_back", music:"melancholy", sprite:[
-    {char:"mio", pose:"speak", pos:"left"},
-    {char:"minato", pose:"hurt", pos:"right"}
-  ],
-  text:"「動かないで」ハンカチで圧迫すると、湊は小さく舌打ちした。「手ぇ慣れてんな」「こう見えて家庭科は得意」(震える手を悟られたくない) 彼は観念したように力を抜いた。",
-  choices:[{label:"店の中へ案内してもらう", next:"M2_kitchen"}]
-};
-
-SCENES["M1_inside"] = {
-  name:"",
-  bg:"ramen_kitchen", music:"calm_day", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"minato", pose:"serious", pos:"right"}
-  ],
-  text:"暖簾の奥、油と出汁の香りが濃い小さな厨房。「そこ、救急箱」湊は顎で示す。ステンレス台に血が一滴落ち、すぐ拭き取られた。(生活の匂い。生きてる匂い)",
-  choices:[{label:"消毒と包帯をする", next:"M2_kitchen", setAffection:{"湊":+1}}]
-};
-
-SCENES["M1_leave"] = {
-  name:"",
-  bg:"street_rain", music:"rain_walk", sprite:[
-    {char:"mio", pose:"think", pos:"center"}
-  ],
-  text:"(怖い。けど見捨てられない) 雨音を挟んで数歩離れると、湊が自分で立ち上がるのが見えた。「……店、来んの？」背中越しの声は強がって、少しだけ弱かった。",
-  choices:[{label:"意を決して店へ入る", next:"M2_kitchen"}]
-};
-
-/* 2章：台所の湯気と本音 */
-SCENES["M2_kitchen"] = {
-  name:"",
-  bg:"ramen_kitchen", music:"calm_day", sprite:[
-    {char:"mio", pose:"smile", pos:"left"},
-    {char:"minato", pose:"neutral", pos:"right"}
-  ],
-  text:"散らかった台所で、私は勝手に味噌汁を作った。「勝手にすんな」ぶっきらぼうに言いながら、湊はお椀を受け取る。一口啜って目を伏せた。「……うめぇじゃん」「当然」(湯気の向こう、やっと笑った)",
-  choices:[
-    {label:"傷の理由を訊く", next:"M2_reason"},
-    {label:"店のことを手伝うと申し出る", next:"M2_offer", setAffection:{"湊":+1}},
-    {label:"自分の“夢”の話を少しだけする", next:"M2_dream"}
-  ]
-};
-
-SCENES["M2_reason"] = {
-  name:"",
-  bg:"ramen_kitchen", music:"melancholy", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"minato", pose:"serious", pos:"right"}
-  ],
-  text:"「借金取り。親父の置き土産。……でも、オレは逃げねえ」拳が震えるのは怒りか痛みか。「ここ、オレの場所だから」(居場所という言葉が、胸に刺さる)",
-  choices:[{label:"黙って横に立つ", next:"M3_front"}]
-};
-
-SCENES["M2_offer"] = {
-  name:"",
-  bg:"ramen_kitchen", music:"calm_day", sprite:[
-    {char:"mio", pose:"speak", pos:"left"},
-    {char:"minato", pose:"neutral", pos:"right"}
-  ],
-  text:"「皿洗いならできる」「……仕込みも」冗談めかして言うと、湊は鼻で笑った。「人使い荒いけど、逃げんなよ」「そっちこそ」(言葉の角が、少し丸くなる)",
-  choices:[{label:"店先に戻る", next:"M3_front"}]
-};
-
-SCENES["M2_dream"] = {
-  name:"",
-  bg:"ramen_kitchen", music:"melancholy", sprite:[
-    {char:"mio", pose:"speak", pos:"left"},
-    {char:"minato", pose:"neutral", pos:"right"}
-  ],
-  text:"「最近、雨とコンクリの匂いの夢ばかり見る」私が言うと、湊は鍋の蓋をずらして火加減を落とした。「匂いの夢は、記憶が近ぇってばあちゃん言ってた」(近い記憶……どこの？)",
-  choices:[{label:"店先に戻る", next:"M3_front"}]
-};
-
-/* 3章：店先の圧力 */
-SCENES["M3_front"] = {
-  name:"",
-  bg:"ramen_front", music:"suspense", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"minato", pose:"serious", pos:"right"}
-  ],
-  text:"引き戸の外に黒い影が二つ。ドアが重く鳴り、鈴が乱暴に転がる。「神原くーん、返事くらいしようぜ」湊は私を背に庇い、前に出た。「客いる。今日は帰れ」",
-  choices:[
-    {label:"湊の隣に立つ（逃げない）", next:"M3_stand", setAffection:{"湊":+1}},
-    {label:"支援窓口に電話する（大人の助け）", next:"M3_call", setFlags:{calledSupport:true}},
-    {label:"人目のある場所へ誘導する", next:"M3_move"}
-  ]
-};
-
-SCENES["M3_stand"] = {
-  name:"",
-  bg:"ramen_front", music:"run", sprite:[
-    {char:"mio", pose:"shock", pos:"left"},
-    {char:"minato", pose:"angry", pos:"right"}
-  ],
-  se:"whoosh",
-  text:"私は湊と肩を並べた。「ここは彼の場所。脅すなら警察に言う」言い終える前に、男の一人が舌打ちをして後ずさる。「チッ、今日はツイてねえ」引き戸が乱暴に閉まり、鈴が長く鳴った。",
-  choices:[{label:"大きく息を吐く", next:"M4_calm"}]
-};
-
-SCENES["M3_call"] = {
-  name:"",
-  bg:"ramen_front", music:"truth", sprite:[
-    {char:"mio", pose:"speak", pos:"left"},
-    {char:"minato", pose:"serious", pos:"right"}
-  ],
-  text:"スマホの向こうで耐えた声。「地域支援センターです。安全な場所に移動できますか」湊は一瞬だけ迷い、うなずいた。「……分かった。行く」(助けは恥じゃない)",
-  choices:[{label:"案内された場所へ向かう", next:"M4_support"}]
-};
-
-SCENES["M3_move"] = {
-  name:"",
-  bg:"street_rain", music:"rain_walk", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"minato", pose:"serious", pos:"right"}
-  ],
-  text:"商店街のアーチの下、人通りに紛れて立つ。男たちは距離を置き、やがて退いた。湊は肩の力を抜き、こちらを見た。「……サンキュ」(怖かった。でも逃げなかった)",
-  choices:[{label:"小さく頷く", next:"M4_calm"}]
-};
-
-/* 4章：余韻と導線（旧プール側棟へ） */
-SCENES["M4_calm"] = {
-  name:"",
-  bg:"street_twilight", music:"calm_day", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"minato", pose:"soft", pos:"right"}
-  ],
-  text:"黄昏の風が油の匂いを薄める。「なぁ、ちょっと寄り道していいか」湊はポケットから古びた札を出す。市章の消えかけた回収券。「昔、配達で行ってた廃施設。……気になってた場所がある」(胸の奥がざわめいた。雨、コンクリ、笑い声)",
-  choices:[
-    {label:"一緒に行く", next:"M4_toRuins", setAffection:{"湊":+1}},
-    {label:"明日にしてもらう", next:"M4_tomorrow"}
-  ]
-};
-
-SCENES["M4_support"] = {
-  name:"",
-  bg:"support_center", music:"truth", sprite:[
-    {char:"mio", pose:"neutral", pos:"left"},
-    {char:"minato", pose:"serious", pos:"right"}
-  ],
-  text:"蛍光灯の白い部屋。書類の山と温かいお茶。「連帯保証の外し方、債務整理の選択肢……」担当者の説明は現実的で、救いがあった。湊は黙って頷き、最後に小さく言う。「助けは、恥じゃないな」",
-  choices:[{label:"帰り道、湊の提案を聞く", next:"M4_calm"}]
-};
-
-SCENES["M4_tomorrow"] = {
-  name:"",
-  bg:"street_twilight", music:"melancholy", sprite:[
-    {char:"mio", pose:"neutral", pos:"left"},
-    {char:"minato", pose:"soft", pos:"right"}
-  ],
-  text:"「明日な。逃げねぇ」湊は指切りみたいに小指を立て、照れて引っ込めた。(その仕草、反則) 約束は、明日の支えになる。",
-  choices:[{label:"翌日、現地へ向かう", next:"M4_toRuins"}]
-};
-
-SCENES["M4_toRuins"] = {
-  name:"",
-  bg:"pool_ruins", music:"suspense", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"minato", pose:"serious", pos:"right"}
-  ],
-  text:"錆びたフェンス、傾いた看板。白いペンキで消された文字の下に、薄く残る。「——市立第一中 プール側棟」(ここだ。夢の匂いと同じ) 風が草むらを撫で、氷のような湿気が肌に触れる。",
-  choices:[
-    {label:"フェンスの穴から中へ", next:"M5_corridor"},
-    {label:"危険を感じて周囲を観察", next:"M5_observe"}
-  ]
-};
-
-SCENES["M5_observe"] = {
-  name:"",
-  bg:"pool_ruins", music:"suspense", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"minato", pose:"neutral", pos:"right"}
-  ],
-  text:"ガラス片、濡れた落書き、外された南京錠。湊はしゃがんで何かを拾い上げた。「……鍵？」茶色く錆びた、小さなマスターキー。(手のひらに乗せると、心臓の拍でわずかに揺れた気がした)",
-  choices:[{label:"鍵を受け取る", next:"M5_getkey", addFragment:"欠片M_錆びたマスターキー"}]
-};
-
-SCENES["M5_corridor"] = {
-  name:"",
-  bg:"pool_corridor_dark", music:"melancholy", sprite:[
-    {char:"mio", pose:"shock", pos:"left"},
-    {char:"minato", pose:"serious", pos:"right"}
-  ],
-  text:"暗い渡り廊下。天井から雫が等間隔で落ちる音が、鼓動を模倣する。(ここ、知ってる) 湊が壁際の箱を開ける。「あ」中には錆びた鍵の束。ひとつが妙に手に馴染む。",
-  choices:[{label:"その鍵を手に取る", next:"M5_getkey", addFragment:"欠片M_錆びたマスターキー"}]
-};
-
-SCENES["M5_getkey"] = {
-  name:"",
-  bg:"pool_corridor_dark", music:"truth", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"minato", pose:"soft", pos:"right"}
-  ],
-  text:"指に冷たさがしみ、過去の風景が一瞬だけ色を持った。笑い声、濡れた床、誰かの影。(“右下の人”は、ここを見ていたのかもしれない) 湊は静かに言う。「なぁ、帰ろう。……無茶すんな」",
-  choices:[{label:"うなずいて外へ出る", next:"M5_bridge"}]
-};
-
-/* 5章：選択（恋愛／救済） */
-SCENES["M5_bridge"] = {
-  name:"",
-  bg:"river_overpass_night", music:"calm_day", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"minato", pose:"serious", pos:"right"}
-  ],
-  text:"高架下の川風が生臭い。橋の照明が波に線を描く。「これから、どうする」湊は真正面から聞く。「オレは逃げねえ。でも一人でもない」(選ぶ。彼と生きる形を)",
-  choices:[
-    {label:"彼の隣で働き、支え合う（恋愛ED導線）", next:"M6a", setFlags:{ED_Minato_Love:true}},
-    {label:"制度と人の助けを借りる（救済ED導線）", next:"M6b", setFlags:{ED_Minato_Save:true}},
-    {label:"もう少しだけ時間がほしい", next:"M5_delay"}
-  ]
-};
-
-SCENES["M5_delay"] = {
-  name:"",
-  bg:"river_overpass_night", music:"melancholy", sprite:[
-    {char:"mio", pose:"neutral", pos:"left"},
-    {char:"minato", pose:"soft", pos:"right"}
-  ],
-  text:"「待つのは得意」湊はポケットに手を入れ、空を見た。「でも、君が一人で抱え込むのは反対」(分かってる。だから——決める)",
-  choices:[
-    {label:"やっぱり彼の隣で生きる", next:"M6a", setFlags:{ED_Minato_Love:true}},
-    {label:"支援を選ぶ", next:"M6b", setFlags:{ED_Minato_Save:true}}
-  ]
-};
-
-/* 6章：ED */
-SCENES["M6a"] = {
-  name:"",
-  bg:"shop_morning", music:"warmth", sprite:[
-    {char:"mio", pose:"smile", pos:"left"},
-    {char:"minato", pose:"smile", pos:"right"}
-  ],
-  text:"【恋愛ED】二人で働き、二人で笑い、二人で眠る未来の話をした。朝、湯気の向こうで湊が照れくさそうに言う。「いってらっしゃい。帰り、合図くれ」指先が触れて離れる。(小さな生活は、誇りだ) テーブルの端には錆びた鍵が置かれている——いつか扉を開けるために。",
-  choices:[{label:"EDを記録してタイトルへ", next:"ED_Collector", setFlags:{ED_Minato_Love:true}}]
-};
-
-SCENES["M6b"] = {
-  name:"",
-  bg:"support_center", music:"truth", sprite:[
-    {char:"mio", pose:"smile", pos:"left"},
-    {char:"minato", pose:"serious", pos:"right"}
-  ],
-  text:"【救済ED】窓口の書類に一枚ずつ印が押され、重しが外れていく音がした。「助けは恥じゃない」湊はもう一度、今度は自分に言い聞かせるように呟く。恋は淡い、でも確かな灯り。鍵は封筒にしまった。——必要なとき、正しい扉を開けるために。",
-  choices:[{label:"EDを記録してタイトルへ", next:"ED_Collector", setFlags:{ED_Minato_Save:true}}]
-};
-
-/* ───────── 藤堂ルート：詳細＋演出 ───────── */
-
-SCENES["R1"] = {
-  name:"",
-  bg:"research_lab_day", music:"calm_day", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"todo", pose:"labcoat", pos:"right"}
-  ],
-  se:"chime",
-  text:"白い壁、低い送風音、モニタの待機画面。藤堂 理久は白衣の袖を丁寧に折り、視線だけで合図した。「境界を確かめましょう。怖くなったら、いつでも止める」(“止める”って言われると、逆に進める気がする)",
-  choices:[
-    {label:"「お願いします」正面から頷く", next:"R1_ok", setAffection:{"藤堂":+1}},
-    {label:"「条件を決めてから」距離を取る", next:"R1_terms"},
-    {label:"「今日は見学だけ」控えめに告げる", next:"R1_observe"}
-  ]
-};
-
-SCENES["R1_ok"] = {
-  name:"",
-  bg:"research_lab_day", music:"calm_day", sprite:[
-    {char:"mio", pose:"speak", pos:"left"},
-    {char:"todo", pose:"soft", pos:"right"}
-  ],
-  text:"「ありがとう」藤堂は無表情に近い微笑をした。心拍計のコードが手首に触れ、冷たさが少しずつ皮膚に馴染む。「語彙は“今感じたまま”で」",
-  choices:[{label:"深呼吸して機材に身を預ける", next:"R2"}]
-};
-
-SCENES["R1_terms"] = {
-  name:"",
-  bg:"research_lab_day", music:"truth", sprite:[
-    {char:"mio", pose:"speak", pos:"left"},
-    {char:"todo", pose:"serious", pos:"right"}
-  ],
-  text:"「限界は私が決める」「了解。三つ合図を用意する。手を握る、目を閉じる、名前を呼ぶ——どれかで即停止」(決めたら、少し怖くなくなる)",
-  choices:[{label:"セッションを始める", next:"R2"}]
-};
-
-SCENES["R1_observe"] = {
-  name:"",
-  bg:"research_lab_day", music:"melancholy", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"todo", pose:"labcoat", pos:"right"}
-  ],
-  text:"「観察からでも進展はある」淡々とした声。机上には“つぎ目”のスケッチ。線と線の縫い目が、紙の上に静かに揺れて見える。(目を逸らさないって、たぶん始めるより難しい)",
-  choices:[{label:"準備が整ったと告げる", next:"R2"}]
-};
-
-/* 2章：静かな計測と質問 */
-SCENES["R2"] = {
-  name:"",
-  bg:"lab_observation", music:"calm_day", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"todo", pose:"labcoat", pos:"right"}
-  ],
-  se:"beep",
-  text:"安全域のテストは静かに始まる。画面に緑の線が、呼吸のリズムを写し取る。「昨夜の夢を——三語で」",
-  choices:[
-    {label:"「水」「コンクリート」「笑い声」", next:"R2_words", setAffection:{"藤堂":+1}},
-    {label:"「匂い」「寒さ」「空白」", next:"R2_words"},
-    {label:"(言葉が出てこない)首を振る", next:"R2_hard", setFlags:{avoidant:true}}
-  ]
-};
-
-SCENES["R2_words"] = {
-  name:"",
-  bg:"lab_observation", music:"calm_day", sprite:[
-    {char:"mio", pose:"speak", pos:"left"},
-    {char:"todo", pose:"serious", pos:"right"}
-  ],
-  text:"「よくできました」藤堂はメトロノームのように一定だ。「次。あなたが“安全”を感じる場所は？」",
-  choices:[
-    {label:"「図書室」", next:"R2_qa"},
-    {label:"「商店街の明かり」", next:"R2_qa"},
-    {label:"「——誰かの手」", next:"R2_qa", setFlags:{seekContact:true}}
-  ]
-};
-
-SCENES["R2_hard"] = {
-  name:"",
-  bg:"lab_observation", music:"melancholy", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"todo", pose:"soft", pos:"right"}
-  ],
-  text:"沈黙に、彼はすぐ答えを重ねない。「沈黙もデータ」(否定されない沈黙は、救いだ) しばらくして彼は紙コップの水を差し出した。",
-  choices:[{label:"落ち着いて質問に戻る", next:"R2_qa"}]
-};
-
-SCENES["R2_qa"] = {
-  name:"",
-  bg:"lab_observation", music:"truth", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"todo", pose:"serious", pos:"right"}
-  ],
-  text:"「仮説を一つ。あなたの夢は“縫合プロトコル”の副作用かもしれない」(縫合……縫い合わせる、という意味の) 「境界を一ミリずつ——押し広げる」",
-  choices:[
-    {label:"「目的は、私を助けるため？」と尋ねる", next:"R2_purpose"},
-    {label:"「あなたの過去に似た症例は？」と尋ねる", next:"R2_past"},
-    {label:"「一旦休憩して整理したい」", next:"R2_break"}
-  ]
-};
-
-SCENES["R2_purpose"] = {
-  name:"",
-  bg:"lab_observation", music:"truth", sprite:[
-    {char:"mio", pose:"speak", pos:"left"},
-    {char:"todo", pose:"serious", pos:"right"}
-  ],
-  text:"「助けたい。だがそれは“私のため”ではない」彼は正面から言う。「記録は、人を守るためにある」(言い切る声は冷たいのに、救われる)",
-  choices:[{label:"実験を続ける", next:"R3"}]
-};
-
-SCENES["R2_past"] = {
-  name:"",
-  bg:"lab_observation", music:"melancholy", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"todo", pose:"pained", pos:"right"}
-  ],
-  text:"「似た症例は、ある」言葉が短くなる。「成功も失敗も、記録に残る。——私の失敗も」(それ以上、彼は語らない。語らないことが事実の重さを示す)",
-  choices:[{label:"実験を続ける", next:"R3"}]
-};
-
-SCENES["R2_break"] = {
-  name:"",
-  bg:"lab_break", music:"calm_day", sprite:[
-    {char:"mio", pose:"neutral", pos:"left"},
-    {char:"todo", pose:"soft", pos:"right"}
-  ],
-  text:"休憩室。紙コップのスープは薄い塩味。「無理をしないあなたを、私は評価する」(褒められてる？) 彼はふっと目線を逸らし、「戻ろう」とだけ言った。",
-  choices:[{label:"実験へ戻る", next:"R3"}]
-};
-
-/* 3章：境界の腕試し */
-SCENES["R3"] = {
-  name:"",
-  bg:"lab_observation", music:"suspense", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"todo", pose:"labcoat", pos:"right"}
-  ],
-  se:"beep",
-  text:"椅子の背に指を置くと、彼の手が空中で止まる。触れない距離で、温度だけがわずかに伝わる。「次は光刺激。強度は上げない」(鼓動が、画面で数値になる)",
-  choices:[
-    {label:"「大丈夫」続行を合図", next:"R3_go", setAffection:{"藤堂":+1}},
-    {label:"「待って」一呼吸置く", next:"R3_wait"},
-    {label:"「今日はここまで」打ち切る", next:"R3_stop"}
-  ]
-};
-
-SCENES["R3_go"] = {
-  name:"",
-  bg:"lab_observation", music:"suspense", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"todo", pose:"serious", pos:"right"}
-  ],
-  text:"光が弱く脈打つ。遠くの笑い声の輪郭が、薄紙の裏から浮き上がる。藤堂の声だけが一定だ。「呼吸、二拍で吸って四拍で吐く」(言われると整う。不思議)",
-  choices:[{label:"次段階へ進む", next:"R4"}]
-};
-
-SCENES["R3_wait"] = {
-  name:"",
-  bg:"lab_observation", music:"tender", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"todo", pose:"soft", pos:"right"}
-  ],
-  text:"彼は即座に停止ボタンへ指を置いたまま待つ。「待機も、前進」(止められるって分かってると、進める) うなずくと、彼はほんの少しだけ口角を上げた。",
-  choices:[{label:"次段階へ進む", next:"R4"}]
-};
-
-SCENES["R3_stop"] = {
-  name:"",
-  bg:"research_lab_day", music:"melancholy", sprite:[
-    {char:"mio", pose:"neutral", pos:"left"},
-    {char:"todo", pose:"soft", pos:"right"}
-  ],
-  text:"「終了」機材の灯りが一つずつ眠る。彼はカルテを閉じて言う。「次回は環境から始めよう。あなたの選択に合わせて設計する」(“合わせる”という言葉が、救いになる)",
-  choices:[{label:"後日、再開する", next:"R4"}]
-};
-
-/* 4章：踏み込むか、距離を置くか＋資料室で欠片 */
-SCENES["R4"] = {
-  name:"",
-  bg:"lab_archive", music:"truth", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"todo", pose:"labcoat", pos:"right"}
-  ],
-  se:"paper",
-  text:"「境界を跨ぐ方法が二つある」藤堂は鍵束で資料室の扉を開けた。「A：短時間の同調、B：環境側の縫合記録の提示」棚には黒塗りのファイルが並ぶ。",
-  choices:[
-    {label:"Aを選ぶ（踏み込む）", next:"R4_sync"},
-    {label:"Bを選ぶ（距離を置く）", next:"R4_record"},
-    {label:"「黒塗りの理由は？」と尋ねる", next:"R4_black"}
-  ]
-};
-
-SCENES["R4_black"] = {
-  name:"",
-  bg:"lab_archive", music:"melancholy", sprite:[
-    {char:"mio", pose:"speak", pos:"left"},
-    {char:"todo", pose:"serious", pos:"right"}
-  ],
-  text:"「倫理委の指示。——そして、私の判断」彼は一冊を引き抜く。「人は、真実で傷つくことがある」(でも、知らないままでいると、別の傷になる)",
-  choices:[
-    {label:"A：同調を選ぶ", next:"R4_sync"},
-    {label:"B：記録を選ぶ", next:"R4_record"}
-  ]
-};
-
-SCENES["R4_sync"] = {
-  name:"",
-  bg:"lab_white", music:"suspense", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"todo", pose:"serious", pos:"right"}
-  ],
-  se:"pulse",
-  text:"白い部屋。椅子が向き合い、間に薄い幕のような光。「合図は覚えていますね」指と指が、幕越しに近づく。(こわい。でも、知りたい)",
-  choices:[
-    {label:"同調を開始", next:"R5a"},
-    {label:"やっぱり今回は見送る", next:"R4_record"}
-  ]
-};
-
-SCENES["R4_record"] = {
-  name:"",
-  bg:"lab_archive", music:"truth", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"todo", pose:"labcoat", pos:"right"}
-  ],
-  text:"ファイルの背に『縫合プロトコル v0.9』。開くと、署名の列だけ黒い帯で塗り潰されていた。(黒い線が、かえって人の形をしている)",
-  choices:[
-    {label:"写しを受け取る（欠片入手）", next:"R4_getfrag", addFragment:"欠片R_縫合プロトコルv0.9（署名黒塗り）"},
-    {label:"さらに別の記録を請求する", next:"R4_more"}
-  ]
-};
-
-SCENES["R4_getfrag"] = {
-  name:"",
-  bg:"lab_archive", music:"truth", sprite:[
-    {char:"mio", pose:"smile", pos:"left"},
-    {char:"todo", pose:"soft", pos:"right"}
-  ],
-  text:"薄い紙をファイルから外す音が小さく響く。「重すぎたら返して」(重い。でも持つ) 彼は私の手元を見て、頷いた。",
-  choices:[{label:"距離を保って前へ進む", next:"R5b"}]
-};
-
-SCENES["R4_more"] = {
-  name:"",
-  bg:"lab_archive", music:"melancholy", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"todo", pose:"serious", pos:"right"}
-  ],
-  text:"別のファイルの背表紙に、消えかけたローマ字：SHI——NOME。(読みかけの名前。ここにはまだ、誰かがいる) 藤堂は首を振る。「今日はここまで」",
-  choices:[{label:"写しをもらい、距離を選ぶ", next:"R4_getfrag", addFragment:"欠片R_縫合プロトコルv0.9（署名黒塗り）"}]
-};
-
-/* 5章A：踏み込み → 危機（MB導線） */
-SCENES["R5a"] = {
-  name:"",
-  bg:"lab_white", music:"suspense", sprite:[
-    {char:"mio", pose:"shock", pos:"left"},
-    {char:"todo", pose:"serious", pos:"right"}
-  ],
-  se:"heartbeat",
-  text:"光の幕に手をかざす。世界が一瞬ひっくり返り、濡れたタイルの冷たさが皮膚の裏へ滲みる。誰かの笑い声が近づき、遠ざかる。「——戻ってきて」藤堂の声が、やっとのことで届く。",
-  choices:[
-    {label:"「まだいける」続行を示す", next:"R5a_push"},
-    {label:"「止めて」合図を出す", next:"R5a_stop"}
-  ]
-};
-
-SCENES["R5a_push"] = {
-  name:"",
-  bg:"lab_white", music:"suspense", sprite:[
-    {char:"mio", pose:"shock", pos:"left"},
-    {char:"todo", pose:"pained", pos:"right"}
-  ],
-  text:"幕の向こうで、彼の輪郭が滲む。「負荷、上がる。戻れ」(あと少し、何かに触れられる) 指先が誰かの名札に触れた瞬間——視界が白く飽和した。",
-  choices:[{label:"——", next:"R6a", setFlags:{ED_Todo_Collapse:true}}]
-};
-
-SCENES["R5a_stop"] = {
-  name:"",
-  bg:"lab_white", music:"tender", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"todo", pose:"soft", pos:"right"}
-  ],
-  text:"手を引く。幕が静かに消え、部屋の白さだけが残る。呼吸が、やっと私のものに戻った。「賢明だ」(失望じゃない声)",
-  choices:[{label:"距離を持って進む選択に切り替える", next:"R5b"}]
-};
-
-/* 5章B：距離を置く → 共同の設計（恋愛導線） */
-SCENES["R5b"] = {
-  name:"",
-  bg:"lab_planning", music:"calm_day", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"todo", pose:"labcoat", pos:"right"}
-  ],
-  se:"typing",
-  text:"ホワイトボードに線が増える。「安全域」「合図」「中断後のケア」——二人の字が並ぶ。「あなたの速度で設計する」(“私の速度”という単語が、胸の中心でほどける)",
-  choices:[
-    {label:"「ありがとう」素直に伝える", next:"R5b_thanks", setAffection:{"藤堂":+1}},
-    {label:"「あなたは休めてる？」と問う", next:"R5b_care"},
-    {label:"「いつか、研究抜きで話したい」", next:"R5b_date"}
-  ]
-};
-
-SCENES["R5b_thanks"] = {
-  name:"",
-  bg:"lab_planning", music:"tender", sprite:[
-    {char:"mio", pose:"smile", pos:"left"},
-    {char:"todo", pose:"soft", pos:"right"}
-  ],
-  text:"「礼は要らない。これは仕事だ」そう言いつつ、彼は目を細める。(仕事に救われる夜も、ある)",
-  choices:[{label:"次のセッションへ", next:"R6b", setFlags:{ED_Todo_Love:true}}]
-};
-
-SCENES["R5b_care"] = {
-  name:"",
-  bg:"lab_planning", music:"melancholy", sprite:[
-    {char:"mio", pose:"speak", pos:"left"},
-    {char:"todo", pose:"pained", pos:"right"}
-  ],
-  text:"「……休み方が下手だと、よく言われる」自嘲の色は薄い。「あなたの“停止合図”は、私にも効くかもしれない」(じゃあ、合図を共有しよう)",
-  choices:[{label:"次のセッションへ", next:"R6b", setFlags:{ED_Todo_Love:true}}]
-};
-
-SCENES["R5b_date"] = {
-  name:"",
-  bg:"lab_planning", music:"warmth", sprite:[
-    {char:"mio", pose:"smile", pos:"left"},
-    {char:"todo", pose:"soft", pos:"right"}
-  ],
-  text:"「倫理的には、研究終了後に」小さく冗談を乗せた声。私も笑う。(終了後の約束が、今を支える)",
-  choices:[{label:"次のセッションへ", next:"R6b", setFlags:{ED_Todo_Love:true}}]
-};
-
-/* 6章：ED */
-SCENES["R6a"] = {
-  name:"",
-  bg:"lab_white_dark", music:"melancholy", sprite:[
-    {char:"mio", pose:"think", pos:"center"}
-  ],
-  text:"【崩壊ED（メリーバッド）】光は消えたのに、耳の奥で心音が続く。私の中の“つぎ目”に、彼の記憶の糸が絡まった。机上に残された白衣のペン跡を、指でなぞる。(選んだのは私。だから、忘れない)",
-  choices:[{label:"EDを記録してタイトルへ", next:"ED_Collector", setFlags:{ED_Todo_Collapse:true}}]
-};
-
-SCENES["R6b"] = {
-  name:"",
-  bg:"lab_evening", music:"warmth", sprite:[
-    {char:"mio", pose:"smile", pos:"left"},
-    {char:"todo", pose:"soft", pos:"right"}
-  ],
-  text:"【恋愛ED】互いにブレーキを持てたとき、初めて同じ速度で歩けた。研究は“人のために”戻っていく。「あなたの現在を、私に記録させてほしい」「——はい」(距離は残る。でも、それは守るための距離だ)",
-  choices:[{label:"EDを記録してタイトルへ", next:"ED_Collector", setFlags:{ED_Todo_Love:true}}]
-};
+  },
+
+  SCENES["K1"] = {
+    name:"",
+    bg:"school_gate_rain", music:"rain_walk", sprite:[
+      {char:"mio", pose:"neutral", pos:"center"},
+      {char:"kujyou", pose:"serious", pos:"right"}
+    ],
+    se:"chime",
+    text:"放課後の校門は雨上がりの匂いで満ちていた。黒い手袋の男が、濡れたアスファルトの境目に立つ。九条 煌はまっすぐこちらを見て、微かに顎を引いた。「柊 澪さん。——少し、お時間をいただけますか」(また“症状”の話だ。けれど、逃げても追いつく気配がする)",
+    choices:[
+      {label:"立ち止まり、話を聞く", next:"K1_listen", setAffection:{"九条":+1}},
+      {label:"無言で通り過ぎる", next:"K1_ignore", setFlags:{defendedByKanade:true}},
+      {label:"距離を保って「少しだけ」と答える", next:"K1_cautious"}
+    ]
+  };
+
+  SCENES["K1_listen"] = {
+    name:"",
+    bg:"school_gate_rain", music:"suspense", sprite:[
+      {char:"mio", pose:"think", pos:"center"},
+      {char:"kujyou", pose:"neutral", pos:"right"}
+    ],
+    text:"歩道の端。九条は鞄から透明なクリアファイルを出し、端を丁寧に揃えた。表紙には『神ノ原 記憶消失事件』の文字。「十年前の資料です。あなたの名は被験者M-0として記録されている」(胸の奥に冷たい指が入ってくるような感じ)「確認させてください。最近、夢や聴覚に異常は」",
+    choices:[{label:"図書館で続きを聞くことを提案する", next:"K2_prelude"}]
+  };
+  SCENES["K1_ignore"] = {
+    name:"",
+    bg:"school_gate_rain", music:"rain_walk", sprite:[
+      {char:"mio", pose:"neutral", pos:"center"}
+    ],
+    text:"踵を返した瞬間、肩にそっと影が差す。「無理に応じなくていい」振り向くと、そこには篠宮 奏。彼女は私と九条の間に一歩入った。「彼女は疲れてます」九条は短く頷く。「では、別の機会に」(助かった——けど、これで終わる気はしない)",
+    choices:[{label:"少し落ち着いてから向き合う決意をする", next:"K2_prelude"}]
+  };
+  SCENES["K1_cautious"] = {
+    name:"",
+    bg:"school_gate_rain", music:"suspense", sprite:[
+      {char:"mio", pose:"neutral", pos:"center"},
+      {char:"kujyou", pose:"serious", pos:"right"}
+    ],
+    text:"二人分の距離を保ったまま、校門脇の屋根の下へ移動する。雨粒が看板から落ちる音が規則正しい。「仮説は一つ。あなたの“欠落”は誘発型の可能性がある」(誘発……私のせいで誰かに何かが起こる？)九条は言葉を選ぶように続けた。「安全のため、記録を取りたい」",
+    choices:[{label:"人通りの少ない図書館へ移動する", next:"K2_prelude"}]
+  };
   
-/* ───────── 奏ルート：詳細＋演出 ───────── */
-
-SCENES["N1"] = {
-  name:"",
-  bg:"classroom_evening", music:"calm_day", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"kanade", pose:"serious", pos:"right"}
-  ],
-  se:"chime",
-  text:"放課後の教室。窓の外に薄い雲。篠宮 奏はノートを閉じ、まっすぐこちらを見る。「大丈夫。私が基準になる」(その言葉だけで、体温が少し下がる)",
-  choices:[
-    {label:"「今、ここにいて」頼む", next:"N1_stay", setAffection:{"奏":+1}},
-    {label:"「強がってるだけ」正直に言う", next:"N1_honest", setAffection:{"奏":+1}},
-    {label:"「平気。自分で何とかする」距離を置く", next:"N1_tough"}
-  ]
-};
-
-SCENES["N1_stay"] = {
-  name:"",
-  bg:"classroom_evening", music:"tender", sprite:[
-    {char:"mio", pose:"speak", pos:"left"},
-    {char:"kanade", pose:"soft", pos:"right"}
-  ],
-  text:"「今はここにいて」言うと、奏は席を引き寄せ、私の机に横付けにした。「はい。隣の椅子、予約済み」(頼らせ方が、うまい)",
-  choices:[{label:"一息ついてから移動する", next:"N2_bus"}]
-};
-
-SCENES["N1_honest"] = {
-  name:"",
-  bg:"classroom_evening", music:"calm_day", sprite:[
-    {char:"mio", pose:"speak", pos:"left"},
-    {char:"kanade", pose:"serious", pos:"right"}
-  ],
-  text:"「強がってるだけ」そう言うと、奏は頷いた。「強がりは悪くない。歩幅を守る道具だから」(道具、か) 彼女は鞄を肩に掛ける。「帰り、バス停まで一緒に」",
-  choices:[{label:"頷く", next:"N2_bus"}]
-};
-
-SCENES["N1_tough"] = {
-  name:"",
-  bg:"classroom_evening", music:"melancholy", sprite:[
-    {char:"mio", pose:"neutral", pos:"left"},
-    {char:"kanade", pose:"soft", pos:"right"}
-  ],
-  text:"「平気」反射で口にすると、奏は少しだけ目を細めた。「じゃあ、平気の定義を一緒に作ろう」(逃げ道じゃなく、足場を作られる感じ)",
-  choices:[{label:"並んで教室を出る", next:"N2_bus"}]
-};
-
-/* 2章：バス停で“期限のある約束” */
-SCENES["N2_bus"] = {
-  name:"",
-  bg:"bus_stop_evening", music:"rain_walk", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"kanade", pose:"serious", pos:"right"}
-  ],
-  text:"雨上がりのバス停。アスファルトがまだ濡れている。奏は広告板の影に立ち、息を整えてから切り出した。「私、期限のある約束をしてる」",
-  choices:[
-    {label:"「どんな約束？」訊く", next:"N2_ask"},
-    {label:"「言いたくないなら言わなくていい」退路を残す", next:"N2_skip"},
-    {label:"(嫌な予感) 沈黙して待つ", next:"N2_wait"}
-  ]
-};
-
-SCENES["N2_ask"] = {
-  name:"",
-  bg:"bus_stop_evening", music:"truth", sprite:[
-    {char:"mio", pose:"speak", pos:"left"},
-    {char:"kanade", pose:"serious", pos:"right"}
-  ],
-  text:"「保証人」奏は言った。「——あなたのための」(息が止まる) 「もしあなたの“症状”が制御不能になったら、私が責任を引き取る契約」",
-  choices:[{label:"「そんなの、間違ってる」", next:"N3_reject"}]
-};
-
-SCENES["N2_skip"] = {
-  name:"",
-  bg:"bus_stop_evening", music:"tender", sprite:[
-    {char:"mio", pose:"neutral", pos:"left"},
-    {char:"kanade", pose:"soft", pos:"right"}
-  ],
-  text:"「ありがとう」奏は微笑む。けれど少しだけ首を振る。「話す。隠すと、あなたが余計に背負うから」(気づかれている)",
-  choices:[{label:"続けて聞く", next:"N2_ask"}]
-};
-
-SCENES["N2_wait"] = {
-  name:"",
-  bg:"bus_stop_evening", music:"melancholy", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"kanade", pose:"serious", pos:"right"}
-  ],
-  text:"「怖がらないで聞いて」奏は広告板の角を指でなぞる。「期限まで、あとわずか」(終わりの足音が、近い)",
-  choices:[{label:"詳細を聞く", next:"N2_ask"}]
-};
-
-/* 3章：支えるか、引き止めるか */
-SCENES["N3_reject"] = {
-  name:"",
-  bg:"footbridge_night", music:"melancholy", sprite:[
-    {char:"mio", pose:"speak", pos:"left"},
-    {char:"kanade", pose:"serious", pos:"right"}
-  ],
-  text:"歩道橋の上、車の光が川みたいに流れる。「そんなの、間違ってる」言うと、奏は揺れない声で返す。「間違ってる。でも、必要だった」",
-  choices:[
-    {label:"「私も一緒に背負う」共同を提案", next:"N3_share", setAffection:{"奏":+1}},
-    {label:"「約束なんか捨てて」引き止める", next:"N3_stop"},
-    {label:"(言葉が出ない) 手を握る", next:"N3_hold", setAffection:{"奏":+1}}
-  ]
-};
-
-SCENES["N3_share"] = {
-  name:"",
-  bg:"footbridge_night", music:"tender", sprite:[
-    {char:"mio", pose:"speak", pos:"left"},
-    {char:"kanade", pose:"soft", pos:"right"}
-  ],
-  text:"「分け合えるなら、軽くなる」奏は小さく笑う。「具体案、作ろう」(実務モードの目だ)",
-  choices:[{label:"明日、事務局に同行する", next:"N4_office"}]
-};
-
-SCENES["N3_stop"] = {
-  name:"",
-  bg:"footbridge_night", music:"truth", sprite:[
-    {char:"mio", pose:"speak", pos:"left"},
-    {char:"kanade", pose:"serious", pos:"right"}
-  ],
-  text:"「捨てるのは簡単じゃない」奏は首を振る。「約束は、誰かの安全のための錘」(私のための) 「でも、方法は他にもある。探そう」",
-  choices:[{label:"具体策を一緒に考える", next:"N4_office"}]
-};
-
-SCENES["N3_hold"] = {
-  name:"",
-  bg:"footbridge_night", music:"warmth", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"kanade", pose:"soft", pos:"right"}
-  ],
-  text:"手を握ると、奏は少し目を伏せた。「温度で決めるの、嫌いじゃない」(言葉よりも早く伝わる)",
-  choices:[{label:"明日、事務局に同行する", next:"N4_office"}]
-};
-
-/* 4章：事務局—欠片N入手 */
-SCENES["N4_office"] = {
-  name:"",
-  bg:"city_office", music:"truth", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"kanade", pose:"serious", pos:"right"}
-  ],
-  se:"paper",
-  text:"古い庁舎。蛍光灯の白さが目に刺さる。窓口の奥で書類が綴じられ、判が乾く音がした。奏は封筒を受け取り、中身を私に見せる。「保証人契約の控え。連絡先だけ——手書き」(滲んだインクの癖、どこかで見た字だ)",
-  choices:[
-    {label:"控えのコピーをもらう（欠片入手）", next:"N4_fragment", addFragment:"欠片N_保証人契約の控え（連絡先だけ手書き）"},
-    {label:"誰の字か、推測する", next:"N4_guess"}
-  ]
-};
-
-SCENES["N4_fragment"] = {
-  name:"",
-  bg:"city_office", music:"truth", sprite:[
-    {char:"mio", pose:"smile", pos:"left"},
-    {char:"kanade", pose:"soft", pos:"right"}
-  ],
-  text:"紙の軽さに反して、手が少し重くなる。「重かったら、私に預けて」奏は当然のように言う。(重さを量らせてくれる人)",
-  choices:[{label:"次の一手を相談する", next:"N4_plan"}]
-};
-
-SCENES["N4_guess"] = {
-  name:"",
-  bg:"city_office", music:"melancholy", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"kanade", pose:"serious", pos:"right"}
-  ],
-  text:"「ここ、黒塗りになる前、別の名前があった」奏は低く言う。「——SHI……まで読めた」(東雲。気づきたくなかった確信が、形を持つ)",
-  choices:[{label:"控えを受け取り、動く", next:"N4_fragment", addFragment:"欠片N_保証人契約の控え（連絡先だけ手書き）"}]
-};
-
-SCENES["N4_plan"] = {
-  name:"",
-  bg:"city_office", music:"calm_day", sprite:[
-    {char:"mio", pose:"speak", pos:"left"},
-    {char:"kanade", pose:"serious", pos:"right"}
-  ],
-  text:"窓口脇のベンチで小さな会議。「選択肢は三つ」奏は指を折る。「A：私が約束を履行して離れる／B：第三者保証へ切替／C：条件変更（監視から伴走へ）」(どれも痛い。けど選ぶ)",
-  choices:[
-    {label:"A：覚悟を受け入れ、彼女を送り出す", next:"N5_away"},
-    {label:"B：第三者保証に切替を申請する", next:"N5_third"},
-    {label:"C：条件変更を交渉する（伴走）", next:"N5_partner", setAffection:{"奏":+1}}
-  ]
-};
-
-/* 5章：分岐 */
-SCENES["N5_away"] = {
-  name:"",
-  bg:"rooftop_dusk", music:"melancholy", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"kanade", pose:"serious", pos:"right"}
-  ],
-  text:"校舎の屋上。風の層が入れ替わる。「送り出すって、残酷な優しさだよ」奏は笑い、まっすぐ前を見る。「でも、あなたが前を向けるなら、正解」(喉の奥に熱が残る)",
-  choices:[{label:"握った手を放す", next:"N6a", setFlags:{ED_Kanade_Friend:true}}]
-};
-
-SCENES["N5_third"] = {
-  name:"",
-  bg:"city_office", music:"truth", sprite:[
-    {char:"mio", pose:"speak", pos:"left"},
-    {char:"kanade", pose:"serious", pos:"right"}
-  ],
-  text:"倫理委宛の申請書。必要な添付は、関係者の同意書と観測ログ。「朝倉の“光”の証言、藤堂の“停止合図”ログ——揃えれば、道が開く」(みんなで支える仕組みに変える)",
-  choices:[{label:"書類を整え、提出へ", next:"N6b", setFlags:{ED_Kanade_Friend2:true}}]
-};
-
-SCENES["N5_partner"] = {
-  name:"",
-  bg:"meeting_room", music:"tender", sprite:[
-    {char:"mio", pose:"speak", pos:"left"},
-    {char:"kanade", pose:"soft", pos:"right"}
-  ],
-  text:"条件変更案。「監視」から「伴走」へ。リスク時の一次停止権を奏が持ち、決定は本人同意を前提にする。「あなたの“現在”を、あなたが決めるための仕組み」(それが欲しかった言葉)",
-  choices:[{label:"合意書に署名する", next:"N6b", setFlags:{ED_Kanade_Friend2:true}}]
-};
-
-/* 6章：ED */
-SCENES["N6a"] = {
-  name:"",
-  bg:"bus_stop_morning", music:"melancholy", sprite:[
-    {char:"mio", pose:"think", pos:"center"}
-  ],
-  text:"【友情/犠牲ED】始発の風。バスのドアが開き、閉じる。奏は振り返らない。強い人の歩き方だ。(代わりに笑うって、こういうことかもしれない) 私は、残された日々をちゃんと選ぶ。",
-  choices:[{label:"EDを記録してタイトルへ", next:"ED_Collector", setFlags:{ED_Kanade_Friend:true}}]
-};
-
-SCENES["N6b"] = {
-  name:"",
-  bg:"arcade_evening", music:"warmth", sprite:[
-    {char:"mio", pose:"smile", pos:"left"},
-    {char:"kanade", pose:"smile", pos:"right"}
-  ],
-  text:"【友情ED】別離は回避された。約束は延長線に置かれ、規約は「伴走」へ書き換わる。夕方のアーケードで、私たちは同じ速度で歩く。(恋とは違うけれど、いちばん近い) 明日も、この歩幅で。",
-  choices:[{label:"EDを記録してタイトルへ", next:"ED_Collector", setFlags:{ED_Kanade_Friend2:true}}]
-};
-
-/* ───────── 隠し：東雲 悠真 ルート（詳細＋演出） ───────── */
-SCENES["H1"] = {
-  name:"",
-  bg:"dream_void", music:"melancholy", sprite:[
-    {char:"mio", pose:"think", pos:"center"},
-    {char:"yuma", pose:"soft", pos:"right"}
-  ],
-  se:"chime",
-  text:"白い無音に、足音だけが生まれては消える。「やっと来たね」男は微笑む。光の粒が肩口でほどけ、輪郭に戻る。「ここは記憶の“外側”。君が選んだどの結末も否定しない、静かな場所」(夢の声と同じ温度——東雲 悠真)",
-  choices:[
-    {label:"「あなたは誰？」", next:"H1_who"},
-    {label:"「どうして、ずっと呼んでたの」", next:"H1_voice"},
-    {label:"「ここで、何ができるの」", next:"H2"}
-  ]
-};
-
-SCENES["H1_who"] = {
-  name:"",
-  bg:"dream_void", music:"melancholy", sprite:[
-    {char:"mio", pose:"speak", pos:"center"},
-    {char:"yuma", pose:"serious", pos:"right"}
-  ],
-  text:"「東雲 悠真。——“守護者”だと自称してる」自嘲の笑み。「十年前、世界は一度だけ綺麗な嘘で縫われた。君は被験者M-0、私は調整役。縫い目がほどけるたび、君を呼んで繕ってきた」",
-  choices:[{label:"「次へ」", next:"H2"}]
-};
-
-SCENES["H1_voice"] = {
-  name:"",
-  bg:"dream_void", music:"tender", sprite:[
-    {char:"mio", pose:"think", pos:"center"},
-    {char:"yuma", pose:"soft", pos:"right"}
-  ],
-  text:"「『誰かの代わりに生きろ』は、命令じゃない。救命の合図だった」彼は手を胸に当てる。「君が沈むたび、浮かぶ言葉を探した。間違っていたら、ごめん」(謝る声がいちばん、現実に近い)",
-  choices:[{label:"「続けて」", next:"H2"}]
-};
-
-SCENES["H2"] = {
-  name:"",
-  bg:"memory_gallery", music:"truth", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"yuma", pose:"serious", pos:"right"}
-  ],
-  text:"回廊に額装が並ぶ。写真、ログ、鍵、契約書——私が集めた欠片が、壁で静かに呼吸する。「ここでは、選び直せる。修復か、受容か。その前に——見たいものを見て」",
-  choices:[
-    {label:"学級写真の“右下”を見る", next:"H3_photo"},
-    {label:"旧プール側棟の廊下を再現する", next:"H3_pool"},
-    {label:"『縫合プロトコルv0.9』の原本を見る", next:"H3_protocol"},
-    {label:"十分に見た。アンカーを選ぶ", next:"H4_anchor"}
-  ]
-};
-
-SCENES["H3_photo"] = {
-  name:"",
-  bg:"classroom_past", music:"melancholy", sprite:[
-    {char:"mio", pose:"shock", pos:"left"},
-    {char:"yuma", pose:"soft", pos:"right"}
-  ],
-  se:"paper",
-  text:"集合写真の右下——切り取られていた位置に、薄い像が重なる。笑い皺、少し曲がった名札。『SHINONOME』(やっぱり、ここに——) 「僕だよ」悠真は淡く笑った。「君の隣にいた」",
-  choices:[
-    {label:"「どうして消えたの」", next:"H3_photo_why"},
-    {label:"回廊に戻る", next:"H2"}
-  ]
-};
-SCENES["H3_photo_why"] = {
-  name:"",
-  bg:"classroom_past", music:"melancholy", sprite:[
-    {char:"mio", pose:"speak", pos:"left"},
-    {char:"yuma", pose:"pained", pos:"right"}
-  ],
-  text:"「事故の日、僕は代わりに“責任者”になった。君の記録を守るために、僕の位置を切り離す。それがプロトコルだった」(右下の空白は、盾だった)",
-  choices:[{label:"回廊に戻る", next:"H2"}]
-};
-
-SCENES["H3_pool"] = {
-  name:"",
-  bg:"pool_corridor_dark", music:"suspense", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"yuma", pose:"serious", pos:"right"}
-  ],
-  se:"pulse",
-  text:"濡れた廊下、等間隔の雫。錆びた鍵が掌で冷える。「ここで世界は縫われた。笑い声は、君を落ち着かせるための音響データ」(優しさの形が、時々刃になる)",
-  choices:[
-    {label:"「鍵は、何の扉」", next:"H3_pool_key"},
-    {label:"回廊に戻る", next:"H2"}
-  ]
-};
-SCENES["H3_pool_key"] = {
-  name:"",
-  bg:"pool_corridor_dark", music:"truth", sprite:[
-    {char:"mio", pose:"speak", pos:"left"},
-    {char:"yuma", pose:"soft", pos:"right"}
-  ],
-  text:"「最初の縫合室。もう開けない。——開けなくていい」彼は静かに言う。(それでも、持っていたい。選ぶために)",
-  choices:[{label:"回廊に戻る", next:"H2"}]
-};
-
-SCENES["H3_protocol"] = {
-  name:"",
-  bg:"lab_white", music:"truth", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"yuma", pose:"serious", pos:"right"}
-  ],
-  text:"『縫合プロトコル v0.9』。黒塗りの署名の下に、消し残った走り書きがある。——“守るのは現在”。「君の現在を守るための嘘。それがこの世界の骨組み」",
-  choices:[
-    {label:"「じゃあ、今を壊さず直せる？」", next:"H3_protocol_fix"},
-    {label:"回廊に戻る", next:"H2"}
-  ]
-};
-SCENES["H3_protocol_fix"] = {
-  name:"",
-  bg:"lab_white", music:"tender", sprite:[
-    {char:"mio", pose:"speak", pos:"left"},
-    {char:"yuma", pose:"soft", pos:"right"}
-  ],
-  text:"「可能かもしれない。痛みは出る。けど、前よりは優しくできる」(“優しく”直す。そんな選択肢があるなら——)",
-  choices:[{label:"回廊に戻る", next:"H2"}]
-};
-
-/* 4章：アンカー選択（各ルートで得た現在を参照） */
-SCENES["H4_anchor"] = {
-  name:"",
-  bg:"memory_gallery", music:"calm_day", sprite:[
-    {char:"mio", pose:"think", pos:"left"},
-    {char:"yuma", pose:"serious", pos:"right"}
-  ],
-  text:"「修復にも受容にも、“現在”を固定する錘が要る」悠真は手を差し出す。「君が選んできた誰かの現在——その在り方を、言葉にして」",
-  choices:[
-    {label:"九条：距離が守る優しさ", next:"H4_k", req:(s)=>!!s.flags.ED_Kujou_Love},
-    {label:"朝倉：守るための嘘", next:"H4_a", req:(s)=>!!s.flags.ED_Asakura_Love},
-    {label:"湊：小さな生活の誇り", next:"H4_m", req:(s)=>!!s.flags.ED_Minato_Love},
-    {label:"藤堂：同じ速度で歩く", next:"H4_r", req:(s)=>!!s.flags.ED_Todo_Love},
-    {label:"アンカーは決めた。最終選択へ", next:"H5_choice"}
-  ]
-};
-
-SCENES["H4_k"] = {
-  name:"",
-  bg:"public_hall_dim", music:"tender", sprite:[
-    {char:"mio", pose:"smile", pos:"left"},
-    {char:"yuma", pose:"soft", pos:"right"}
-  ],
-  text:"「触れない距離が、守るための形になる」言葉にすると胸が軽くなる。「うん。距離は欠落じゃない。設計だ」",
-  choices:[{label:"回廊へ戻る", next:"H4_anchor"}]
-};
-SCENES["H4_a"] = {
-  name:"",
-  bg:"cafe_night", music:"warmth", sprite:[
-    {char:"mio", pose:"smile", pos:"left"},
-    {char:"yuma", pose:"soft", pos:"right"}
-  ],
-  text:"「嘘は盾。合言葉で意味を共有する」悠真は頷く。「共有された嘘は、もう孤独じゃない」",
-  choices:[{label:"回廊へ戻る", next:"H4_anchor"}]
-};
-SCENES["H4_m"] = {
-  name:"",
-  bg:"shop_morning", music:"warmth", sprite:[
-    {char:"mio", pose:"smile", pos:"left"},
-    {char:"yuma", pose:"soft", pos:"right"}
-  ],
-  text:"「働いて、笑って、眠る。小さいけど、確かな誇り」「世界の大工事より、生活のネジを締める方が難しいんだ」",
-  choices:[{label:"回廊へ戻る", next:"H4_anchor"}]
-};
-SCENES["H4_r"] = {
-  name:"",
-  bg:"lab_evening", music:"tender", sprite:[
-    {char:"mio", pose:"smile", pos:"left"},
-    {char:"yuma", pose:"soft", pos:"right"}
-  ],
-  text:"「ブレーキを持ち合うと、同じ速度で歩ける」悠真は小さく笑う。「じゃあ、急がない処置を選べるね」",
-  choices:[{label:"回廊へ戻る", next:"H4_anchor"}]
-};
-
-/* 5章：最終選択（修復 or 受容） */
-SCENES["H5_choice"] = {
-  name:"",
-  bg:"dream_void", music:"truth", sprite:[
-    {char:"mio", pose:"think", pos:"center"},
-    {char:"yuma", pose:"serious", pos:"right"}
-  ],
-  se:"pulse",
-  text:"「選んで。世界を修復するか、現実を受け入れるか」白い空間に、二つの扉が静かに立つ。(どちらを選んでも、私の現在は私が決める)",
-  choices:[
-    {label:"世界を修復する（トゥルー）", next:"H6a", setFlags:{ED_Hidden_True:true}},
-    {label:"現実を受け入れる（ビターグッド）", next:"H6b", setFlags:{ED_Hidden_Bitter:true}}
-  ]
-};
-
-/* 6章：ED */
-SCENES["H6a"] = {
-  name:"",
-  bg:"rooftop_dawn", music:"warmth", sprite:[
-    {char:"mio", pose:"smile", pos:"left"},
-    {char:"yuma", pose:"soft", pos:"right"}
-  ],
-  se:"breath",
-  text:"【トゥルーED：縫合の完了】欠片は矛盾なく繋がり、右下の“空白”は空白のまま“役割”を得た。誰も上書きされず、物語は収束する。「正しい眠り方を、やっと覚えたね」「うん」朝の風は、やさしい重さで私たちを押した。",
-  choices:[{label:"タイトルへ", next:"title"}]
-};
-
-SCENES["H6b"] = {
-  name:"",
-  bg:"starfield", music:"melancholy", sprite:[
-    {char:"mio", pose:"think", pos:"center"},
-    {char:"yuma", pose:"soft", pos:"right"}
-  ],
-  text:"【ビターグッド】継ぎ目はそのまま、しかし手当ては施された。ほつれを知っている者だけが見つけられる、静かな幸福。「君が見つけた現在を、僕は見失わない」「私も」遠くで、昨日と同じ雨が降りはじめる。",
-  choices:[{label:"タイトルへ", next:"title"}]
-};
-
-// ───────── ED記録・メニュー復帰 ─────────
-SCENES["ED_Collector"] = {
-  name:"",
-  text:"【ED記録を更新】必要条件を満たすと、タイトルに『静寂の声』が出現します。",
-  choices:[{label:"タイトルへ戻る", next:"title"}]
+  SCENES["K2_prelude"] = {
+    name:"",
+    bg:"library", music:"calm_day", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"kujyou", pose:"neutral", pos:"right"}
+    ],
+    text:"放課後の図書館は空調の音だけが低く響いていた。窓際の机に向かい合って座る。九条は手袋を外さない。「質問します。昨夜の夢、覚えていますか」",
+    choices:[
+      {label:"「声がした。『誰かの代わりに生きろ』って」正直に話す", next:"K2_honest", setAffection:{"九条":+1}},
+      {label:"(言いたくない)話をぼかす", next:"K2_avoid", setFlags:{avoidant:true}},
+      {label:"「九条さんは、私を信じますか」と聞き返す", next:"K2_asktrust", setFlags:{askedTrust:true}}
+    ]
+  };
+  
+  SCENES["K2_honest"] = {
+    name:"",
+    bg:"library", music:"calm_day", sprite:[
+      {char:"mio", pose:"speak", pos:"left"},
+      {char:"kujyou", pose:"serious", pos:"right"}
+    ],
+    text:"「——『誰かの代わりに生きろ』」言葉にした瞬間、胸の奥で砂が落ちる音がした。九条は短く息を整える。「誘導ではありません。あなたの記述です」ノートに走るペン先は一定のリズム。(観測、じゃない。これは救命の手順みたいだ)",
+    choices:[{label:"さらに詳しく——夢の風景や温度を語る", next:"K2_detail"}]
+  };
+  SCENES["K2_detail"] = {
+    name:"",
+    bg:"library", music:"truth", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"kujyou", pose:"neutral", pos:"right"}
+    ],
+    text:"「水の匂いがして、床は冷たいコンクリート。誰かが窓の外で笑ってるのに、顔が思い出せない」九条は目を伏せ、静かに頷いた。「確認できました。あなたは“つぎ目”に触れている」(つぎ目？)「世界の記録が継ぎ合わされた箇所、という意味です」",
+    choices:[{label:"意味を飲み込み、続きを促す", next:"K3"}]
+  };
+  
+  SCENES["K2_avoid"] = {
+    name:"",
+    bg:"library", music:"melancholy", sprite:[
+      {char:"mio", pose:"neutral", pos:"left"},
+      {char:"kujyou", pose:"soft", pos:"right"}
+    ],
+    text:"「……断片的で」曖昧な返事をすると、九条はそれ以上追及しなかった。「分かりました。強要はしません」彼はノートを閉じ、窓の外に視線を逸らす。その横顔は、思ったより年相応だった。(優しいというより、距離の取り方が上手い人だ)",
+    choices:[{label:"沈黙のまま席を立つ", next:"K3"}]
+  };
+  
+  SCENES["K2_asktrust"] = {
+    name:"",
+    bg:"library", music:"calm_day", sprite:[
+      {char:"mio", pose:"speak", pos:"left"},
+      {char:"kujyou", pose:"serious", pos:"right"}
+    ],
+    text:"「九条さんは、私を信じますか」問いかけに、彼は一拍置いてから「信じる/信じないは任務に含まれない」と答えた。「ただ、記録には責任がある」(それは、私を守るって意味？)彼は答えず、窓の外の雲を見た。",
+    choices:[{label:"言葉の意味を考えながら席を立つ", next:"K3", setAffection:{"九条":+1}}]
+  };
+  
+  SCENES["K3"] = {
+    name:"",
+    bg:"street_rain", music:"rain_walk", sprite:[
+      {char:"mio", pose:"shock", pos:"center"},
+      {char:"kujyou", pose:"serious", pos:"right"}
+    ],
+    se:"whoosh",
+    text:"帰り道、空は再び降り出した。曲がり角の向こうから黒いバンが近づく。スライドドアが開き、無機質な光が路面を舐めた。九条が前に出る。「乗らないで。——危険です」(選ばなきゃ)",
+    choices:[
+      {label:"言われるままに車へ乗る", next:"K3_car"},
+      {label:"九条の手を掴んで走る", next:"K3_run", setAffection:{"九条":+1}},
+      {label:"「信じていいの？」と立ち止まる", next:"K3_trust", setFlags:{trustTalk:true}}
+    ]
+  };
+  
+  SCENES["K3_car"] = {
+    name:"",
+    bg:"car_dark", music:"suspense", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"kujyou", pose:"neutral", pos:"right"}
+    ],
+    text:"車内の空気は冷たく乾いていた。九条は私の隣に座り、手袋越しにシートベルトを確認する。「一時的な保護です」(守られてるのか、監視されてるのか)フロントガラスを叩く雨が、会話の隙間を埋めた。",
+    choices:[{label:"保護先へ向かう", next:"K4"}]
+  };
+  SCENES["K3_run"] = {
+    name:"",
+    bg:"alley_rain", music:"run", sprite:[
+      {char:"mio", pose:"shock", pos:"center"},
+      {char:"kujyou", pose:"serious", pos:"right"}
+    ],
+    se:"run",
+    text:"私は九条の手を掴み、濡れた商店街を駆けた。彼は規則正しく息を吐き、私の歩幅に合わせて速度を調整する。「この選択は、報告書に書かれません」(つまり、彼は今、規則を破っている)",
+    choices:[{label:"路地を抜け、人気のない施設へ", next:"K4"}]
+  };
+  SCENES["K3_trust"] = {
+    name:"",
+    bg:"street_rain", music:"rain_walk", sprite:[
+      {char:"mio", pose:"think", pos:"center"},
+      {char:"kujyou", pose:"soft", pos:"right"}
+    ],
+    text:"「信じていいの？」問いは雨に紛れず届いた。九条は短く頷く。「私を信じる必要はない。状況判断だけでいい」(それ、ずるい)でも、その言い方は、私に選ぶ自由を返した。",
+    choices:[{label:"九条に任せる", next:"K4", setAffection:{"九条":+1}}]
+  };
+  
+  SCENES["K4"] = {
+    name:"",
+    bg:"public_hall", music:"tender", sprite:[
+      {char:"mio", pose:"neutral", pos:"left"},
+      {char:"kujyou", pose:"neutral", pos:"right"}
+    ],
+    text:"辿り着いたのは閉鎖中の公民館。非常灯だけが薄く床を照らす。九条は備品室から毛布を出し、机の端に並べた。「触れ方について、先に伝えておきます」彼は手袋を少し持ち上げる。「私が素手であなたに触れると、あなたの記憶へ侵入する可能性がある」",
+    choices:[
+      {label:"「それでもいい」手を差し出す", next:"K4_touch"},
+      {label:"「今は距離を置こう」告げる", next:"K4_distance"},
+      {label:"「安全なテスト方法は？」と相談する", next:"K4_test"}
+    ]
+  };
+  
+  SCENES["K4_touch"] = {
+    name:"",
+    bg:"public_hall_dim", music:"tender", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"kujyou", pose:"serious", pos:"right"}
+    ],
+    se:"breath",
+    text:"毛布の上で向き合う。私が手を差し出すと、九条は長い沈黙ののち、手袋を外した。白い指先が震えている。「——儀式です。過去を赦すための」(赦すのは、私？それとも彼自身？)",
+    choices:[{label:"指先を重ねる", next:"K5a_prelude"}]
+  };
+  SCENES["K4_distance"] = {
+    name:"",
+    bg:"public_hall", music:"truth", sprite:[
+      {char:"mio", pose:"neutral", pos:"left"},
+      {char:"kujyou", pose:"serious", pos:"right"}
+    ],
+    text:"「今は距離を置こう」そう告げると、九条はわずかに目尻を緩めた。「分別ある判断です」彼は封筒を差し出す。「局の不正に関する記録。もしあなたが望むなら——終わらせられる」",
+    choices:[{label:"封筒を受け取り、決意を固める", next:"K5b_prelude"}]
+  };
+  SCENES["K4_test"] = {
+    name:"",
+    bg:"public_hall", music:"suspense", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"kujyou", pose:"serious", pos:"right"}
+    ],
+    text:"「安全なテスト方法は？」九条はハンカチを取り出し、手のひらに二重に重ねた。「布越しに、三秒だけ。無理ならすぐ離れてください」(こわい。でも知りたい)",
+    choices:[
+      {label:"テストを実行する", next:"K5c_trigger"},
+      {label:"やはりやめる", next:"K4_distance"}
+    ]
+  };
+  
+  SCENES["K5a_prelude"] = {
+    name:"",
+    bg:"public_hall_dim", music:"warmth", sprite:[
+      {char:"mio", pose:"smile", pos:"left"},
+      {char:"kujyou", pose:"soft", pos:"right"}
+    ],
+    text:"素肌が触れ合った瞬間、微かな熱が往復する。遠い笑い声、濡れた廊下、誰かの靴音——断片が波のように押し寄せた。九条の睫毛が震える。「……あなたは、よく頑張りました」(涙が出そう)彼は私の手を包む力を、そっと強くした。",
+    choices:[
+      {label:"目を閉じて、その温度を受け入れる", next:"K6a", setFlags:{ED_Kujou_Love:true}},
+      {label:"恥ずかしくて手を離す", next:"K5a_hesitate"}
+    ]
+  };
+  SCENES["K5a_hesitate"] = {
+    name:"",
+    bg:"public_hall", music:"tender", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"kujyou", pose:"soft", pos:"right"}
+    ],
+    text:"指が離れた途端、音が遠のく。「すみません、急ぎすぎましたね」九条は手袋を戻さず、距離だけを戻した。「時間をかけてもいい」(それでも、もう分かってしまった。私はこの人のそばにいたい)",
+    choices:[{label:"意を決して、もう一度触れる", next:"K6a", setFlags:{ED_Kujou_Love:true}}]
+  };
+  
+  SCENES["K5b_prelude"] = {
+    name:"",
+    bg:"public_hall", music:"truth", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"kujyou", pose:"serious", pos:"right"}
+    ],
+    text:"封筒の中には、改竄ログと署名の写しが綴じられていた。ページの端に『M-0』のインデックス。(私の名前は、この書類の中で記号だった)九条は言う。「内部告発の窓口に出すなら、私が前に立つ」",
+    choices:[
+      {label:"正面から闘う（実名で告発）", next:"K6b", setFlags:{ED_Kujou_Truth:true}},
+      {label:"匿名で投函する", next:"K5b_anon"}
+    ]
+  };
+  SCENES["K5b_anon"] = {
+    name:"",
+    bg:"post_night", music:"melancholy", sprite:[
+      {char:"mio", pose:"think", pos:"center"}
+    ],
+    text:"夜のポストに封筒が吸い込まれる音は、思ったよりも軽い。「——ありがとう」九条の声は、ほとんど聞こえないほど小さかった。(終わりの始まり)　そして私たちは、別々の道順で同じ駅へ歩いた。",
+    choices:[{label:"それでも前を向くと決める", next:"K6b", setFlags:{ED_Kujou_Truth:true}}]
+  };
+  
+  SCENES["K5c_trigger"] = {
+    name:"",
+    bg:"public_hall_dim", music:"suspense", sprite:[
+      {char:"mio", pose:"shock", pos:"left"},
+      {char:"kujyou", pose:"serious", pos:"right"}
+    ],
+    se:"pulse",
+    text:"布越しの三秒。視界が反転し、過去と現在が互いの輪郭を侵食する。誰かの泣き声、手術灯の眩しさ、笑っているのに泣いている自分——九条の指先が強張った。「戻ってこい。……柊」",
+    choices:[
+      {label:"「九条、離れて！」と叫ぶ", next:"K5c_pullback"},
+      {label:"(このまま任せるしかない)と目を閉じる", next:"K6c", setFlags:{ED_Kujou_Collapse:true}}
+    ]
+  };
+  SCENES["K5c_pullback"] = {
+    name:"",
+    bg:"public_hall", music:"tender", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"kujyou", pose:"soft", pos:"right"}
+    ],
+    text:"互いに跳ね退く。布が床に落ち、重たい呼吸が部屋に残る。「——無理は、しないでください」九条は額に汗をにじませ、しかし微笑んだ。(危なかった。でも、彼は最後まで私を呼んでいた)",
+    choices:[
+      {label:"距離を選び、告発の準備に移る", next:"K5b_prelude"},
+      {label:"勇気を出して、もう一度だけ触れる", next:"K5a_prelude"}
+    ]
+  };
+  
+  /* ED */
+  SCENES["K6a"] = {
+    name:"",
+    bg:"public_hall_dim", music:"warmth", sprite:[
+      {char:"mio", pose:"smile", pos:"left"},
+      {char:"kujyou", pose:"soft", pos:"right"}
+    ],
+    text:"【恋愛ED：赦し】非常灯の薄い明かりの下、二人は練習するように何度も指を確かめた。触れるたび、過去のざらつきが細かく砕けていく。「これからも、あなたの現在を記録させてください」「……はい」(世界は急に優しくならない。でも、呼吸は確かに軽い)",
+    choices:[{label:"記録してタイトルへ", next:"ED_Collector", setFlags:{ED_Kujou_Love:true}}]
+  };
+  SCENES["K6b"] = {
+    name:"",
+    bg:"press", music:"truth", sprite:[
+      {char:"mio", pose:"neutral", pos:"left"},
+      {char:"kujyou", pose:"serious", pos:"right"}
+    ],
+    text:"【真実ED：終止報告】提出印の押された紙は、やけに薄く見えた。記者会見で九条は「個人より倫理を守る」と短く語る。私は客席から拍手をした。(私たちは同じ方向を見て歩く。でも並び方は選べる)帰り道、彼は遠慮がちに微笑む。「いつか、仕事抜きでコーヒーでも」「考えておきます」",
+    choices:[{label:"記録してタイトルへ", next:"ED_Collector", setFlags:{ED_Kujou_Truth:true}}]
+  };
+  SCENES["K6c"] = {
+    name:"",
+    bg:"public_hall_dark", music:"melancholy", sprite:[
+      {char:"mio", pose:"think", pos:"center"}
+    ],
+    text:"【崩壊ED：共鳴】境界は破れ、九条は私の“つぎ目”に沈んだ。朝、テーブルには黒い手袋だけが残る。触れると、微かな熱がまだ宿っている。(赦しは届いたのかもしれない。ただ、もう確かめる方法がない)窓の外で、昨日と同じ雨が降り始めた。",
+    choices:[{label:"記録してタイトルへ", next:"ED_Collector", setFlags:{ED_Kujou_Collapse:true}}]
+  };
+  
+  SCENES["A1"] = {
+    name:"",
+    bg:"cafe_day", music:"calm_day", sprite:[
+      {char:"mio", pose:"neutral", pos:"left"},
+      {char:"asakura", pose:"smile", pos:"right"}
+    ],
+    text:"放課後のカフェは曇天の明るさで満ちていた。窓ガラスの外を薄い雨が斜めに走る。朝倉 晃は、カップを指先で回しながらこちらを見上げる。「相変わらず目の下、赤いね。——眠れてない？」(からかう声色なのに、目だけが真面目だ)",
+    choices:[
+      {label:"「大丈夫。コーヒーで治る」軽口を返す", next:"A1_banter", setAffection:{"朝倉":+1}},
+      {label:"「実は、変な夢ばかり見るの」正直に話す", next:"A1_honest", setAffection:{"朝倉":+1}},
+      {label:"話題をそらして外を眺める", next:"A1_avoid"}
+    ]
+  };
+  
+  SCENES["A1_banter"] = {
+    name:"",
+    bg:"cafe_day", music:"calm_day", sprite:[
+      {char:"mio", pose:"smile", pos:"left"},
+      {char:"asakura", pose:"smile", pos:"right"}
+    ],
+    text:"「じゃあお代わりもらおうか。——二杯分の元気」軽口に合わせると、朝倉は笑い皺をつくった。「いいね。元気の相場、今日だけ割引」ミルの音が丸く響き、空気の粒が揃っていく。(この人の冗談は、音量がやさしい)",
+    choices:[{label:"冗談の流れで、夢の話を少し漏らす", next:"A2_hook"}]
+  };
+  SCENES["A1_honest"] = {
+    name:"",
+    bg:"cafe_day", music:"calm_day", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"asakura", pose:"serious", pos:"right"}
+    ],
+    text:"「……雨のにおいがして、冷たいコンクリートの床に寝てるの。誰かの笑い声が、遠くで」言い切ると、朝倉は視線を落とし、指でテーブルの木目をなぞった。「そっか」それ以上は追わず、代わりに砂糖を一個、私のほうへ滑らせる。(聞き出さない、って優しさもある)",
+    choices:[{label:"少し気が緩んだ。もう少しだけ話す", next:"A2_hook"}]
+  };
+  SCENES["A1_avoid"] = {
+    name:"",
+    bg:"cafe_day", music:"calm_day", sprite:[
+      {char:"mio", pose:"neutral", pos:"left"},
+      {char:"asakura", pose:"smile", pos:"right"}
+    ],
+    text:"窓の外で、傘の骨が光った。話題を変えて天気のことを言うと、朝倉は笑って肩をすくめる。「天気はいつだって正直」(私が正直じゃないこと、気づいてる？)「ねえ、図書室寄らない？写真、見せたいのがある」",
+    choices:[{label:"図書室へ向かう", next:"A2_library"}]
+  };
+  
+  SCENES["A2_hook"] = {
+    name:"",
+    bg:"cafe_day", music:"calm_day", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"asakura", pose:"serious", pos:"right"}
+    ],
+    text:"朝倉は声量を落とした。「言いにくいこと、無理に言わなくていいよ。——代わりに、俺がひとつ言う」彼は自分の胸を軽く叩く。「俺、嘘が光って見えるんだ」(嘘が……光る？)カップの縁で小さな音が鳴った。",
+    choices:[
+      {label:"「そんなこと、あるの？」と笑う", next:"A2_deny"},
+      {label:"「私の今の言葉は……？」と試す", next:"A2_test", setFlags:{testedByAsakura:true}},
+      {label:"「信じる。たぶん、そういう世界だと思う」", next:"A2_believe", setAffection:{"朝倉":+1}}
+    ]
+  };
+  
+  SCENES["A2_deny"] = {
+    name:"",
+    bg:"cafe_day", music:"calm_day", sprite:[
+      {char:"mio", pose:"neutral", pos:"left"},
+      {char:"asakura", pose:"smile", pos:"right"}
+    ],
+    text:"「あるよ。残酷なくらいね」彼は冗談みたいに言って、冗談みたいに笑わなかった。「だから俺、守るための嘘は肯定派」(守るための嘘)窓辺の光が、彼の横顔の輪郭を溶かす。",
+    choices:[{label:"図書室で続きを聞く", next:"A2_library"}]
+  };
+  SCENES["A2_test"] = {
+    name:"",
+    bg:"cafe_day", music:"calm_day", sprite:[
+      {char:"mio", pose:"speak", pos:"left"},
+      {char:"asakura", pose:"serious", pos:"right"}
+    ],
+    text:"「私の今の言葉は……？」試すように尋ねると、朝倉は少しだけ目を細める。「“強がり”が淡く光ってる」(見透かされるのは怖い。けど、嫌じゃない)「でもね、君が嘘をつくとき、光は弱い。誰かを守るときの嘘だって、分かる」",
+    choices:[{label:"図書室へ移動する", next:"A2_library"}]
+  };
+  SCENES["A2_believe"] = {
+    name:"",
+    bg:"cafe_day", music:"warmth", sprite:[
+      {char:"mio", pose:"smile", pos:"left"},
+      {char:"asakura", pose:"smile", pos:"right"}
+    ],
+    text:"「ありがとう。信じてくれるの、楽になる」肩の力を落として笑うその顔は、いつもより少し幼い。「じゃあ、証拠を見せる」",
+    choices:[{label:"図書室へ移動する", next:"A2_library"}]
+  };
+  
+  SCENES["A2_library"] = {
+    name:"",
+    bg:"library", music:"calm_day", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"asakura", pose:"serious", pos:"right"}
+    ],
+    text:"放課後の図書室。朝倉は手を洗ってから丁寧にアルバムを開いた。「見て。これ、君の学年」集合写真の右下が、器用に切り取られている。(右下……誰かの顔だけ、抜けている)",
+    choices:[
+      {label:"「どうして、ここだけ？」と訊く", next:"A2_photowhy"},
+      {label:"切れ目の断面を指で確かめる", next:"A2_phototouch"},
+      {label:"胸騒ぎがしてページを閉じる", next:"A3_exit"}
+    ]
+  };
+  
+  SCENES["A2_photowhy"] = {
+    name:"",
+    bg:"library", music:"truth", sprite:[
+      {char:"mio", pose:"shock", pos:"left"},
+      {char:"asakura", pose:"serious", pos:"right"}
+    ],
+    text:"「この空白、光るんだ。——嘘の色で」朝倉は静かに言った。「元の世界ではここに“誰か”がいた。でも、上書きされた記録はそれを飲み込んでる」(誰……？)喉が乾く音が、やけに大きい。",
+    choices:[{label:"写真を持ち帰り、調べることを提案", next:"A3_invest", addFragment:"欠片A_学級写真(右下欠け)"}]
+  };
+  SCENES["A2_phototouch"] = {
+    name:"",
+    bg:"library", music:"calm_day", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"asakura", pose:"serious", pos:"right"}
+    ],
+    text:"断面は新しくも古くもない。時間の匂いが混ざって、判別できない。朝倉は言葉を選ぶ。「君が見てる夢、多分この空白と繋がってる。無理はしてほしくないけど」(逃げ続けたら、空白の方から追ってくる気がする)",
+    choices:[{label:"写真を借りて持ち帰る", next:"A3_invest", addFragment:"欠片A_学級写真(右下欠け)"}]
+  };
+  
+  SCENES["A3_exit"] = {
+    name:"",
+    bg:"library", music:"melancholy", sprite:[
+      {char:"mio", pose:"neutral", pos:"left"},
+      {char:"asakura", pose:"soft", pos:"right"}
+    ],
+    text:"ページを閉じると、埃の匂いが舞い上がった。足元が少しだけふらつく。朝倉はすかさず距離を詰め、転ばないように背を支える。「大丈夫？」(支え方が、うまい。甘やかしじゃなく、必要な量だけ)",
+    choices:[{label:"「平気」笑って見せる", next:"A3_invest"}]
+  };
+  
+  SCENES["A3_invest"] = {
+    name:"",
+    bg:"arcade_rain", music:"rain_walk", sprite:[
+      {char:"mio", pose:"neutral", pos:"left"},
+      {char:"asakura", pose:"smile", pos:"right"}
+    ],
+    text:"帰り道。アーケードの看板が、薄い雨の糸を青く染める。朝倉は歩幅を合わせながら言う。「俺、君の嘘が嫌いじゃないよ。嘘って盾だから」(盾)「ただ——俺は、自分の盾も外せない。そういうときは言って。『本音を見せて』って」",
+    choices:[
+      {label:"「今、本音が見たい」", next:"A3_truthnow", setFlags:{askTruthNow:true}},
+      {label:"「今日は盾ごとでいい」", next:"A3_maskok"},
+      {label:"「本音は、怖い。でも逃げない」", next:"A3_brave", setAffection:{"朝倉":+1}}
+    ]
+  };
+  
+  SCENES["A3_truthnow"] = {
+    name:"",
+    bg:"arcade_rain", music:"warmth", sprite:[
+      {char:"mio", pose:"shock", pos:"left"},
+      {char:"asakura", pose:"serious", pos:"right"}
+    ],
+    text:"立ち止まると、風の粒だけが先に歩いていく。朝倉は息を吸い直し、真正面から見た。「俺は君が好き。守るための嘘ごと」(言葉が、簡単だ)「でも君が苦しいなら、友達でいい。どっちでも君を守る」",
+    choices:[{label:"言葉の重さを受け止める", next:"A4"}]
+  };
+  SCENES["A3_maskok"] = {
+    name:"",
+    bg:"arcade_rain", music:"calm_day", sprite:[
+      {char:"mio", pose:"smile", pos:"left"},
+      {char:"asakura", pose:"smile", pos:"right"}
+    ],
+    text:"「了解。盾ごと守る」軽い返事に笑った顔は、でも冗談になっていない。「じゃあ今日は、君の疲れを減らすための嘘だけ使う」(そんなモードがあるの……器用だな)",
+    choices:[{label:"肩の力が抜けたまま歩く", next:"A4"}]
+  };
+  SCENES["A3_brave"] = {
+    name:"",
+    bg:"arcade_rain", music:"melancholy", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"asakura", pose:"serious", pos:"right"}
+    ],
+    text:"「逃げないって、いちばん勇気いるよね」朝倉は前を見たまま言った。「俺も怖い。光るものを見てると、ときどき全部が嘘に見えるから」(それでも、隣で歩いてくれる)",
+    choices:[{label:"並んでアーケードを抜ける", next:"A4"}]
+  };
+  
+  SCENES["A4"] = {
+    name:"",
+    bg:"photo_shop_closed", music:"calm_day", sprite:[
+      {char:"mio", pose:"neutral", pos:"left"},
+      {char:"asakura", pose:"think", pos:"right"}
+    ],
+    text:"夜。商店街の端にある古い写真屋のシャッターは半分降りたまま。風鈴だけが働いている。「ここ、明日なら開いてる。ネガの保管を聞けるかも」朝倉はスマホで営業時間を見せた。画面の光が顔の輪郭を薄くする。",
+    choices:[
+      {label:"「明日、一緒に来て」", next:"A4_together", setAffection:{"朝倉":+1}},
+      {label:"「一人で行ってみる」", next:"A4_alone"},
+      {label:"「今日はもう無理。休みたい」", next:"A4_rest", setFlags:{needRest:true}}
+    ]
+  };
+  
+  SCENES["A4_together"] = {
+    name:"",
+    bg:"photo_shop_closed", music:"warmth", sprite:[
+      {char:"mio", pose:"smile", pos:"left"},
+      {char:"asakura", pose:"smile", pos:"right"}
+    ],
+    text:"「もちろん」即答の速さは、安心と同じ速度だった。「君が望む距離で歩くよ」(距離を、私に選ばせてくれる)",
+    choices:[{label:"翌日、写真屋へ", next:"A5_shop"}]
+  };
+  SCENES["A4_alone"] = {
+    name:"",
+    bg:"photo_shop_closed", music:"calm_day", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"asakura", pose:"smile", pos:"right"}
+    ],
+    text:"「分かった。終わったら連絡して」彼は無理に同行を申し出ない。「君が自分で届く強さ、俺は信じてる」(この言い方、ずるい。頑張れるに決まってる)",
+    choices:[{label:"翌日、写真屋へ", next:"A5_shop"}]
+  };
+  SCENES["A4_rest"] = {
+    name:"",
+    bg:"photo_shop_closed", music:"melancholy", sprite:[
+      {char:"mio", pose:"neutral", pos:"left"},
+      {char:"asakura", pose:"soft", pos:"right"}
+    ],
+    text:"「じゃあ、今日は撤退。撤退は立派な戦術」彼は笑って、駅までの最短ルートを示す。「帰ったら、温かい飲み物」(指示が具体的で、助かる)",
+    choices:[{label:"翌日、写真屋へ", next:"A5_shop"}]
+  };
+  
+  SCENES["A5_shop"] = {
+    name:"",
+    bg:"photo_shop", music:"calm_day", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"asakura", pose:"serious", pos:"right"}
+    ],
+    text:"写真屋のガラスには古いフィルムの箱が山のように飾られていた。店主は事情を聞くと、奥の棚から埃を払って紙箱を出す。「学級写真ならネガがあるよ」緊張で喉が鳴る。朝倉が後ろでそっと息を合わせる。「開けてみよう」",
+    choices:[
+      {label:"ネガを光にかざす", next:"A5_negs"},
+      {label:"店主にスキャンを頼む", next:"A5_scan"},
+      {label:"胸騒ぎがして、やめる", next:"A5_abort"}
+    ]
+  };
+  
+  SCENES["A5_negs"] = {
+    name:"",
+    bg:"photo_shop", music:"truth", sprite:[
+      {char:"mio", pose:"shock", pos:"left"},
+      {char:"asakura", pose:"serious", pos:"right"}
+    ],
+    text:"逆さの世界に、右下の輪郭が“いる”。誰かの肩、笑い皺、ペンのキャップ。(やっぱり、ここに誰かいた)朝倉は小さく息を飲む。「光ってる。——嘘の上に、ほんとの像が」",
+    choices:[{label:"像の正体を確かめる決意をする", next:"A5_bridge"}]
+  };
+  SCENES["A5_scan"] = {
+    name:"",
+    bg:"photo_shop", music:"truth", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"asakura", pose:"serious", pos:"right"}
+    ],
+    text:"スキャナの光がゆっくり走る。プリントされた写真には、右下の人物だけ薄く滲んで写った。店主が目を丸くする。「機械の癖かな」(癖じゃない。世界の継ぎ目だ)",
+    choices:[{label:"像の正体を確かめる決意をする", next:"A5_bridge"}]
+  };
+  SCENES["A5_abort"] = {
+    name:"",
+    bg:"photo_shop", music:"melancholy", sprite:[
+      {char:"mio", pose:"neutral", pos:"left"},
+      {char:"asakura", pose:"soft", pos:"right"}
+    ],
+    text:"店を出る。風鈴が小さく鳴って、すぐ黙る。朝倉は追いかけも説得もしない。ただ横に立った。「無理しない選択、俺は好きだよ」(でも、私はここで止まれない)",
+    choices:[{label:"やっぱり確かめに戻る", next:"A5_shop"}]
+  };
+  
+  SCENES["A5_bridge"] = {
+    name:"",
+    bg:"arcade_evening", music:"calm_day", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"asakura", pose:"serious", pos:"right"}
+    ],
+    text:"アーケードの端で立ち止まる。夕方のライトが、道路に細い橋をかけたみたいに連なる。「ここから先は、選ぶことになる」朝倉はまっすぐ言う。「嘘を受け入れて守るか、本音を求めて痛むか」(どちらも、私の選択だ)",
+    choices:[
+      {label:"嘘を受け入れる（恋愛ED導線）", next:"A6a"},
+      {label:"本音を求める（友情ED導線）", next:"A6b"},
+      {label:"「君の嘘も、見たい」と踏み込む", next:"A5_seehis", setFlags:{seeHisMask:true}}
+    ]
+  };
+  
+  SCENES["A5_seehis"] = {
+    name:"",
+    bg:"arcade_evening", music:"warmth", sprite:[
+      {char:"mio", pose:"neutral", pos:"left"},
+      {char:"asakura", pose:"serious", pos:"right"}
+    ],
+    text:"「俺の？」朝倉は少し黙って、うなずく。「俺はね——“大丈夫”って言葉を使いすぎる。光らせないための癖」(守るための嘘)「でも今日は控える。君が選ぶ瞬間を、照らさないために」",
+    choices:[
+      {label:"嘘を受け入れる（恋愛ED導線）", next:"A6a", setAffection:{"朝倉":+1}},
+      {label:"本音を求める（友情ED導線）", next:"A6b"}
+    ]
+  };
+  
+  /* ED */
+  SCENES["A6a"] = {
+    name:"",
+    bg:"cafe_night", music:"warmth", sprite:[
+      {char:"mio", pose:"smile", pos:"left"},
+      {char:"asakura", pose:"smile", pos:"right"}
+    ],
+    text:"【恋愛ED：守るための嘘】夜更けのカフェ。二人で同じ嘘を共有する練習を始めた。「今日は大丈夫、の意味は“今は息ができる”で統一」彼が笑う。「了解。じゃあ、合言葉」テーブルの下で指先が触れ、そっと離れる。(世界は急に優しくならない。でも二人なら、温度の配分を学べる)",
+    choices:[{label:"EDを記録してタイトルへ", next:"ED_Collector", setFlags:{ED_Asakura_Love:true}}]
+  };
+  SCENES["A6b"] = {
+    name:"",
+    bg:"arcade_night", music:"melancholy", sprite:[
+      {char:"mio", pose:"smile", pos:"left"},
+      {char:"asakura", pose:"serious", pos:"right"}
+    ],
+    text:"【友情ED：素顔の交換】アーケードの灯りが一つずつ消える頃、私たちは互いの“盾”を机に置いた。「君の『平気』は、頑張る合図だったんだね」「あなたの『大丈夫』は、引き返してほしいサイン」——笑って、覚える。(恋に急がず、でも誰より深く) 私たちは、これからの嘘と本音を二人で管理していく。",
+    choices:[{label:"EDを記録してタイトルへ", next:"ED_Collector", setFlags:{ED_Asakura_Friend:true}}]
+  };
+  
+  /* ───────── 湊ルート：詳細＋演出 ───────── */
+  
+  SCENES["M1"] = {
+    name:"",
+    bg:"alley_back", music:"melancholy", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"minato", pose:"hurt", pos:"right"}
+    ],
+    text:"路地裏で肩を庇う彼の手は、血の匂いと洗剤の匂いが混じっていた。「見んな。平気」(平気じゃない) 雨水が軒先から落ち、濡れた段ボールを叩く。彼はダンボールを足で押しやり、視線だけこちらに寄越した。",
+    choices:[
+      {label:"「止血させて」袖を裂いて手当てする", next:"M1_help", setAffection:{"湊":+1}},
+      {label:"「救急箱はどこ？」店に入れてもらう", next:"M1_inside"},
+      {label:"(怖い) いったん離れて様子を見る", next:"M1_leave", setFlags:{keptDistance:true}}
+    ]
+  };
+  
+  SCENES["M1_help"] = {
+    name:"",
+    bg:"alley_back", music:"melancholy", sprite:[
+      {char:"mio", pose:"speak", pos:"left"},
+      {char:"minato", pose:"hurt", pos:"right"}
+    ],
+    text:"「動かないで」ハンカチで圧迫すると、湊は小さく舌打ちした。「手ぇ慣れてんな」「こう見えて家庭科は得意」(震える手を悟られたくない) 彼は観念したように力を抜いた。",
+    choices:[{label:"店の中へ案内してもらう", next:"M2_kitchen"}]
+  };
+  
+  SCENES["M1_inside"] = {
+    name:"",
+    bg:"ramen_kitchen", music:"calm_day", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"minato", pose:"serious", pos:"right"}
+    ],
+    text:"暖簾の奥、油と出汁の香りが濃い小さな厨房。「そこ、救急箱」湊は顎で示す。ステンレス台に血が一滴落ち、すぐ拭き取られた。(生活の匂い。生きてる匂い)",
+    choices:[{label:"消毒と包帯をする", next:"M2_kitchen", setAffection:{"湊":+1}}]
+  };
+  
+  SCENES["M1_leave"] = {
+    name:"",
+    bg:"street_rain", music:"rain_walk", sprite:[
+      {char:"mio", pose:"think", pos:"center"}
+    ],
+    text:"(怖い。けど見捨てられない) 雨音を挟んで数歩離れると、湊が自分で立ち上がるのが見えた。「……店、来んの？」背中越しの声は強がって、少しだけ弱かった。",
+    choices:[{label:"意を決して店へ入る", next:"M2_kitchen"}]
+  };
+  
+  /* 2章：台所の湯気と本音 */
+  SCENES["M2_kitchen"] = {
+    name:"",
+    bg:"ramen_kitchen", music:"calm_day", sprite:[
+      {char:"mio", pose:"smile", pos:"left"},
+      {char:"minato", pose:"neutral", pos:"right"}
+    ],
+    text:"散らかった台所で、私は勝手に味噌汁を作った。「勝手にすんな」ぶっきらぼうに言いながら、湊はお椀を受け取る。一口啜って目を伏せた。「……うめぇじゃん」「当然」(湯気の向こう、やっと笑った)",
+    choices:[
+      {label:"傷の理由を訊く", next:"M2_reason"},
+      {label:"店のことを手伝うと申し出る", next:"M2_offer", setAffection:{"湊":+1}},
+      {label:"自分の“夢”の話を少しだけする", next:"M2_dream"}
+    ]
+  };
+  
+  SCENES["M2_reason"] = {
+    name:"",
+    bg:"ramen_kitchen", music:"melancholy", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"minato", pose:"serious", pos:"right"}
+    ],
+    text:"「借金取り。親父の置き土産。……でも、オレは逃げねえ」拳が震えるのは怒りか痛みか。「ここ、オレの場所だから」(居場所という言葉が、胸に刺さる)",
+    choices:[{label:"黙って横に立つ", next:"M3_front"}]
+  };
+  
+  SCENES["M2_offer"] = {
+    name:"",
+    bg:"ramen_kitchen", music:"calm_day", sprite:[
+      {char:"mio", pose:"speak", pos:"left"},
+      {char:"minato", pose:"neutral", pos:"right"}
+    ],
+    text:"「皿洗いならできる」「……仕込みも」冗談めかして言うと、湊は鼻で笑った。「人使い荒いけど、逃げんなよ」「そっちこそ」(言葉の角が、少し丸くなる)",
+    choices:[{label:"店先に戻る", next:"M3_front"}]
+  };
+  
+  SCENES["M2_dream"] = {
+    name:"",
+    bg:"ramen_kitchen", music:"melancholy", sprite:[
+      {char:"mio", pose:"speak", pos:"left"},
+      {char:"minato", pose:"neutral", pos:"right"}
+    ],
+    text:"「最近、雨とコンクリの匂いの夢ばかり見る」私が言うと、湊は鍋の蓋をずらして火加減を落とした。「匂いの夢は、記憶が近ぇってばあちゃん言ってた」(近い記憶……どこの？)",
+    choices:[{label:"店先に戻る", next:"M3_front"}]
+  };
+  
+  /* 3章：店先の圧力 */
+  SCENES["M3_front"] = {
+    name:"",
+    bg:"ramen_front", music:"suspense", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"minato", pose:"serious", pos:"right"}
+    ],
+    text:"引き戸の外に黒い影が二つ。ドアが重く鳴り、鈴が乱暴に転がる。「神原くーん、返事くらいしようぜ」湊は私を背に庇い、前に出た。「客いる。今日は帰れ」",
+    choices:[
+      {label:"湊の隣に立つ（逃げない）", next:"M3_stand", setAffection:{"湊":+1}},
+      {label:"支援窓口に電話する（大人の助け）", next:"M3_call", setFlags:{calledSupport:true}},
+      {label:"人目のある場所へ誘導する", next:"M3_move"}
+    ]
+  };
+  
+  SCENES["M3_stand"] = {
+    name:"",
+    bg:"ramen_front", music:"run", sprite:[
+      {char:"mio", pose:"shock", pos:"left"},
+      {char:"minato", pose:"angry", pos:"right"}
+    ],
+    se:"whoosh",
+    text:"私は湊と肩を並べた。「ここは彼の場所。脅すなら警察に言う」言い終える前に、男の一人が舌打ちをして後ずさる。「チッ、今日はツイてねえ」引き戸が乱暴に閉まり、鈴が長く鳴った。",
+    choices:[{label:"大きく息を吐く", next:"M4_calm"}]
+  };
+  
+  SCENES["M3_call"] = {
+    name:"",
+    bg:"ramen_front", music:"truth", sprite:[
+      {char:"mio", pose:"speak", pos:"left"},
+      {char:"minato", pose:"serious", pos:"right"}
+    ],
+    text:"スマホの向こうで耐えた声。「地域支援センターです。安全な場所に移動できますか」湊は一瞬だけ迷い、うなずいた。「……分かった。行く」(助けは恥じゃない)",
+    choices:[{label:"案内された場所へ向かう", next:"M4_support"}]
+  };
+  
+  SCENES["M3_move"] = {
+    name:"",
+    bg:"street_rain", music:"rain_walk", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"minato", pose:"serious", pos:"right"}
+    ],
+    text:"商店街のアーチの下、人通りに紛れて立つ。男たちは距離を置き、やがて退いた。湊は肩の力を抜き、こちらを見た。「……サンキュ」(怖かった。でも逃げなかった)",
+    choices:[{label:"小さく頷く", next:"M4_calm"}]
+  };
+  
+  /* 4章：余韻と導線（旧プール側棟へ） */
+  SCENES["M4_calm"] = {
+    name:"",
+    bg:"street_twilight", music:"calm_day", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"minato", pose:"soft", pos:"right"}
+    ],
+    text:"黄昏の風が油の匂いを薄める。「なぁ、ちょっと寄り道していいか」湊はポケットから古びた札を出す。市章の消えかけた回収券。「昔、配達で行ってた廃施設。……気になってた場所がある」(胸の奥がざわめいた。雨、コンクリ、笑い声)",
+    choices:[
+      {label:"一緒に行く", next:"M4_toRuins", setAffection:{"湊":+1}},
+      {label:"明日にしてもらう", next:"M4_tomorrow"}
+    ]
+  };
+  
+  SCENES["M4_support"] = {
+    name:"",
+    bg:"support_center", music:"truth", sprite:[
+      {char:"mio", pose:"neutral", pos:"left"},
+      {char:"minato", pose:"serious", pos:"right"}
+    ],
+    text:"蛍光灯の白い部屋。書類の山と温かいお茶。「連帯保証の外し方、債務整理の選択肢……」担当者の説明は現実的で、救いがあった。湊は黙って頷き、最後に小さく言う。「助けは、恥じゃないな」",
+    choices:[{label:"帰り道、湊の提案を聞く", next:"M4_calm"}]
+  };
+  
+  SCENES["M4_tomorrow"] = {
+    name:"",
+    bg:"street_twilight", music:"melancholy", sprite:[
+      {char:"mio", pose:"neutral", pos:"left"},
+      {char:"minato", pose:"soft", pos:"right"}
+    ],
+    text:"「明日な。逃げねぇ」湊は指切りみたいに小指を立て、照れて引っ込めた。(その仕草、反則) 約束は、明日の支えになる。",
+    choices:[{label:"翌日、現地へ向かう", next:"M4_toRuins"}]
+  };
+  
+  SCENES["M4_toRuins"] = {
+    name:"",
+    bg:"pool_ruins", music:"suspense", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"minato", pose:"serious", pos:"right"}
+    ],
+    text:"錆びたフェンス、傾いた看板。白いペンキで消された文字の下に、薄く残る。「——市立第一中 プール側棟」(ここだ。夢の匂いと同じ) 風が草むらを撫で、氷のような湿気が肌に触れる。",
+    choices:[
+      {label:"フェンスの穴から中へ", next:"M5_corridor"},
+      {label:"危険を感じて周囲を観察", next:"M5_observe"}
+    ]
+  };
+  
+  SCENES["M5_observe"] = {
+    name:"",
+    bg:"pool_ruins", music:"suspense", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"minato", pose:"neutral", pos:"right"}
+    ],
+    text:"ガラス片、濡れた落書き、外された南京錠。湊はしゃがんで何かを拾い上げた。「……鍵？」茶色く錆びた、小さなマスターキー。(手のひらに乗せると、心臓の拍でわずかに揺れた気がした)",
+    choices:[{label:"鍵を受け取る", next:"M5_getkey", addFragment:"欠片M_錆びたマスターキー"}]
+  };
+  
+  SCENES["M5_corridor"] = {
+    name:"",
+    bg:"pool_corridor_dark", music:"melancholy", sprite:[
+      {char:"mio", pose:"shock", pos:"left"},
+      {char:"minato", pose:"serious", pos:"right"}
+    ],
+    text:"暗い渡り廊下。天井から雫が等間隔で落ちる音が、鼓動を模倣する。(ここ、知ってる) 湊が壁際の箱を開ける。「あ」中には錆びた鍵の束。ひとつが妙に手に馴染む。",
+    choices:[{label:"その鍵を手に取る", next:"M5_getkey", addFragment:"欠片M_錆びたマスターキー"}]
+  };
+  
+  SCENES["M5_getkey"] = {
+    name:"",
+    bg:"pool_corridor_dark", music:"truth", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"minato", pose:"soft", pos:"right"}
+    ],
+    text:"指に冷たさがしみ、過去の風景が一瞬だけ色を持った。笑い声、濡れた床、誰かの影。(“右下の人”は、ここを見ていたのかもしれない) 湊は静かに言う。「なぁ、帰ろう。……無茶すんな」",
+    choices:[{label:"うなずいて外へ出る", next:"M5_bridge"}]
+  };
+  
+  /* 5章：選択（恋愛／救済） */
+  SCENES["M5_bridge"] = {
+    name:"",
+    bg:"river_overpass_night", music:"calm_day", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"minato", pose:"serious", pos:"right"}
+    ],
+    text:"高架下の川風が生臭い。橋の照明が波に線を描く。「これから、どうする」湊は真正面から聞く。「オレは逃げねえ。でも一人でもない」(選ぶ。彼と生きる形を)",
+    choices:[
+      {label:"彼の隣で働き、支え合う（恋愛ED導線）", next:"M6a", setFlags:{ED_Minato_Love:true}},
+      {label:"制度と人の助けを借りる（救済ED導線）", next:"M6b", setFlags:{ED_Minato_Save:true}},
+      {label:"もう少しだけ時間がほしい", next:"M5_delay"}
+    ]
+  };
+  
+  SCENES["M5_delay"] = {
+    name:"",
+    bg:"river_overpass_night", music:"melancholy", sprite:[
+      {char:"mio", pose:"neutral", pos:"left"},
+      {char:"minato", pose:"soft", pos:"right"}
+    ],
+    text:"「待つのは得意」湊はポケットに手を入れ、空を見た。「でも、君が一人で抱え込むのは反対」(分かってる。だから——決める)",
+    choices:[
+      {label:"やっぱり彼の隣で生きる", next:"M6a", setFlags:{ED_Minato_Love:true}},
+      {label:"支援を選ぶ", next:"M6b", setFlags:{ED_Minato_Save:true}}
+    ]
+  };
+  
+  /* 6章：ED */
+  SCENES["M6a"] = {
+    name:"",
+    bg:"shop_morning", music:"warmth", sprite:[
+      {char:"mio", pose:"smile", pos:"left"},
+      {char:"minato", pose:"smile", pos:"right"}
+    ],
+    text:"【恋愛ED】二人で働き、二人で笑い、二人で眠る未来の話をした。朝、湯気の向こうで湊が照れくさそうに言う。「いってらっしゃい。帰り、合図くれ」指先が触れて離れる。(小さな生活は、誇りだ) テーブルの端には錆びた鍵が置かれている——いつか扉を開けるために。",
+    choices:[{label:"EDを記録してタイトルへ", next:"ED_Collector", setFlags:{ED_Minato_Love:true}}]
+  };
+  
+  SCENES["M6b"] = {
+    name:"",
+    bg:"support_center", music:"truth", sprite:[
+      {char:"mio", pose:"smile", pos:"left"},
+      {char:"minato", pose:"serious", pos:"right"}
+    ],
+    text:"【救済ED】窓口の書類に一枚ずつ印が押され、重しが外れていく音がした。「助けは恥じゃない」湊はもう一度、今度は自分に言い聞かせるように呟く。恋は淡い、でも確かな灯り。鍵は封筒にしまった。——必要なとき、正しい扉を開けるために。",
+    choices:[{label:"EDを記録してタイトルへ", next:"ED_Collector", setFlags:{ED_Minato_Save:true}}]
+  };
+  
+  /* ───────── 藤堂ルート：詳細＋演出 ───────── */
+  
+  SCENES["R1"] = {
+    name:"",
+    bg:"research_lab_day", music:"calm_day", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"todo", pose:"labcoat", pos:"right"}
+    ],
+    se:"chime",
+    text:"白い壁、低い送風音、モニタの待機画面。藤堂 理久は白衣の袖を丁寧に折り、視線だけで合図した。「境界を確かめましょう。怖くなったら、いつでも止める」(“止める”って言われると、逆に進める気がする)",
+    choices:[
+      {label:"「お願いします」正面から頷く", next:"R1_ok", setAffection:{"藤堂":+1}},
+      {label:"「条件を決めてから」距離を取る", next:"R1_terms"},
+      {label:"「今日は見学だけ」控えめに告げる", next:"R1_observe"}
+    ]
+  };
+  
+  SCENES["R1_ok"] = {
+    name:"",
+    bg:"research_lab_day", music:"calm_day", sprite:[
+      {char:"mio", pose:"speak", pos:"left"},
+      {char:"todo", pose:"soft", pos:"right"}
+    ],
+    text:"「ありがとう」藤堂は無表情に近い微笑をした。心拍計のコードが手首に触れ、冷たさが少しずつ皮膚に馴染む。「語彙は“今感じたまま”で」",
+    choices:[{label:"深呼吸して機材に身を預ける", next:"R2"}]
+  };
+  
+  SCENES["R1_terms"] = {
+    name:"",
+    bg:"research_lab_day", music:"truth", sprite:[
+      {char:"mio", pose:"speak", pos:"left"},
+      {char:"todo", pose:"serious", pos:"right"}
+    ],
+    text:"「限界は私が決める」「了解。三つ合図を用意する。手を握る、目を閉じる、名前を呼ぶ——どれかで即停止」(決めたら、少し怖くなくなる)",
+    choices:[{label:"セッションを始める", next:"R2"}]
+  };
+  
+  SCENES["R1_observe"] = {
+    name:"",
+    bg:"research_lab_day", music:"melancholy", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"todo", pose:"labcoat", pos:"right"}
+    ],
+    text:"「観察からでも進展はある」淡々とした声。机上には“つぎ目”のスケッチ。線と線の縫い目が、紙の上に静かに揺れて見える。(目を逸らさないって、たぶん始めるより難しい)",
+    choices:[{label:"準備が整ったと告げる", next:"R2"}]
+  };
+  
+  /* 2章：静かな計測と質問 */
+  SCENES["R2"] = {
+    name:"",
+    bg:"lab_observation", music:"calm_day", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"todo", pose:"labcoat", pos:"right"}
+    ],
+    se:"beep",
+    text:"安全域のテストは静かに始まる。画面に緑の線が、呼吸のリズムを写し取る。「昨夜の夢を——三語で」",
+    choices:[
+      {label:"「水」「コンクリート」「笑い声」", next:"R2_words", setAffection:{"藤堂":+1}},
+      {label:"「匂い」「寒さ」「空白」", next:"R2_words"},
+      {label:"(言葉が出てこない)首を振る", next:"R2_hard", setFlags:{avoidant:true}}
+    ]
+  };
+  
+  SCENES["R2_words"] = {
+    name:"",
+    bg:"lab_observation", music:"calm_day", sprite:[
+      {char:"mio", pose:"speak", pos:"left"},
+      {char:"todo", pose:"serious", pos:"right"}
+    ],
+    text:"「よくできました」藤堂はメトロノームのように一定だ。「次。あなたが“安全”を感じる場所は？」",
+    choices:[
+      {label:"「図書室」", next:"R2_qa"},
+      {label:"「商店街の明かり」", next:"R2_qa"},
+      {label:"「——誰かの手」", next:"R2_qa", setFlags:{seekContact:true}}
+    ]
+  };
+  
+  SCENES["R2_hard"] = {
+    name:"",
+    bg:"lab_observation", music:"melancholy", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"todo", pose:"soft", pos:"right"}
+    ],
+    text:"沈黙に、彼はすぐ答えを重ねない。「沈黙もデータ」(否定されない沈黙は、救いだ) しばらくして彼は紙コップの水を差し出した。",
+    choices:[{label:"落ち着いて質問に戻る", next:"R2_qa"}]
+  };
+  
+  SCENES["R2_qa"] = {
+    name:"",
+    bg:"lab_observation", music:"truth", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"todo", pose:"serious", pos:"right"}
+    ],
+    text:"「仮説を一つ。あなたの夢は“縫合プロトコル”の副作用かもしれない」(縫合……縫い合わせる、という意味の) 「境界を一ミリずつ——押し広げる」",
+    choices:[
+      {label:"「目的は、私を助けるため？」と尋ねる", next:"R2_purpose"},
+      {label:"「あなたの過去に似た症例は？」と尋ねる", next:"R2_past"},
+      {label:"「一旦休憩して整理したい」", next:"R2_break"}
+    ]
+  };
+  
+  SCENES["R2_purpose"] = {
+    name:"",
+    bg:"lab_observation", music:"truth", sprite:[
+      {char:"mio", pose:"speak", pos:"left"},
+      {char:"todo", pose:"serious", pos:"right"}
+    ],
+    text:"「助けたい。だがそれは“私のため”ではない」彼は正面から言う。「記録は、人を守るためにある」(言い切る声は冷たいのに、救われる)",
+    choices:[{label:"実験を続ける", next:"R3"}]
+  };
+  
+  SCENES["R2_past"] = {
+    name:"",
+    bg:"lab_observation", music:"melancholy", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"todo", pose:"pained", pos:"right"}
+    ],
+    text:"「似た症例は、ある」言葉が短くなる。「成功も失敗も、記録に残る。——私の失敗も」(それ以上、彼は語らない。語らないことが事実の重さを示す)",
+    choices:[{label:"実験を続ける", next:"R3"}]
+  };
+  
+  SCENES["R2_break"] = {
+    name:"",
+    bg:"lab_break", music:"calm_day", sprite:[
+      {char:"mio", pose:"neutral", pos:"left"},
+      {char:"todo", pose:"soft", pos:"right"}
+    ],
+    text:"休憩室。紙コップのスープは薄い塩味。「無理をしないあなたを、私は評価する」(褒められてる？) 彼はふっと目線を逸らし、「戻ろう」とだけ言った。",
+    choices:[{label:"実験へ戻る", next:"R3"}]
+  };
+  
+  /* 3章：境界の腕試し */
+  SCENES["R3"] = {
+    name:"",
+    bg:"lab_observation", music:"suspense", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"todo", pose:"labcoat", pos:"right"}
+    ],
+    se:"beep",
+    text:"椅子の背に指を置くと、彼の手が空中で止まる。触れない距離で、温度だけがわずかに伝わる。「次は光刺激。強度は上げない」(鼓動が、画面で数値になる)",
+    choices:[
+      {label:"「大丈夫」続行を合図", next:"R3_go", setAffection:{"藤堂":+1}},
+      {label:"「待って」一呼吸置く", next:"R3_wait"},
+      {label:"「今日はここまで」打ち切る", next:"R3_stop"}
+    ]
+  };
+  
+  SCENES["R3_go"] = {
+    name:"",
+    bg:"lab_observation", music:"suspense", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"todo", pose:"serious", pos:"right"}
+    ],
+    text:"光が弱く脈打つ。遠くの笑い声の輪郭が、薄紙の裏から浮き上がる。藤堂の声だけが一定だ。「呼吸、二拍で吸って四拍で吐く」(言われると整う。不思議)",
+    choices:[{label:"次段階へ進む", next:"R4"}]
+  };
+  
+  SCENES["R3_wait"] = {
+    name:"",
+    bg:"lab_observation", music:"tender", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"todo", pose:"soft", pos:"right"}
+    ],
+    text:"彼は即座に停止ボタンへ指を置いたまま待つ。「待機も、前進」(止められるって分かってると、進める) うなずくと、彼はほんの少しだけ口角を上げた。",
+    choices:[{label:"次段階へ進む", next:"R4"}]
+  };
+  
+  SCENES["R3_stop"] = {
+    name:"",
+    bg:"research_lab_day", music:"melancholy", sprite:[
+      {char:"mio", pose:"neutral", pos:"left"},
+      {char:"todo", pose:"soft", pos:"right"}
+    ],
+    text:"「終了」機材の灯りが一つずつ眠る。彼はカルテを閉じて言う。「次回は環境から始めよう。あなたの選択に合わせて設計する」(“合わせる”という言葉が、救いになる)",
+    choices:[{label:"後日、再開する", next:"R4"}]
+  };
+  
+  /* 4章：踏み込むか、距離を置くか＋資料室で欠片 */
+  SCENES["R4"] = {
+    name:"",
+    bg:"lab_archive", music:"truth", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"todo", pose:"labcoat", pos:"right"}
+    ],
+    se:"paper",
+    text:"「境界を跨ぐ方法が二つある」藤堂は鍵束で資料室の扉を開けた。「A：短時間の同調、B：環境側の縫合記録の提示」棚には黒塗りのファイルが並ぶ。",
+    choices:[
+      {label:"Aを選ぶ（踏み込む）", next:"R4_sync"},
+      {label:"Bを選ぶ（距離を置く）", next:"R4_record"},
+      {label:"「黒塗りの理由は？」と尋ねる", next:"R4_black"}
+    ]
+  };
+  
+  SCENES["R4_black"] = {
+    name:"",
+    bg:"lab_archive", music:"melancholy", sprite:[
+      {char:"mio", pose:"speak", pos:"left"},
+      {char:"todo", pose:"serious", pos:"right"}
+    ],
+    text:"「倫理委の指示。——そして、私の判断」彼は一冊を引き抜く。「人は、真実で傷つくことがある」(でも、知らないままでいると、別の傷になる)",
+    choices:[
+      {label:"A：同調を選ぶ", next:"R4_sync"},
+      {label:"B：記録を選ぶ", next:"R4_record"}
+    ]
+  };
+  
+  SCENES["R4_sync"] = {
+    name:"",
+    bg:"lab_white", music:"suspense", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"todo", pose:"serious", pos:"right"}
+    ],
+    se:"pulse",
+    text:"白い部屋。椅子が向き合い、間に薄い幕のような光。「合図は覚えていますね」指と指が、幕越しに近づく。(こわい。でも、知りたい)",
+    choices:[
+      {label:"同調を開始", next:"R5a"},
+      {label:"やっぱり今回は見送る", next:"R4_record"}
+    ]
+  };
+  
+  SCENES["R4_record"] = {
+    name:"",
+    bg:"lab_archive", music:"truth", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"todo", pose:"labcoat", pos:"right"}
+    ],
+    text:"ファイルの背に『縫合プロトコル v0.9』。開くと、署名の列だけ黒い帯で塗り潰されていた。(黒い線が、かえって人の形をしている)",
+    choices:[
+      {label:"写しを受け取る（欠片入手）", next:"R4_getfrag", addFragment:"欠片R_縫合プロトコルv0.9（署名黒塗り）"},
+      {label:"さらに別の記録を請求する", next:"R4_more"}
+    ]
+  };
+  
+  SCENES["R4_getfrag"] = {
+    name:"",
+    bg:"lab_archive", music:"truth", sprite:[
+      {char:"mio", pose:"smile", pos:"left"},
+      {char:"todo", pose:"soft", pos:"right"}
+    ],
+    text:"薄い紙をファイルから外す音が小さく響く。「重すぎたら返して」(重い。でも持つ) 彼は私の手元を見て、頷いた。",
+    choices:[{label:"距離を保って前へ進む", next:"R5b"}]
+  };
+  
+  SCENES["R4_more"] = {
+    name:"",
+    bg:"lab_archive", music:"melancholy", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"todo", pose:"serious", pos:"right"}
+    ],
+    text:"別のファイルの背表紙に、消えかけたローマ字：SHI——NOME。(読みかけの名前。ここにはまだ、誰かがいる) 藤堂は首を振る。「今日はここまで」",
+    choices:[{label:"写しをもらい、距離を選ぶ", next:"R4_getfrag", addFragment:"欠片R_縫合プロトコルv0.9（署名黒塗り）"}]
+  };
+  
+  /* 5章A：踏み込み → 危機（MB導線） */
+  SCENES["R5a"] = {
+    name:"",
+    bg:"lab_white", music:"suspense", sprite:[
+      {char:"mio", pose:"shock", pos:"left"},
+      {char:"todo", pose:"serious", pos:"right"}
+    ],
+    se:"heartbeat",
+    text:"光の幕に手をかざす。世界が一瞬ひっくり返り、濡れたタイルの冷たさが皮膚の裏へ滲みる。誰かの笑い声が近づき、遠ざかる。「——戻ってきて」藤堂の声が、やっとのことで届く。",
+    choices:[
+      {label:"「まだいける」続行を示す", next:"R5a_push"},
+      {label:"「止めて」合図を出す", next:"R5a_stop"}
+    ]
+  };
+  
+  SCENES["R5a_push"] = {
+    name:"",
+    bg:"lab_white", music:"suspense", sprite:[
+      {char:"mio", pose:"shock", pos:"left"},
+      {char:"todo", pose:"pained", pos:"right"}
+    ],
+    text:"幕の向こうで、彼の輪郭が滲む。「負荷、上がる。戻れ」(あと少し、何かに触れられる) 指先が誰かの名札に触れた瞬間——視界が白く飽和した。",
+    choices:[{label:"——", next:"R6a", setFlags:{ED_Todo_Collapse:true}}]
+  };
+  
+  SCENES["R5a_stop"] = {
+    name:"",
+    bg:"lab_white", music:"tender", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"todo", pose:"soft", pos:"right"}
+    ],
+    text:"手を引く。幕が静かに消え、部屋の白さだけが残る。呼吸が、やっと私のものに戻った。「賢明だ」(失望じゃない声)",
+    choices:[{label:"距離を持って進む選択に切り替える", next:"R5b"}]
+  };
+  
+  /* 5章B：距離を置く → 共同の設計（恋愛導線） */
+  SCENES["R5b"] = {
+    name:"",
+    bg:"lab_planning", music:"calm_day", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"todo", pose:"labcoat", pos:"right"}
+    ],
+    se:"typing",
+    text:"ホワイトボードに線が増える。「安全域」「合図」「中断後のケア」——二人の字が並ぶ。「あなたの速度で設計する」(“私の速度”という単語が、胸の中心でほどける)",
+    choices:[
+      {label:"「ありがとう」素直に伝える", next:"R5b_thanks", setAffection:{"藤堂":+1}},
+      {label:"「あなたは休めてる？」と問う", next:"R5b_care"},
+      {label:"「いつか、研究抜きで話したい」", next:"R5b_date"}
+    ]
+  };
+  
+  SCENES["R5b_thanks"] = {
+    name:"",
+    bg:"lab_planning", music:"tender", sprite:[
+      {char:"mio", pose:"smile", pos:"left"},
+      {char:"todo", pose:"soft", pos:"right"}
+    ],
+    text:"「礼は要らない。これは仕事だ」そう言いつつ、彼は目を細める。(仕事に救われる夜も、ある)",
+    choices:[{label:"次のセッションへ", next:"R6b", setFlags:{ED_Todo_Love:true}}]
+  };
+  
+  SCENES["R5b_care"] = {
+    name:"",
+    bg:"lab_planning", music:"melancholy", sprite:[
+      {char:"mio", pose:"speak", pos:"left"},
+      {char:"todo", pose:"pained", pos:"right"}
+    ],
+    text:"「……休み方が下手だと、よく言われる」自嘲の色は薄い。「あなたの“停止合図”は、私にも効くかもしれない」(じゃあ、合図を共有しよう)",
+    choices:[{label:"次のセッションへ", next:"R6b", setFlags:{ED_Todo_Love:true}}]
+  };
+  
+  SCENES["R5b_date"] = {
+    name:"",
+    bg:"lab_planning", music:"warmth", sprite:[
+      {char:"mio", pose:"smile", pos:"left"},
+      {char:"todo", pose:"soft", pos:"right"}
+    ],
+    text:"「倫理的には、研究終了後に」小さく冗談を乗せた声。私も笑う。(終了後の約束が、今を支える)",
+    choices:[{label:"次のセッションへ", next:"R6b", setFlags:{ED_Todo_Love:true}}]
+  };
+  
+  /* 6章：ED */
+  SCENES["R6a"] = {
+    name:"",
+    bg:"lab_white_dark", music:"melancholy", sprite:[
+      {char:"mio", pose:"think", pos:"center"}
+    ],
+    text:"【崩壊ED（メリーバッド）】光は消えたのに、耳の奥で心音が続く。私の中の“つぎ目”に、彼の記憶の糸が絡まった。机上に残された白衣のペン跡を、指でなぞる。(選んだのは私。だから、忘れない)",
+    choices:[{label:"EDを記録してタイトルへ", next:"ED_Collector", setFlags:{ED_Todo_Collapse:true}}]
+  };
+  
+  SCENES["R6b"] = {
+    name:"",
+    bg:"lab_evening", music:"warmth", sprite:[
+      {char:"mio", pose:"smile", pos:"left"},
+      {char:"todo", pose:"soft", pos:"right"}
+    ],
+    text:"【恋愛ED】互いにブレーキを持てたとき、初めて同じ速度で歩けた。研究は“人のために”戻っていく。「あなたの現在を、私に記録させてほしい」「——はい」(距離は残る。でも、それは守るための距離だ)",
+    choices:[{label:"EDを記録してタイトルへ", next:"ED_Collector", setFlags:{ED_Todo_Love:true}}]
+  };
+    
+  /* ───────── 奏ルート：詳細＋演出 ───────── */
+  
+  SCENES["N1"] = {
+    name:"",
+    bg:"classroom_evening", music:"calm_day", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"kanade", pose:"serious", pos:"right"}
+    ],
+    se:"chime",
+    text:"放課後の教室。窓の外に薄い雲。篠宮 奏はノートを閉じ、まっすぐこちらを見る。「大丈夫。私が基準になる」(その言葉だけで、体温が少し下がる)",
+    choices:[
+      {label:"「今、ここにいて」頼む", next:"N1_stay", setAffection:{"奏":+1}},
+      {label:"「強がってるだけ」正直に言う", next:"N1_honest", setAffection:{"奏":+1}},
+      {label:"「平気。自分で何とかする」距離を置く", next:"N1_tough"}
+    ]
+  };
+  
+  SCENES["N1_stay"] = {
+    name:"",
+    bg:"classroom_evening", music:"tender", sprite:[
+      {char:"mio", pose:"speak", pos:"left"},
+      {char:"kanade", pose:"soft", pos:"right"}
+    ],
+    text:"「今はここにいて」言うと、奏は席を引き寄せ、私の机に横付けにした。「はい。隣の椅子、予約済み」(頼らせ方が、うまい)",
+    choices:[{label:"一息ついてから移動する", next:"N2_bus"}]
+  };
+  
+  SCENES["N1_honest"] = {
+    name:"",
+    bg:"classroom_evening", music:"calm_day", sprite:[
+      {char:"mio", pose:"speak", pos:"left"},
+      {char:"kanade", pose:"serious", pos:"right"}
+    ],
+    text:"「強がってるだけ」そう言うと、奏は頷いた。「強がりは悪くない。歩幅を守る道具だから」(道具、か) 彼女は鞄を肩に掛ける。「帰り、バス停まで一緒に」",
+    choices:[{label:"頷く", next:"N2_bus"}]
+  };
+  
+  SCENES["N1_tough"] = {
+    name:"",
+    bg:"classroom_evening", music:"melancholy", sprite:[
+      {char:"mio", pose:"neutral", pos:"left"},
+      {char:"kanade", pose:"soft", pos:"right"}
+    ],
+    text:"「平気」反射で口にすると、奏は少しだけ目を細めた。「じゃあ、平気の定義を一緒に作ろう」(逃げ道じゃなく、足場を作られる感じ)",
+    choices:[{label:"並んで教室を出る", next:"N2_bus"}]
+  };
+  
+  /* 2章：バス停で“期限のある約束” */
+  SCENES["N2_bus"] = {
+    name:"",
+    bg:"bus_stop_evening", music:"rain_walk", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"kanade", pose:"serious", pos:"right"}
+    ],
+    text:"雨上がりのバス停。アスファルトがまだ濡れている。奏は広告板の影に立ち、息を整えてから切り出した。「私、期限のある約束をしてる」",
+    choices:[
+      {label:"「どんな約束？」訊く", next:"N2_ask"},
+      {label:"「言いたくないなら言わなくていい」退路を残す", next:"N2_skip"},
+      {label:"(嫌な予感) 沈黙して待つ", next:"N2_wait"}
+    ]
+  };
+  
+  SCENES["N2_ask"] = {
+    name:"",
+    bg:"bus_stop_evening", music:"truth", sprite:[
+      {char:"mio", pose:"speak", pos:"left"},
+      {char:"kanade", pose:"serious", pos:"right"}
+    ],
+    text:"「保証人」奏は言った。「——あなたのための」(息が止まる) 「もしあなたの“症状”が制御不能になったら、私が責任を引き取る契約」",
+    choices:[{label:"「そんなの、間違ってる」", next:"N3_reject"}]
+  };
+  
+  SCENES["N2_skip"] = {
+    name:"",
+    bg:"bus_stop_evening", music:"tender", sprite:[
+      {char:"mio", pose:"neutral", pos:"left"},
+      {char:"kanade", pose:"soft", pos:"right"}
+    ],
+    text:"「ありがとう」奏は微笑む。けれど少しだけ首を振る。「話す。隠すと、あなたが余計に背負うから」(気づかれている)",
+    choices:[{label:"続けて聞く", next:"N2_ask"}]
+  };
+  
+  SCENES["N2_wait"] = {
+    name:"",
+    bg:"bus_stop_evening", music:"melancholy", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"kanade", pose:"serious", pos:"right"}
+    ],
+    text:"「怖がらないで聞いて」奏は広告板の角を指でなぞる。「期限まで、あとわずか」(終わりの足音が、近い)",
+    choices:[{label:"詳細を聞く", next:"N2_ask"}]
+  };
+  
+  /* 3章：支えるか、引き止めるか */
+  SCENES["N3_reject"] = {
+    name:"",
+    bg:"footbridge_night", music:"melancholy", sprite:[
+      {char:"mio", pose:"speak", pos:"left"},
+      {char:"kanade", pose:"serious", pos:"right"}
+    ],
+    text:"歩道橋の上、車の光が川みたいに流れる。「そんなの、間違ってる」言うと、奏は揺れない声で返す。「間違ってる。でも、必要だった」",
+    choices:[
+      {label:"「私も一緒に背負う」共同を提案", next:"N3_share", setAffection:{"奏":+1}},
+      {label:"「約束なんか捨てて」引き止める", next:"N3_stop"},
+      {label:"(言葉が出ない) 手を握る", next:"N3_hold", setAffection:{"奏":+1}}
+    ]
+  };
+  
+  SCENES["N3_share"] = {
+    name:"",
+    bg:"footbridge_night", music:"tender", sprite:[
+      {char:"mio", pose:"speak", pos:"left"},
+      {char:"kanade", pose:"soft", pos:"right"}
+    ],
+    text:"「分け合えるなら、軽くなる」奏は小さく笑う。「具体案、作ろう」(実務モードの目だ)",
+    choices:[{label:"明日、事務局に同行する", next:"N4_office"}]
+  };
+  
+  SCENES["N3_stop"] = {
+    name:"",
+    bg:"footbridge_night", music:"truth", sprite:[
+      {char:"mio", pose:"speak", pos:"left"},
+      {char:"kanade", pose:"serious", pos:"right"}
+    ],
+    text:"「捨てるのは簡単じゃない」奏は首を振る。「約束は、誰かの安全のための錘」(私のための) 「でも、方法は他にもある。探そう」",
+    choices:[{label:"具体策を一緒に考える", next:"N4_office"}]
+  };
+  
+  SCENES["N3_hold"] = {
+    name:"",
+    bg:"footbridge_night", music:"warmth", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"kanade", pose:"soft", pos:"right"}
+    ],
+    text:"手を握ると、奏は少し目を伏せた。「温度で決めるの、嫌いじゃない」(言葉よりも早く伝わる)",
+    choices:[{label:"明日、事務局に同行する", next:"N4_office"}]
+  };
+  
+  /* 4章：事務局—欠片N入手 */
+  SCENES["N4_office"] = {
+    name:"",
+    bg:"city_office", music:"truth", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"kanade", pose:"serious", pos:"right"}
+    ],
+    se:"paper",
+    text:"古い庁舎。蛍光灯の白さが目に刺さる。窓口の奥で書類が綴じられ、判が乾く音がした。奏は封筒を受け取り、中身を私に見せる。「保証人契約の控え。連絡先だけ——手書き」(滲んだインクの癖、どこかで見た字だ)",
+    choices:[
+      {label:"控えのコピーをもらう（欠片入手）", next:"N4_fragment", addFragment:"欠片N_保証人契約の控え（連絡先だけ手書き）"},
+      {label:"誰の字か、推測する", next:"N4_guess"}
+    ]
+  };
+  
+  SCENES["N4_fragment"] = {
+    name:"",
+    bg:"city_office", music:"truth", sprite:[
+      {char:"mio", pose:"smile", pos:"left"},
+      {char:"kanade", pose:"soft", pos:"right"}
+    ],
+    text:"紙の軽さに反して、手が少し重くなる。「重かったら、私に預けて」奏は当然のように言う。(重さを量らせてくれる人)",
+    choices:[{label:"次の一手を相談する", next:"N4_plan"}]
+  };
+  
+  SCENES["N4_guess"] = {
+    name:"",
+    bg:"city_office", music:"melancholy", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"kanade", pose:"serious", pos:"right"}
+    ],
+    text:"「ここ、黒塗りになる前、別の名前があった」奏は低く言う。「——SHI……まで読めた」(東雲。気づきたくなかった確信が、形を持つ)",
+    choices:[{label:"控えを受け取り、動く", next:"N4_fragment", addFragment:"欠片N_保証人契約の控え（連絡先だけ手書き）"}]
+  };
+  
+  SCENES["N4_plan"] = {
+    name:"",
+    bg:"city_office", music:"calm_day", sprite:[
+      {char:"mio", pose:"speak", pos:"left"},
+      {char:"kanade", pose:"serious", pos:"right"}
+    ],
+    text:"窓口脇のベンチで小さな会議。「選択肢は三つ」奏は指を折る。「A：私が約束を履行して離れる／B：第三者保証へ切替／C：条件変更（監視から伴走へ）」(どれも痛い。けど選ぶ)",
+    choices:[
+      {label:"A：覚悟を受け入れ、彼女を送り出す", next:"N5_away"},
+      {label:"B：第三者保証に切替を申請する", next:"N5_third"},
+      {label:"C：条件変更を交渉する（伴走）", next:"N5_partner", setAffection:{"奏":+1}}
+    ]
+  };
+  
+  /* 5章：分岐 */
+  SCENES["N5_away"] = {
+    name:"",
+    bg:"rooftop_dusk", music:"melancholy", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"kanade", pose:"serious", pos:"right"}
+    ],
+    text:"校舎の屋上。風の層が入れ替わる。「送り出すって、残酷な優しさだよ」奏は笑い、まっすぐ前を見る。「でも、あなたが前を向けるなら、正解」(喉の奥に熱が残る)",
+    choices:[{label:"握った手を放す", next:"N6a", setFlags:{ED_Kanade_Friend:true}}]
+  };
+  
+  SCENES["N5_third"] = {
+    name:"",
+    bg:"city_office", music:"truth", sprite:[
+      {char:"mio", pose:"speak", pos:"left"},
+      {char:"kanade", pose:"serious", pos:"right"}
+    ],
+    text:"倫理委宛の申請書。必要な添付は、関係者の同意書と観測ログ。「朝倉の“光”の証言、藤堂の“停止合図”ログ——揃えれば、道が開く」(みんなで支える仕組みに変える)",
+    choices:[{label:"書類を整え、提出へ", next:"N6b", setFlags:{ED_Kanade_Friend2:true}}]
+  };
+  
+  SCENES["N5_partner"] = {
+    name:"",
+    bg:"meeting_room", music:"tender", sprite:[
+      {char:"mio", pose:"speak", pos:"left"},
+      {char:"kanade", pose:"soft", pos:"right"}
+    ],
+    text:"条件変更案。「監視」から「伴走」へ。リスク時の一次停止権を奏が持ち、決定は本人同意を前提にする。「あなたの“現在”を、あなたが決めるための仕組み」(それが欲しかった言葉)",
+    choices:[{label:"合意書に署名する", next:"N6b", setFlags:{ED_Kanade_Friend2:true}}]
+  };
+  
+  /* 6章：ED */
+  SCENES["N6a"] = {
+    name:"",
+    bg:"bus_stop_morning", music:"melancholy", sprite:[
+      {char:"mio", pose:"think", pos:"center"}
+    ],
+    text:"【友情/犠牲ED】始発の風。バスのドアが開き、閉じる。奏は振り返らない。強い人の歩き方だ。(代わりに笑うって、こういうことかもしれない) 私は、残された日々をちゃんと選ぶ。",
+    choices:[{label:"EDを記録してタイトルへ", next:"ED_Collector", setFlags:{ED_Kanade_Friend:true}}]
+  };
+  
+  SCENES["N6b"] = {
+    name:"",
+    bg:"arcade_evening", music:"warmth", sprite:[
+      {char:"mio", pose:"smile", pos:"left"},
+      {char:"kanade", pose:"smile", pos:"right"}
+    ],
+    text:"【友情ED】別離は回避された。約束は延長線に置かれ、規約は「伴走」へ書き換わる。夕方のアーケードで、私たちは同じ速度で歩く。(恋とは違うけれど、いちばん近い) 明日も、この歩幅で。",
+    choices:[{label:"EDを記録してタイトルへ", next:"ED_Collector", setFlags:{ED_Kanade_Friend2:true}}]
+  };
+  
+  /* ───────── 隠し：東雲 悠真 ルート（詳細＋演出） ───────── */
+  SCENES["H1"] = {
+    name:"",
+    bg:"dream_void", music:"melancholy", sprite:[
+      {char:"mio", pose:"think", pos:"center"},
+      {char:"yuma", pose:"soft", pos:"right"}
+    ],
+    se:"chime",
+    text:"白い無音に、足音だけが生まれては消える。「やっと来たね」男は微笑む。光の粒が肩口でほどけ、輪郭に戻る。「ここは記憶の“外側”。君が選んだどの結末も否定しない、静かな場所」(夢の声と同じ温度——東雲 悠真)",
+    choices:[
+      {label:"「あなたは誰？」", next:"H1_who"},
+      {label:"「どうして、ずっと呼んでたの」", next:"H1_voice"},
+      {label:"「ここで、何ができるの」", next:"H2"}
+    ]
+  };
+  
+  SCENES["H1_who"] = {
+    name:"",
+    bg:"dream_void", music:"melancholy", sprite:[
+      {char:"mio", pose:"speak", pos:"center"},
+      {char:"yuma", pose:"serious", pos:"right"}
+    ],
+    text:"「東雲 悠真。——“守護者”だと自称してる」自嘲の笑み。「十年前、世界は一度だけ綺麗な嘘で縫われた。君は被験者M-0、私は調整役。縫い目がほどけるたび、君を呼んで繕ってきた」",
+    choices:[{label:"「次へ」", next:"H2"}]
+  };
+  
+  SCENES["H1_voice"] = {
+    name:"",
+    bg:"dream_void", music:"tender", sprite:[
+      {char:"mio", pose:"think", pos:"center"},
+      {char:"yuma", pose:"soft", pos:"right"}
+    ],
+    text:"「『誰かの代わりに生きろ』は、命令じゃない。救命の合図だった」彼は手を胸に当てる。「君が沈むたび、浮かぶ言葉を探した。間違っていたら、ごめん」(謝る声がいちばん、現実に近い)",
+    choices:[{label:"「続けて」", next:"H2"}]
+  };
+  
+  SCENES["H2"] = {
+    name:"",
+    bg:"memory_gallery", music:"truth", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"yuma", pose:"serious", pos:"right"}
+    ],
+    text:"回廊に額装が並ぶ。写真、ログ、鍵、契約書——私が集めた欠片が、壁で静かに呼吸する。「ここでは、選び直せる。修復か、受容か。その前に——見たいものを見て」",
+    choices:[
+      {label:"学級写真の“右下”を見る", next:"H3_photo"},
+      {label:"旧プール側棟の廊下を再現する", next:"H3_pool"},
+      {label:"『縫合プロトコルv0.9』の原本を見る", next:"H3_protocol"},
+      {label:"十分に見た。アンカーを選ぶ", next:"H4_anchor"}
+    ]
+  };
+  
+  SCENES["H3_photo"] = {
+    name:"",
+    bg:"classroom_past", music:"melancholy", sprite:[
+      {char:"mio", pose:"shock", pos:"left"},
+      {char:"yuma", pose:"soft", pos:"right"}
+    ],
+    se:"paper",
+    text:"集合写真の右下——切り取られていた位置に、薄い像が重なる。笑い皺、少し曲がった名札。『SHINONOME』(やっぱり、ここに——) 「僕だよ」悠真は淡く笑った。「君の隣にいた」",
+    choices:[
+      {label:"「どうして消えたの」", next:"H3_photo_why"},
+      {label:"回廊に戻る", next:"H2"}
+    ]
+  };
+  SCENES["H3_photo_why"] = {
+    name:"",
+    bg:"classroom_past", music:"melancholy", sprite:[
+      {char:"mio", pose:"speak", pos:"left"},
+      {char:"yuma", pose:"pained", pos:"right"}
+    ],
+    text:"「事故の日、僕は代わりに“責任者”になった。君の記録を守るために、僕の位置を切り離す。それがプロトコルだった」(右下の空白は、盾だった)",
+    choices:[{label:"回廊に戻る", next:"H2"}]
+  };
+  
+  SCENES["H3_pool"] = {
+    name:"",
+    bg:"pool_corridor_dark", music:"suspense", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"yuma", pose:"serious", pos:"right"}
+    ],
+    se:"pulse",
+    text:"濡れた廊下、等間隔の雫。錆びた鍵が掌で冷える。「ここで世界は縫われた。笑い声は、君を落ち着かせるための音響データ」(優しさの形が、時々刃になる)",
+    choices:[
+      {label:"「鍵は、何の扉」", next:"H3_pool_key"},
+      {label:"回廊に戻る", next:"H2"}
+    ]
+  };
+  SCENES["H3_pool_key"] = {
+    name:"",
+    bg:"pool_corridor_dark", music:"truth", sprite:[
+      {char:"mio", pose:"speak", pos:"left"},
+      {char:"yuma", pose:"soft", pos:"right"}
+    ],
+    text:"「最初の縫合室。もう開けない。——開けなくていい」彼は静かに言う。(それでも、持っていたい。選ぶために)",
+    choices:[{label:"回廊に戻る", next:"H2"}]
+  };
+  
+  SCENES["H3_protocol"] = {
+    name:"",
+    bg:"lab_white", music:"truth", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"yuma", pose:"serious", pos:"right"}
+    ],
+    text:"『縫合プロトコル v0.9』。黒塗りの署名の下に、消し残った走り書きがある。——“守るのは現在”。「君の現在を守るための嘘。それがこの世界の骨組み」",
+    choices:[
+      {label:"「じゃあ、今を壊さず直せる？」", next:"H3_protocol_fix"},
+      {label:"回廊に戻る", next:"H2"}
+    ]
+  };
+  SCENES["H3_protocol_fix"] = {
+    name:"",
+    bg:"lab_white", music:"tender", sprite:[
+      {char:"mio", pose:"speak", pos:"left"},
+      {char:"yuma", pose:"soft", pos:"right"}
+    ],
+    text:"「可能かもしれない。痛みは出る。けど、前よりは優しくできる」(“優しく”直す。そんな選択肢があるなら——)",
+    choices:[{label:"回廊に戻る", next:"H2"}]
+  };
+  
+  /* 4章：アンカー選択（各ルートで得た現在を参照） */
+  SCENES["H4_anchor"] = {
+    name:"",
+    bg:"memory_gallery", music:"calm_day", sprite:[
+      {char:"mio", pose:"think", pos:"left"},
+      {char:"yuma", pose:"serious", pos:"right"}
+    ],
+    text:"「修復にも受容にも、“現在”を固定する錘が要る」悠真は手を差し出す。「君が選んできた誰かの現在——その在り方を、言葉にして」",
+    choices:[
+      {label:"九条：距離が守る優しさ", next:"H4_k", req:(s)=>!!s.flags.ED_Kujou_Love},
+      {label:"朝倉：守るための嘘", next:"H4_a", req:(s)=>!!s.flags.ED_Asakura_Love},
+      {label:"湊：小さな生活の誇り", next:"H4_m", req:(s)=>!!s.flags.ED_Minato_Love},
+      {label:"藤堂：同じ速度で歩く", next:"H4_r", req:(s)=>!!s.flags.ED_Todo_Love},
+      {label:"アンカーは決めた。最終選択へ", next:"H5_choice"}
+    ]
+  };
+  
+  SCENES["H4_k"] = {
+    name:"",
+    bg:"public_hall_dim", music:"tender", sprite:[
+      {char:"mio", pose:"smile", pos:"left"},
+      {char:"yuma", pose:"soft", pos:"right"}
+    ],
+    text:"「触れない距離が、守るための形になる」言葉にすると胸が軽くなる。「うん。距離は欠落じゃない。設計だ」",
+    choices:[{label:"回廊へ戻る", next:"H4_anchor"}]
+  };
+  SCENES["H4_a"] = {
+    name:"",
+    bg:"cafe_night", music:"warmth", sprite:[
+      {char:"mio", pose:"smile", pos:"left"},
+      {char:"yuma", pose:"soft", pos:"right"}
+    ],
+    text:"「嘘は盾。合言葉で意味を共有する」悠真は頷く。「共有された嘘は、もう孤独じゃない」",
+    choices:[{label:"回廊へ戻る", next:"H4_anchor"}]
+  };
+  SCENES["H4_m"] = {
+    name:"",
+    bg:"shop_morning", music:"warmth", sprite:[
+      {char:"mio", pose:"smile", pos:"left"},
+      {char:"yuma", pose:"soft", pos:"right"}
+    ],
+    text:"「働いて、笑って、眠る。小さいけど、確かな誇り」「世界の大工事より、生活のネジを締める方が難しいんだ」",
+    choices:[{label:"回廊へ戻る", next:"H4_anchor"}]
+  };
+  SCENES["H4_r"] = {
+    name:"",
+    bg:"lab_evening", music:"tender", sprite:[
+      {char:"mio", pose:"smile", pos:"left"},
+      {char:"yuma", pose:"soft", pos:"right"}
+    ],
+    text:"「ブレーキを持ち合うと、同じ速度で歩ける」悠真は小さく笑う。「じゃあ、急がない処置を選べるね」",
+    choices:[{label:"回廊へ戻る", next:"H4_anchor"}]
+  };
+  
+  /* 5章：最終選択（修復 or 受容） */
+  SCENES["H5_choice"] = {
+    name:"",
+    bg:"dream_void", music:"truth", sprite:[
+      {char:"mio", pose:"think", pos:"center"},
+      {char:"yuma", pose:"serious", pos:"right"}
+    ],
+    se:"pulse",
+    text:"「選んで。世界を修復するか、現実を受け入れるか」白い空間に、二つの扉が静かに立つ。(どちらを選んでも、私の現在は私が決める)",
+    choices:[
+      {label:"世界を修復する（トゥルー）", next:"H6a", setFlags:{ED_Hidden_True:true}},
+      {label:"現実を受け入れる（ビターグッド）", next:"H6b", setFlags:{ED_Hidden_Bitter:true}}
+    ]
+  };
+  
+  /* 6章：ED */
+  SCENES["H6a"] = {
+    name:"",
+    bg:"rooftop_dawn", music:"warmth", sprite:[
+      {char:"mio", pose:"smile", pos:"left"},
+      {char:"yuma", pose:"soft", pos:"right"}
+    ],
+    se:"breath",
+    text:"【トゥルーED：縫合の完了】欠片は矛盾なく繋がり、右下の“空白”は空白のまま“役割”を得た。誰も上書きされず、物語は収束する。「正しい眠り方を、やっと覚えたね」「うん」朝の風は、やさしい重さで私たちを押した。",
+    choices:[{label:"タイトルへ", next:"title"}]
+  };
+  
+  SCENES["H6b"] = {
+    name:"",
+    bg:"starfield", music:"melancholy", sprite:[
+      {char:"mio", pose:"think", pos:"center"},
+      {char:"yuma", pose:"soft", pos:"right"}
+    ],
+    text:"【ビターグッド】継ぎ目はそのまま、しかし手当ては施された。ほつれを知っている者だけが見つけられる、静かな幸福。「君が見つけた現在を、僕は見失わない」「私も」遠くで、昨日と同じ雨が降りはじめる。",
+    choices:[{label:"タイトルへ", next:"title"}]
+  };
+  
+  // ───────── ED記録・メニュー復帰 ─────────
+  SCENES["ED_Collector"] = {
+    name:"",
+    text:"【ED記録を更新】必要条件を満たすと、タイトルに『静寂の声』が出現します。",
+    choices:[{label:"タイトルへ戻る", next:"title"}]
+  },
 }; 
 
 // 隠し解放条件：朝倉/九条/湊/藤堂の恋愛ED ＋ 欠片3つ以上
