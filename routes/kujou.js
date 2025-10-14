@@ -4,7 +4,7 @@
   window.SCENES = window.SCENES || {};
 
   Object.assign(window.SCENES, {
-    "K1": {
+  SCENES["K1"] = {
     name:"",
     bg:"school_gate_rain", music:"rain_walk", sprite:[
       {char:"mio", pose:"neutral", pos:"center"},
