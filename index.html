@@ -1,0 +1,669 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>記憶交錯 - Web乙女ノベル（既読スキップ & 自動送り対応）</title>
+<style>
+  :root{
+    --bg:#0f1116;--panel:#171a22;--ink:#e8ecf1;--sub:#a6b0be;--accent:#7aa2f7;--warn:#f7768e
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.7 system-ui,-apple-system,"Segoe UI",Roboto}
+  #app{max-width:880px;margin:0 auto;padding:16px}
+  header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  header h1{font-size:18px;margin:0;color:var(--ink)}
+  header .mini{color:var(--sub);font-size:12px}
+  #stage{background:var(--panel);border:1px solid #22252e;border-radius:12px;min-height:320px;padding:18px;margin-top:12px;position:relative}
+  .name{font-weight:700;color:var(--accent);margin-bottom:6px}
+  .text{white-space:pre-wrap}
+  #choices{margin-top:16px;display:grid;gap:10px}
+  button.choice{background:#22283a;color:var(--ink);border:none;padding:12px;border-radius:10px;text-align:left}
+  button.choice[disabled]{opacity:.55}
+  #ui{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}
+  #ui button,#ui .seg{background:#263146;border:1px solid #2f3950;color:var(--ink);padding:8px 10px;border-radius:8px}
+  #ui .seg{display:flex;align-items:center;gap:8px}
+  #ui input[type="range"]{width:140px}
+  #log{margin-top:12px;color:var(--sub);background:#12141a;border-radius:10px;padding:10px;max-height:160px;overflow:auto;font-size:13px}
+  #badges{margin-top:8px;font-size:12px;color:var(--sub)}
+  .pill{display:inline-block;border:1px solid #2f3950;border-radius:999px;padding:2px 8px;margin:2px}
+  a{color:var(--accent);text-decoration:none}
+  .sep{opacity:.5;margin:0 6px}
+  .mark-read{position:absolute;right:12px;top:10px;font-size:12px;color:var(--sub);opacity:.8}
+  .unread{color:var(--warn);font-weight:700}
+  .toggle-on{outline:2px solid var(--accent)}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <h1>記憶交錯<span class="mini"> — Web分岐ノベル（既読/自動送り対応・初稿）</span></h1>
+    <div class="mini">v1.0</div>
+  </header>
+
+  <div id="stage">
+    <div class="mark-read" id="readmark"></div>
+    <div class="name" id="speaker"></div>
+    <div class="text" id="text"></div>
+    <div id="choices"></div>
+  </div>
+
+  <div id="ui">
+    <button id="btnBack">◀︎ 戻る</button>
+    <button id="btnSkipRead">⏭ 既読スキップ</button>
+    <div class="seg">
+      <button id="btnToggleSkip">既読SKIP: OFF</button>
+      <span class="mini">（既読＆単一選択は自動進行）</span>
+    </div>
+    <div class="seg">
+      <button id="btnAutoplay">自動送り: OFF</button>
+      <label class="mini">速度 <input id="speed" type="range" min="800" max="4000" step="100" value="1800"></label>
+      <span id="speedVal" class="mini">1.8s</span>
+    </div>
+    <span class="sep">|</span>
+    <button id="btnSave">💾 セーブ</button>
+    <button id="btnLoad">📂 ロード</button>
+    <button id="btnReset">🗑 初期化</button>
+  </div>
+
+  <div id="badges"></div>
+  <div id="log" aria-label="backlog"></div>
+</div>
+
+<script>
+/* =========================================================
+   シナリオ定義（共通＋九条→朝倉→湊→藤堂→奏→隠し）
+   ※ 前回までの二つのスクリプト内容を統合
+   ========================================================= */
+const SCENES = {
+  // ───────── タイトル／共通 ─────────
+  "title": {
+    name:"タイトル",
+    text:"— 記憶交錯 —\n現代ファンタジー×選択式ノベル。\n共通ルートを進め、各キャラのルートを解放しよう。\n恋愛EDを集め、記憶の欠片を集めると——『静寂の声』が現れる。",
+    choices: [
+      { label:"▶︎ 共通ルートから始める", next:"start" },
+      { label:"▶︎ 隠し：静寂の声（東雲 悠真）", next:"H1", req: isHiddenUnlocked }
+    ]
+  },
+
+  "start": {
+    name: "澪",
+    text: "…また同じ夢。見知らぬ誰かの声が、水底から届くように胸を震わせる。目覚めると、手のひらに残る温度だけが現実で、言葉は残らない。今日は放課後、図書館で十年前の事件を調べようと思う。何かが、そこに繋がっている気がする。",
+    choices: [
+      { label: "図書館へ向かう（知性+／九条導線）", next: "lib1", setAffection: {"九条": +1}, setFlags:{wentLibrary:true} },
+      { label: "カフェで一息（共感+／朝倉・湊導線）", next: "cafe1", setAffection: {"朝倉": +1, "湊": +1}, setFlags:{wentCafe:true} },
+      { label: "研究協力メールに返信（理性+／藤堂導線）", next: "mail1", setAffection: {"藤堂": +1}, setFlags:{repliedMail:true} },
+    ],
+    onEnter: (s)=>logPush("【プロローグ】")
+  },
+
+  "lib1": {
+    name: "澪",
+    text: "静かな紙の匂い。古い綴じ込みの片隅に、『神ノ原 記憶消失事件』の見出しが黄ばんで眠っていた。頁をめくる手が震える。読み進めるほど、私の中の“既視感”は輪郭を得ていく。",
+    choices: [
+      { label: "さらに読む（欠片①入手）", next: "lib1_gain", addFragment:"欠片01_古新聞" },
+      { label: "切り上げる", next:"afterIntro" }
+    ]
+  },
+  "lib1_gain": {
+    name:"システム",
+    text:"【記憶の欠片】欠片①『古新聞：失われた学級記録』を手に入れた。",
+    choices:[{label:"続ける", next:"afterIntro"}]
+  },
+
+  "cafe1": {
+    name: "朝倉",
+    text: "「やあ。……目の下、少し赤いね。眠れてない？」冗談めかす声は軽く、けれど視線はまっすぐだ。カップに映る自分が、少しだけ他人に思えた。",
+    choices: [
+      { label: "軽口を返す（朝倉+）", next:"afterIntro", setAffection:{"朝倉":+1} },
+      { label: "正直に不調を伝える（フラグ）", next:"afterIntro", setFlags:{honest:true} }
+    ]
+  },
+
+  "mail1": {
+    name:"藤堂",
+    text:"『ご返信ありがとう。無理のない範囲で構わないから、あなたの“感じたこと”を教えてほしい』柔らかな文面の奥に、沈殿する冷ややかな好奇心が見えた。",
+    choices:[{label:"丁寧に了承を返す（フラグ）", next:"afterIntro", setFlags:{agreedResearch:true}}]
+  },
+
+  "afterIntro": {
+    name: "澪",
+    text: "校門を出ると、黒い手袋の男が静かに立っていた。風向きが変わる。視線が合うより早く、彼は私の名を呼ぶ。",
+    choices: [{ label: "立ち止まる", next: "meetKujou" }]
+  },
+
+  "meetKujou": {
+    name: "九条",
+    text: "「柊澪さん。……あなたの“症状”について、話がある」低い声が輪郭を描く。彼の眼差しは曇りなく、だからこそ息苦しいほどに正確だった。",
+    choices: [
+      { label: "話を聞く（九条+）", next: "forkPrep", setAffection: {"九条": +1} },
+      { label: "断る（奏イベントへ）", next: "meetKanade", setFlags:{defendedByKanade:true} }
+    ]
+  },
+
+  "meetKanade": {
+    name: "奏",
+    text: "「無理に応じなくていい。——私がいる」肩に置かれた手は熱を持っていて、心拍より先に不安を鎮めた。",
+    choices: [{ label: "礼を言う", next: "forkPrep" }]
+  },
+
+  "forkPrep": {
+    name: "システム",
+    text: "【放課後】廃部室の写真立てに触れると、遠い笑い声が一瞬流れ込む。（欠片②）",
+    choices: [{ label: "欠片を拾う", next: "roof", addFragment: "欠片02_写真立て" }]
+  },
+
+  "roof": {
+    name: "澪",
+    text: "屋上で風に舞ったメモを追い、手すり越しに指先で掴む。（欠片③）『実験計画：被験者M-0』という活字が、紙に浅く残っていた。",
+    choices: [{ label: "メモをポケットへ", next: "branch", addFragment: "欠片03_屋上メモ" }]
+  },
+
+  "branch": {
+    name: "システム",
+    text: "誰の隣で、この揺らぐ世界を歩く？（個別ルート開始）",
+    choices: [
+      { label: "朝倉 晃ルート", next: "A1", req:(s)=> (s.affection["朝倉"]||0) >= 2 || s.flags.wentCafe },
+      { label: "九条 煌ルート", next: "K1", req:(s)=> (s.affection["九条"]||0) >= 2 || s.flags.wentLibrary },
+      { label: "神原 湊ルート", next: "M1", req:(s)=> (s.affection["湊"]||0) >= 2 || s.flags.wentCafe },
+      { label: "藤堂 理久ルート", next: "R1", req:(s)=> (s.affection["藤堂"]||0) >= 2 || s.flags.repliedMail || s.flags.agreedResearch },
+      { label: "篠宮 奏（友情）", next: "N1", req:(s)=> true }
+    ]
+  },
+
+  // ───────── 九条（K1〜K6） ─────────
+  "K1": {
+    name:"九条",
+    text:"「監視対象としてではなく、人として確認したい。あなたは自分の力をどう認識している？」手袋越しの距離は正確で、残酷なほど優しかった。私は言葉を探し、やっと『怖い。でも放り出したくない』と口にする。",
+    choices:[{label:"続ける", next:"K2"}]
+  },
+  "K2": {
+    name:"九条",
+    text:"任務は“安全確保”。だが彼は、私の帰り道を一歩後ろで歩くだけで、何も強制しない。その無言の尊重が、逆に境界線をくっきりと浮かび上がらせる。触れないための手袋。彼が守っているのは誰の手か。",
+    choices:[{label:"続ける", next:"K3"}]
+  },
+  "K3": {
+    name:"澪",
+    text:"雨の夜、研究局の車が私を連れ去ろうとした瞬間、九条は規則を破った。ハザードの赤が跳ね、私の腕を引く力が温度を持つ。『規則は人を守るためにある。——だから今は、あなたを守る』",
+    choices:[{label:"続ける", next:"K4"}]
+  },
+  "K4": {
+    name:"システム",
+    text:"【選択】彼の手に触れるか、彼の規則を尊重するか。",
+    choices:[
+      {label:"手に触れる（恋愛ED導線）", next:"K5a"},
+      {label:"規則を守ると伝える（真実ED導線）", next:"K5b"}
+    ]
+  },
+  "K5a": {
+    name:"澪",
+    text:"私は手袋の縁に指をかけ、彼の許可を待った。長い沈黙ののち、九条は自ら手袋を外す。触れた肌は驚くほど熱く、薄い震えが私の鼓動と重なる。『これは儀式だ。過去を赦すための』",
+    choices:[{label:"続ける", next:"K6a"}]
+  },
+  "K6a": {
+    name:"システム",
+    text:"【恋愛ED：赦し】二人は触れることを取り戻し、規則の外に小さな避難所を作った。世界は変わらないが、呼吸は確かに軽くなる。",
+    choices:[{label:"EDを記録してタイトルへ", next:"ED_Collector", setFlags:{ED_Kujou_Love:true}}]
+  },
+  "K5b": {
+    name:"澪",
+    text:"私は一歩下がり、彼の“正しさ”を選ぶ。『あなたが守ってきたものを壊したくない』九条は頷き、局の不正に関する情報を差し出した。『一緒に終わらせよう』",
+    choices:[{label:"続ける", next:"K6b"}]
+  },
+  "K6b": {
+    name:"システム",
+    text:"【真実ED】内部告発は波紋を広げ、計画は凍結された。二人は距離を残しつつ、同じ方向を見て歩く。",
+    choices:[{label:"EDを記録してタイトルへ", next:"ED_Collector", setFlags:{ED_Kujou_Truth:true}}]
+  },
+
+  // ───────── 朝倉（A1〜A6） ─────────
+  "A1": {
+    name:"朝倉",
+    text:"「君、時々すごく遠くを見てる顔をするよね」軽口の裏で、彼は人の表情の綻びを正確に拾う。嘘を見抜く目は、優しさで包んで見えなくしてくれる。",
+    choices:[{label:"続ける", next:"A2"}]
+  },
+  "A2": {
+    name:"澪",
+    text:"私の力を打ち明けると、朝倉は深く息を吐いた。「そっか。——実はさ、俺も、人がつく嘘が光って見えるんだ」彼の笑顔の輪郭が、少しだけ滲んで見えた。",
+    choices:[{label:"続ける", next:"A3"}]
+  },
+  "A3": {
+    name:"朝倉",
+    text:"「本音って、時々残酷だよ。だから俺は、守るための嘘を選ぶ」彼が差し出したのは、軽い冗談の形をした盾。私は、その盾の内側に身を寄せたくなる。",
+    choices:[{label:"続ける", next:"A4"}]
+  },
+  "A4": {
+    name:"システム",
+    text:"【選択】彼の嘘を受け入れるか、本音を求めるか。",
+    choices:[
+      {label:"受け入れる（恋愛ED導線）", next:"A5a"},
+      {label:"本音を求める（友情ED導線）", next:"A5b"}
+    ]
+  },
+  "A5a": {
+    name:"澪",
+    text:"「あなたが苦しくないなら、その嘘ごと抱きしめたい」告げると、朝倉は照れたように笑い、真顔で「ありがとう」と言った。仮面は外さずに、でも確かに距離は縮まる。",
+    choices:[{label:"続ける", next:"A6a"}]
+  },
+  "A6a": {
+    name:"システム",
+    text:"【恋愛ED】“守るための嘘”は二人の合言葉になった。真実は急がず、肩を並べる日々が続いていく。",
+    choices:[{label:"EDを記録してタイトルへ", next:"ED_Collector", setFlags:{ED_Asakura_Love:true}}]
+  },
+  "A5b": {
+    name:"朝倉",
+    text:"「怖いけど、逃げない。君がそう言うなら」彼の声は小さく震え、しかし澄んでいた。嘘の幕が一枚だけ、静かに降りる。",
+    choices:[{label:"続ける", next:"A6b"}]
+  },
+  "A6b": {
+    name:"システム",
+    text:"【友情ED】二人は素顔を交換し、恋に急がず友でいる道を選んだ。笑い合う声は、以前よりも深い。",
+    choices:[{label:"EDを記録してタイトルへ", next:"ED_Collector", setFlags:{ED_Asakura_Friend:true}}]
+  },
+
+  // ───────── 湊（M1〜M6） ─────────
+  "M1": {
+    name:"湊",
+    text:"路地裏で肩を庇う彼の手は、血の匂いと洗剤の匂いが混じっていた。「見んな。平気」強がりの芯に、真っ直ぐな正義感が刺さっている。",
+    choices:[{label:"続ける", next:"M2"}]
+  },
+  "M2": {
+    name:"澪",
+    text:"散らかった台所で、私は勝手に味噌汁を作った。湊は不満そうに眉を寄せ、結局おかわりをした。湯気の向こうに、やっと笑顔が見える。",
+    choices:[{label:"続ける", next:"M3"}]
+  },
+  "M3": {
+    name:"湊",
+    text:"借金絡みの連中が店先に現れ、彼は私を背に庇った。「逃げねえよ。ここ、オレの場所だから」震えは、膝ではなく声の奥にあった。",
+    choices:[{label:"続ける", next:"M4"}]
+  },
+  "M4": {
+    name:"システム",
+    text:"【選択】逃げずに立つか、大人の助けを借りるか。",
+    choices:[
+      {label:"逃げない（恋愛ED導線）", next:"M5a"},
+      {label:"大人に頼る（救済ED導線）", next:"M5b"}
+    ]
+  },
+  "M5a": {
+    name:"澪",
+    text:"私は彼の隣で立った。怖さを正直に言葉にすると、湊は少しだけ肩の力を抜いた。「……ありがとな」",
+    choices:[{label:"続ける", next:"M6a"}]
+  },
+  "M6a": {
+    name:"システム",
+    text:"【恋愛ED】二人で働き、二人で笑い、二人で眠る未来の話をした。小さな生活は、誇りだった。",
+    choices:[{label:"EDを記録してタイトルへ", next:"ED_Collector", setFlags:{ED_Minato_Love:true}}]
+  },
+  "M5b": {
+    name:"澪",
+    text:"私は支援窓口に連絡し、彼を連れて行った。助けは恥じゃないと伝えると、湊は沈黙のあと、素直に頷いた。",
+    choices:[{label:"続ける", next:"M6b"}]
+  },
+  "M6b": {
+    name:"システム",
+    text:"【救済ED】制度と人に支えられ、彼は“居場所”を取り戻した。恋は淡く、しかし確かな灯りだった。",
+    choices:[{label:"EDを記録してタイトルへ", next:"ED_Collector", setFlags:{ED_Minato_Save:true}}]
+  },
+
+  // ───────── 藤堂（R1〜R6） ─────────
+  "R1": {
+    name:"藤堂",
+    text:"「境界を確かめましょう。怖くなったら、いつでも止める」白衣の袖は丁寧に折られていた。言葉はやさしいが、視線は結果を欲している。",
+    choices:[{label:"続ける", next:"R2"}]
+  },
+  "R2": {
+    name:"澪",
+    text:"安全域の実験は静かに始まり、静かに進む。私は感じたものを言葉にし、彼は記録を重ねる。心拍の波形が呼吸よりも正直だと知る。",
+    choices:[{label:"続ける", next:"R3"}]
+  },
+  "R3": {
+    name:"藤堂",
+    text:"「君の負荷を最小限に」そう言いながら、彼は境界線を一ミリずつ押し広げた。私の目の前で理性と情が均衡を失いかける。",
+    choices:[{label:"続ける", next:"R4"}]
+  },
+  "R4": {
+    name:"システム",
+    text:"【選択】彼を信じて踏み込むか、距離を置くか。",
+    choices:[
+      {label:"信じる（崩壊ED導線／MB）", next:"R5a"},
+      {label:"距離を置く（恋愛ED導線）", next:"R5b"}
+    ]
+  },
+  "R5a": {
+    name:"澪",
+    text:"私は限界を見誤った。光が反転し、記憶の海に飲まれる瞬間、彼は自らを犠牲にして私を引き上げた。彼の声だけが浮標だった。",
+    choices:[{label:"続ける", next:"R6a"}]
+  },
+  "R6a": {
+    name:"システム",
+    text:"【崩壊ED（メリーバッド）】研究は止まった。二人は互いの責任の中で生きることを選ぶ。愛は残り、傷も残る。",
+    choices:[{label:"EDを記録してタイトルへ", next:"ED_Collector", setFlags:{ED_Todo_Collapse:true}}]
+  },
+  "R5b": {
+    name:"澪",
+    text:"私は手を下ろし、彼の手から一歩退いた。「あなたの理性を、守りたい」藤堂は長く息を吐き、微笑んだ。「ありがとう」",
+    choices:[{label:"続ける", next:"R6b"}]
+  },
+  "R6b": {
+    name:"システム",
+    text:"【恋愛ED】互いにブレーキを持てたとき、初めて同じ速度で歩けた。研究は“人のために”戻っていく。",
+    choices:[{label:"EDを記録してタイトルへ", next:"ED_Collector", setFlags:{ED_Todo_Love:true}}]
+  },
+
+  // ───────── 奏（友情 N1〜N6） ─────────
+  "N1": {
+    name:"奏",
+    text:"「大丈夫。私が基準になる」簡潔な言葉が、私の熱を下げる。彼女はいつだって、必要な量だけの優しさを知っている。",
+    choices:[{label:"続ける", next:"N2"}]
+  },
+  "N2": {
+    name:"澪",
+    text:"放課後のバス停。奏は珍しく話を逸らさず、自分の家の事情を話した。期限のある約束。背負っているものの形。",
+    choices:[{label:"続ける", next:"N3"}]
+  },
+  "N3": {
+    name:"奏",
+    text:"「もし何かが起きたら、私の代わりに笑って」不器用な頼み。私は首を振り、彼女の手を握った。温度でしか伝わらないことがある。",
+    choices:[{label:"続ける", next:"N4"}]
+  },
+  "N4": {
+    name:"システム",
+    text:"【選択】彼女を信じて送り出すか、引き止めるか。",
+    choices:[
+      {label:"送り出す（友情/犠牲ED導線）", next:"N5a"},
+      {label:"引き止める（別離回避）", next:"N5b"}
+    ]
+  },
+  "N5a": {
+    name:"澪",
+    text:"私は『行って』と告げた。彼女は笑い、背を向け、振り返らなかった。強い人の歩き方を、私はそのとき知った。",
+    choices:[{label:"続ける", next:"N6a"}]
+  },
+  "N6a": {
+    name:"システム",
+    text:"【友情/犠牲ED】彼女の選んだ未来は重く、しかし確かだった。残された私たちは、それでも前を向くことを選ぶ。",
+    choices:[{label:"EDを記録してタイトルへ", next:"ED_Collector", setFlags:{ED_Kanade_Friend:true}}]
+  },
+  "N5b": {
+    name:"奏",
+    text:"「わかった。じゃあ一緒に考えよう」彼女は歩調を落とし、私の隣に立った。恋とは違う形で、距離が結び直される。",
+    choices:[{label:"続ける", next:"N6b"}]
+  },
+  "N6b": {
+    name:"システム",
+    text:"【友情ED】別離は回避された。約束は延長線に置かれ、笑い声は今のまま続いていく。",
+    choices:[{label:"EDを記録してタイトルへ", next:"ED_Collector", setFlags:{ED_Kanade_Friend2:true}}]
+  },
+
+  // ───────── 隠し：東雲 悠真（H1〜H4） ─────────
+  "H1": {
+    name:"悠真",
+    text:"「やっと来たね。ここは記憶の“外側”。君が選んだどの結末も否定しない、静かな場所」彼の声は、最初に夢で聞いた温度と同じだった。",
+    choices:[{label:"続ける", next:"H2"}]
+  },
+  "H2": {
+    name:"澪",
+    text:"十年前、世界はひとつの嘘で綺麗に整えられた。私は被験者M-0。君——東雲悠真は、その調整役。“守護者”として、失われた記憶のつぎ目を縫い続けてきた。",
+    choices:[{label:"続ける", next:"H3"}]
+  },
+  "H3": {
+    name:"システム",
+    text:"【選択】世界を修復するか、現実を受け入れるか。",
+    choices:[
+      {label:"世界を修復（トゥルーED導線）", next:"H4a"},
+      {label:"現実を受け入れる（ビターグッド）", next:"H4b"}
+    ]
+  },
+  "H4a": {
+    name:"システム",
+    text:"【トゥルーED】欠片は矛盾なく繋がり、誰も上書きされないまま物語は収束した。私たちはやっと、正しい眠り方を知る。",
+    choices:[{label:"タイトルへ", next:"title"}]
+  },
+  "H4b": {
+    name:"システム",
+    text:"【ビターグッド】継ぎ目はそのまま、しかし手当ては施された。ほつれを知っている者だけが見つけられる、静かな幸福。",
+    choices:[{label:"タイトルへ", next:"title"}]
+  },
+
+  // ───────── ED記録・メニュー復帰 ─────────
+  "ED_Collector": {
+    name:"システム",
+    text:"【ED記録を更新】必要条件を満たすと、タイトルに『静寂の声』が出現します。",
+    choices:[{label:"タイトルへ戻る", next:"title"}]
+  }
+};
+
+// 隠し解放条件：朝倉/九条/湊/藤堂の恋愛ED ＋ 欠片3つ以上
+function isHiddenUnlocked(s){
+  const needED = s.flags.ED_Asakura_Love && s.flags.ED_Kujou_Love
+              && s.flags.ED_Minato_Love && s.flags.ED_Todo_Love;
+  const enoughFragments = (s.fragments||[]).length >= 3;
+  return needED && enoughFragments;
+}
+
+/* =========================================================
+   エンジン（既読スキップ & 自動送り対応）
+   ========================================================= */
+const DEFAULT_STATE = {
+  sceneId: "title",
+  flags: { skipReadToggle:false, autoplay:false, autoplayMs:1800 },
+  affection: {},
+  fragments: [],
+  history: [],
+  seen: {} // {sceneId: true}
+};
+
+let state = loadState() || structuredClone(DEFAULT_STATE);
+const elSpeaker = document.getElementById("speaker");
+const elText = document.getElementById("text");
+const elChoices = document.getElementById("choices");
+const elLog = document.getElementById("log");
+const elBadges = document.getElementById("badges");
+const elReadmark = document.getElementById("readmark");
+const btnBack = document.getElementById("btnBack");
+const btnSkipRead = document.getElementById("btnSkipRead");
+const btnToggleSkip = document.getElementById("btnToggleSkip");
+const btnAutoplay = document.getElementById("btnAutoplay");
+const rngSpeed = document.getElementById("speed");
+const speedVal = document.getElementById("speedVal");
+
+document.getElementById("btnSave").onclick = ()=>{ saveState(); alert("セーブしました"); };
+document.getElementById("btnLoad").onclick = ()=>{ const ok=confirm("ロードしますか？未保存の進行は失われます。"); if(ok){ const s=loadState(); if(s){ state=s; render(); }}};
+document.getElementById("btnReset").onclick = ()=>{ const ok=confirm("初期化しますか？"); if(ok){ state=structuredClone(DEFAULT_STATE); saveState(); render(); }};
+btnBack.onclick = back;
+btnSkipRead.onclick = skipToNextUnread;
+btnToggleSkip.onclick = ()=>{ state.flags.skipReadToggle = !state.flags.skipReadToggle; renderToggles(); render(); saveState(); };
+btnAutoplay.onclick = toggleAutoplay;
+rngSpeed.oninput = ()=>{ state.flags.autoplayMs = Number(rngSpeed.value); speedVal.textContent = (state.flags.autoplayMs/1000).toFixed(1)+"s"; saveState(); if(state.flags.autoplay){ restartAutoplay(); }};
+
+let autoplayTimer=null;
+
+render();
+
+/* ---------- レンダリング ---------- */
+function render(){
+  const sc = SCENES[state.sceneId];
+  if(!sc){ return showText("システム","シーンが見つかりません: "+state.sceneId, []); }
+
+  // onEnter: 一度だけ
+  if(!state.flags["_entered_"+state.sceneId] && typeof sc.onEnter==="function"){
+    sc.onEnter(state);
+    state.flags["_entered_"+state.sceneId] = true;
+  }
+
+  // 既読マーキング
+  const wasSeen = !!state.seen[state.sceneId];
+  // 表示
+  showText(sc.name||"", sc.text||"", buildChoices(sc));
+
+  // 既読表示
+  elReadmark.innerHTML = wasSeen ? "既読" : '<span class="unread">未読</span>';
+
+  // 既読スキップ：ONかつ既読かつ選択肢が1つ以下なら自動で進む
+  if(state.flags.skipReadToggle && wasSeen){
+    const validChoices = getValidChoices(sc);
+    if(validChoices.length === 1){
+      setTimeout(()=>choose(validChoices[0]), 0);
+      return; // ここで一旦抜ける
+    }
+  }
+
+  // このタイミングで既読登録（※読むたびに登録）
+  state.seen[state.sceneId] = true;
+
+  // バッジ更新
+  updateBadges();
+  // トグルUI反映
+  renderToggles();
+
+  // 自動送り：ON時は単一選択のみ自動、複数選択は停止
+  if(state.flags.autoplay){
+    scheduleAutoplayStep();
+  }
+
+  saveState();
+}
+
+function showText(name, text, choiceElems){
+  elSpeaker.textContent = name||"";
+  elText.textContent = text||"";
+  elChoices.innerHTML = "";
+  choiceElems.forEach(cfg=>{
+    const btn = document.createElement("button");
+    btn.className = "choice";
+    btn.textContent = cfg.label;
+    if(cfg.disabled){ btn.disabled = true; }
+    btn.onclick = ()=>choose(cfg);
+    elChoices.appendChild(btn);
+  });
+}
+
+/* ---------- 選択肢関連 ---------- */
+function buildChoices(sc){
+  const out=[];
+  for(const ch of (sc.choices||[])){
+    let ok = true;
+    if(ch.req){ try{ ok = !!ch.req(state);}catch(e){ok=false;} }
+    out.push({...ch, disabled: !ok});
+  }
+  return out;
+}
+function getValidChoices(sc){
+  return (sc.choices||[]).filter(ch=>!ch.req || ch.req(state));
+}
+
+function choose(ch){
+  // 効果適用
+  if(ch.setFlags){ Object.assign(state.flags, ch.setFlags); }
+  if(ch.setAffection){
+    for(const k in ch.setAffection){
+      state.affection[k] = (state.affection[k]||0) + ch.setAffection[k];
+    }
+  }
+  if(ch.addFragment){
+    if(!state.fragments.includes(ch.addFragment)){
+      state.fragments.push(ch.addFragment);
+      logPush("【欠片入手】"+ch.addFragment);
+    }
+  }
+  // 戻る用履歴
+  state.history.push(state.sceneId);
+  // 進む
+  state.sceneId = ch.next;
+  render();
+}
+
+function back(){
+  const prev = state.history.pop();
+  if(prev){ state.sceneId = prev; render(); saveState(); }
+}
+
+/* ---------- 既読スキップ（次の未読 or 分岐まで） ---------- */
+function skipToNextUnread(){
+  let guard=0;
+  while(guard++<200){
+    const sc = SCENES[state.sceneId];
+    if(!sc) break;
+
+    const seen = !!state.seen[state.sceneId];
+    const valid = getValidChoices(sc);
+
+    // 未読、または選択肢が複数ある（分岐点）なら停止
+    if(!seen || valid.length !== 1){
+      render(); // 再描画だけ
+      return;
+    }
+    // 単一選択で既読 → 自動で踏む
+    choose(valid[0]);
+  }
+}
+
+/* ---------- 自動送り ---------- */
+function toggleAutoplay(){
+  state.flags.autoplay = !state.flags.autoplay;
+  if(state.flags.autoplay){ startAutoplay(); } else { stopAutoplay(); }
+  renderToggles(); saveState();
+}
+function startAutoplay(){
+  stopAutoplay();
+  scheduleAutoplayStep();
+}
+function stopAutoplay(){
+  if(autoplayTimer){ clearTimeout(autoplayTimer); autoplayTimer=null; }
+}
+function restartAutoplay(){
+  if(state.flags.autoplay){ startAutoplay(); }
+}
+function scheduleAutoplayStep(){
+  stopAutoplay();
+  autoplayTimer = setTimeout(autoplayStep, state.flags.autoplayMs||1800);
+}
+function autoplayStep(){
+  // 複数選択の場面では自動停止
+  const sc = SCENES[state.sceneId];
+  if(!sc){ return; }
+  const valid = getValidChoices(sc);
+  if(valid.length === 1){
+    choose(valid[0]);
+  }else{
+    // 停止（選ばせる）
+    stopAutoplay();
+    renderToggles();
+  }
+}
+
+/* ---------- UI/状態 ---------- */
+function updateBadges(){
+  const fr = (state.fragments||[]).length;
+  const af = Object.entries(state.affection).map(([k,v])=>`<span class="pill">${k}:${v}</span>`).join("");
+  const eds = Object.keys(state.flags).filter(k=>k.startsWith("ED_")).map(k=>`<span class="pill">${k.replace("ED_","ED:")}</span>`).join("");
+  const hid = isHiddenUnlocked(state) ? `<span class="pill">隠し：解放済</span>` : `<span class="pill">隠し：未解放</span>`;
+  const seenCount = Object.keys(state.seen||{}).length;
+  document.getElementById("badges").innerHTML =
+    `欠片 ${fr} / ? <span class="sep">|</span> 好感度 ${af} <span class="sep">|</span> ${eds} <span class="sep">|</span> ${hid} <span class="sep">|</span> 既読 ${seenCount}`;
+}
+function renderToggles(){
+  btnToggleSkip.textContent = `既読SKIP: ${state.flags.skipReadToggle ? "ON" : "OFF"}`;
+  btnToggleSkip.classList.toggle("toggle-on", !!state.flags.skipReadToggle);
+  btnAutoplay.textContent = `自動送り: ${state.flags.autoplay ? "ON" : "OFF"}`;
+  btnAutoplay.classList.toggle("toggle-on", !!state.flags.autoplay);
+  rngSpeed.value = String(state.flags.autoplayMs||1800);
+  speedVal.textContent = ((state.flags.autoplayMs||1800)/1000).toFixed(1)+"s";
+}
+
+/* ---------- 既読ログ ---------- */
+function logPush(line){
+  const p = document.createElement("div");
+  p.textContent = new Date().toLocaleTimeString()+" "+line;
+  elLog.appendChild(p);
+  elLog.scrollTop = elLog.scrollHeight;
+}
+
+/* ---------- 永続化 ---------- */
+function saveState(){ localStorage.setItem("mem_novel_state", JSON.stringify(state)); }
+function loadState(){ try{ return JSON.parse(localStorage.getItem("mem_novel_state")); }catch(e){ return null; } }
+
+</script>
+</body>
+</html>
