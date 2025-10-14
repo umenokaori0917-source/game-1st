@@ -1944,6 +1944,22 @@ btnAutoplay.onclick = toggleAutoplay;
 rngSpeed.oninput = ()=>{ state.flags.autoplayMs = Number(rngSpeed.value); speedVal.textContent = (state.flags.autoplayMs/1000).toFixed(1)+"s"; saveState(); if(state.flags.autoplay){ restartAutoplay(); }};
 
 let autoplayTimer=null;
+// === 画像フォールバック（webp/png/jpg/jpegを順に試す） ===
+async function resolveImageWithFallback(basePathNoExt, exts=["webp","png","jpg","jpeg"]) {
+  for (const ext of exts) {
+    const url = `${basePathNoExt}.${ext}`;
+    try {
+      await new Promise((res, rej)=>{
+        const img = new Image();
+        img.onload = ()=>res();
+        img.onerror = ()=>rej();
+        img.src = url;
+      });
+      return url; // 読めた拡張子が見つかった
+    } catch(_) {}
+  }
+  return null; // どれも無かった
+}
 
 render();
 function applyVisual(sc){
@@ -1953,36 +1969,51 @@ function applyVisual(sc){
   if(sc.se) playSE(sc.se);
 }
 
-function setBg(id){
+async function setBg(id){
   if(id===currentBg) return;
   currentBg = id;
-  // 例: assets/bg/school_gate_rain.jpg
+
+  // assets/bg/<id>.(webp|png|jpg|jpeg) を順に試す
+  const url = await resolveImageWithFallback(`assets/bg/${id}`);
+
   bgLayer.style.opacity = .6;
-  bgLayer.style.backgroundImage = `url(assets/bg/${id}.jpg)`;
+
+  if (url) {
+    bgLayer.style.backgroundImage = `url(${url})`;
+    bgLayer.style.backgroundSize = "cover";
+    bgLayer.style.backgroundPosition = "center";
+  } else {
+    // 画像がまだ無い間のダミー背景（後で実ファイルを置けば自動で切替）
+    bgLayer.style.backgroundImage =
+      "linear-gradient(135deg, #0b0e14 0%, #1a2235 60%, #101521 100%)";
+    bgLayer.style.backgroundSize = "cover";
+    bgLayer.style.backgroundPosition = "center";
+  }
+
   requestAnimationFrame(()=>{ bgLayer.style.opacity = .95; });
 }
 
-function setBgm(id){
-  if(id===currentBgm) return;
-  currentBgm = id;
-  // 例: assets/bgm/rain_walk.mp3
-  try{
-    bgmEl.src = `assets/bgm/${id}.mp3`;
-    bgmEl.volume = 0.8;
-    bgmEl.play().catch(()=>{/* ユーザー操作後に再生されます */});
-  }catch(e){}
-}
-
-function setSprites(list){
-  // list: [{char:'mio', pose:'think', pos:'center'}, ...]
+async function setSprites(list){
   spriteLayer.innerHTML = "";
-  (list||[]).forEach(sp=>{
+  for (const sp of (list||[])) {
     const el = document.createElement("div");
     el.className = `sprite ${sp.pos||"center"}`;
-    // 例: assets/sprites/kujyou_serious.png
-    el.style.backgroundImage = `url(assets/sprites/${sp.char}_${sp.pose}.png)`;
+
+    const base = `assets/sprites/${sp.char}_${sp.pose}`;
+    const url = await resolveImageWithFallback(base, ["webp","png","jpg","jpeg"]);
+
+    if (url) {
+      el.style.backgroundImage = `url(${url})`;
+      el.style.backgroundSize = "contain";
+      el.style.backgroundRepeat = "no-repeat";
+      el.style.backgroundPosition = "center bottom";
+      el.style.opacity = "1";
+    } else {
+      // 画像が無い間は非表示（後でファイルを置けば自動表示）
+      el.style.opacity = "0";
+    }
     spriteLayer.appendChild(el);
-  });
+  }
 }
 
 function playSE(id){
