@@ -2016,6 +2016,18 @@ async function setSprites(list){
   }
 }
 
+// === BGM（mp3を優先、失敗したら無音で進む） ===
+function setBgm(id){
+  if(id === currentBgm) return;
+  currentBgm = id;
+  try{
+    bgmEl.src = `assets/bgm/${id}.mp3`;   // 後でファイルを置けば自動で鳴る
+    bgmEl.volume = 0.8;
+    // ユーザー操作前は再生がブロックされることがあるので catch で握りつぶす
+    bgmEl.play().catch(()=>{});
+  }catch(_){}
+}
+
 function playSE(id){
   try{
     seEl.src = `assets/se/${id}.mp3`;
