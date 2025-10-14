@@ -3,7 +3,6 @@
   // 安全策：SCENESがなければ作る（基本はmain.jsで作られているはず）
   window.SCENES = window.SCENES || {};
 
-  Object.assign(window.SCENES, {
   SCENES["K1"] = {
     name:"",
     bg:"school_gate_rain", music:"rain_walk", sprite:[
@@ -14,8 +13,7 @@
     text:"放課後の校門は雨上がりの匂いで満ちていた。\n黒い手袋の男が、濡れたアスファルトの境目に立つ。\n男はまっすぐこちらを見て、微かに顎を引いた。",
     autoNext:"K2",   // ←これを追加
     autoDelay: 0              // ←ミリ秒。省略可（デフォルト0）
-  }
-};
+  };
   
   SCENES["K2"] = {
     name:"？",
