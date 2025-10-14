@@ -152,9 +152,7 @@ const SCENES = {
     name: "澪",
     text: "…また同じ夢。見知らぬ誰かの声が、水底から届くように胸を震わせる。目覚めると、手のひらに残る温度だけが現実で、言葉は残らない。今日は放課後、図書館で十年前の事件を調べようと思う。何かが、そこに繋がっている気がする。",
     choices: [
-      { label: "図書館へ向かう", next: "lib1", setAffection: {"九条": +1}, setFlags:{wentLibrary:true} },
-      { label: "カフェで一息つく", next: "cafe1", setAffection: {"朝倉": +1, "湊": +1}, setFlags:{wentCafe:true} },
-      { label: "研究協力のメールに返事を出す", next: "mail1", setAffection: {"藤堂": +1}, setFlags:{repliedMail:true} },
+     { label: "図書館へ向かう", next: "lib1", setFlags:{wentLibrary:true} }
     ],
     onEnter: (s)=>logPush("【プロローグ】")
   },
@@ -170,65 +168,39 @@ const SCENES = {
   "lib1_gain": {
     name:"",
     text:"【記憶の欠片】欠片①『古新聞：失われた学級記録』を手に入れた。",
-    choices:[{label:"続ける", next:"afterIntro"}]
-  },
-
-  "cafe1": {
-    name: "朝倉",
-    text: "「やあ。……目の下、少し赤いね。眠れてない？」冗談めかす声は軽く、けれど視線はまっすぐだ。カップに映る自分が、少しだけ他人に思えた。",
-    choices: [
-      { label: "軽口で返す", next:"afterIntro", setAffection:{"朝倉":+1} },
-      { label: "正直に体調を伝える", next:"afterIntro", setFlags:{honest:true} }
-    ]
-  },
-
-  "mail1": {
-    name:"藤堂",
-    text:"『ご返信ありがとう。無理のない範囲で構わないから、あなたの“感じたこと”を教えてほしい』柔らかな文面の奥に、沈殿する冷ややかな好奇心が見えた。",
-    choices:[{label:"丁寧に了承を返す", next:"afterIntro", setFlags:{agreedResearch:true}}]
-  },
-
-  "afterIntro": {
-    name: "澪",
-    text: "校門を出ると、黒い手袋の男が静かに立っていた。風向きが変わる。視線が合うより早く、彼は私の名を呼ぶ。",
-    choices: [{ label: "立ち止まる", next: "meetKujou" }]
-  },
-
-  "meetKujou": {
-    name: "九条",
-    text: "「柊澪さん。……あなたの“症状”について、話がある」低い声が輪郭を描く。彼の眼差しは曇りなく、だからこそ息苦しいほどに正確だった。",
-    choices: [
-      { label: "話を聞く", next: "forkPrep", setAffection: {"九条": +1} },
-      { label: "断って立ち去る", next: "meetKanade", setFlags:{defendedByKanade:true} }
-    ]
-  },
-
-  "meetKanade": {
-    name: "奏",
-    text: "「無理に応じなくていい。——私がいる」肩に置かれた手は熱を持っていて、心拍より先に不安を鎮めた。",
-    choices: [{ label: "礼を言う", next: "forkPrep" }]
-  },
-
-  "forkPrep": {
-    name: "",
-    text: "【放課後】廃部室の写真立てに触れると、遠い笑い声が一瞬流れ込む。（欠片②）",
-    choices: [{ label: "写真立てを手に取る", next: "roof", addFragment: "欠片02_写真立て" }]
+    choices:[{label:"外の空気を吸いに行く", next:"roof"}]
   },
 
   "roof": {
     name: "澪",
     text: "屋上で風に舞ったメモを追い、手すり越しに指先で掴む。（欠片③）『実験計画：被験者M-0』という活字が、紙に浅く残っていた。",
-    choices: [{ label: "メモをしまう", next: "branch", addFragment: "欠片03_屋上メモ" }]
+    choices: [{ label: "メモをしまう", next: "forkPrep", addFragment: "欠片03_屋上メモ" }]
+  },
+
+  "forkPrep": {
+    name: "",
+    text: "用事を思い出し、廃部室へ向かう。部室に置いてある古びた写真立てに触れると、遠い笑い声が一瞬流れ込む。（欠片②）",
+    choices: [{ label: "すぐにその場を離れる", next: "firstMeetHub", addFragment: "欠片02_写真立て" }]
+  },
+  
+  "firstMeetHub": {
+    name: "",
+    text: "今日はなんだか疲れた。",
+    choices: [
+      { label: "帰路につく", next: "branch", setAffection: {"九条": +1}, setFlags:{wentLibrary:true} },
+      { label: "友人に会いに行く", next:"branch", setAffection: {"朝倉": +1, "湊": +1}, setFlags:{wentCafe:true} },
+      { label: "別のことを考える", next:"branch", setAffection: {"藤堂": +1}, setFlags:{repliedMail:true} },
+    ]
   },
 
   "branch": {
     name: "",
     text: "誰の隣で、この揺らぐ世界を歩く？（個別ルート開始）",
     choices: [
-      { label: "朝倉 晃のもとへ向かう", next: "A1", req:(s)=> (s.affection["朝倉"]||0) >= 2 || s.flags.wentCafe },
-      { label: "九条 煌に会いに行く", next: "K1", req:(s)=> (s.affection["九条"]||0) >= 2 || s.flags.wentLibrary },
-      { label: "神原 湊を探す", next: "M1", req:(s)=> (s.affection["湊"]||0) >= 2 || s.flags.wentCafe },
-      { label: "藤堂 理久の研究室へ", next: "R1", req:(s)=> (s.affection["藤堂"]||0) >= 2 || s.flags.repliedMail || s.flags.agreedResearch },
+      { label: "朝倉 晃のもとへ向かう", next: "A1", req:(s)=> (s.affection["朝倉"]||0) >= 1 || s.flags.wentCafe },
+      { label: "九条 煌に会いに行く", next: "K1", req:(s)=> (s.affection["九条"]||0) >= 1 || s.flags.wentLibrary },
+      { label: "神原 湊を探す", next: "M1", req:(s)=> (s.affection["湊"]||0) >= 1 || s.flags.wentCafe },
+      { label: "藤堂 理久の研究室へ", next: "R1", req:(s)=> (s.affection["藤堂"]||0) >= 1 || s.flags.repliedMail || s.flags.agreedResearch },
       { label: "篠宮 奏と過ごす（友情）", next: "N1", req:(s)=> true }
     ]
   },
