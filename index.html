@@ -235,17 +235,31 @@ const SCENES = {
     bg:"library",
     music:"calm_day",
     text:"「柊 澪さん。——少し、お時間をいただけますか」",
-    autoNext:"KMW_1",   // ←これを追加
+    autoNext:"",   // ←これを追加
     autoDelay: 0              // ←ミリ秒。省略可（デフォルト0）
   };
 
+  SCENES["KW_2"] = {
+    name:"九条",
+    text:"「怪しいものではありません。九条と申します。以後、お見知りおきを」",
+    autoNext:"",
+    autoDelay: 0
+  };
+
+  SCENES["KW_"] = {
+    name:"",
+    text:"そう言って、九条と名乗った男は名刺を差し出してきた。私は差し出された名刺を受け取る。\nそこにはかつての研究所の名前があった。",
+    autoNext:"",
+    autoDelay: 0
+  };
+  
   SCENES["KMW_1"] = {
     name:"澪",
-    text:" (また“症状”の話だ。けれど、逃げても追いつく気配がする)",
+    text:" (また“症状”の話だ。きっと、逃げられない)",
     choices:[
       {label:"立ち止まり、話を聞く", next:"K1_listen", setAffection:{"九条":+1}},
       {label:"無言で通り過ぎる", next:"K1_ignore", setFlags:{defendedByKanade:true}},
-      {label:"距離を保って「少しだけ」と答える", next:"K1_cautious"}
+      {label:"「少しだけ」と答える", next:"K1_cautious"}
     ]
   };
 
@@ -255,9 +269,17 @@ const SCENES = {
       {char:"mio", pose:"think", pos:"center"},
       {char:"kujyou", pose:"neutral", pos:"right"}
     ],
-    text:"歩道の端。\n男は鞄から透明なクリアファイルを出し、端を丁寧に揃えた。\n表紙には『神ノ原 記憶消失事件』の文字。「十年前の資料です。あなたの名は被験者M-0として記録されている」(胸の奥に冷たい指が入ってくるような感じ)「確認させてください。最近、夢や聴覚に異常は」",
+    text:"歩道の端。\n男は鞄から透明なクリアファイルを出し、端を丁寧に揃えた。\n表紙には『神ノ原 記憶消失事件』の文字。(胸の奥に冷たい指が入ってくるような感じ)「確認させてください。最近、夢や聴覚に異常は」",
     choices:[{label:"図書館で続きを聞くことを提案する", next:"K2_prelude"}]
   };
+
+  SCENES["KW_"] = {
+    name:"九条",
+    text:"「十年前の資料です。あなたの名は被験者M-0として記録されています」",
+    autoNext:"",
+    autoDelay: 0
+  };
+  
   SCENES["K1_ignore"] = {
     name:"",
     bg:"school_gate_rain", music:"rain_walk", sprite:[
