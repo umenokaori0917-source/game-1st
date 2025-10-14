@@ -515,9 +515,9 @@ const journalModal = document.getElementById("journalModal");
 const journalBackdrop = document.getElementById("journalBackdrop");
 const btnJournalClose = document.getElementById("btnJournalClose");
 
-btnJournal.onclick = openJournal;
-btnJournalClose.onclick = closeJournal;
-journalBackdrop.onclick = closeJournal;
+btnJournal && (btnJournal.onclick = openJournal);
+btnJournalClose && (btnJournalClose.onclick = closeJournal);
+journalBackdrop && (journalBackdrop.onclick = closeJournal);
 document.addEventListener("keydown", (e)=>{ if(e.key==="Escape") closeJournal(); });
 document.getElementById("btnSave").onclick = ()=>{ saveState(); alert("セーブしました"); };
 document.getElementById("btnLoad").onclick = ()=>{ const ok=confirm("ロードしますか？未保存の進行は失われます。"); if(ok){ const s=loadState(); if(s){ state=s; render(); }}};
