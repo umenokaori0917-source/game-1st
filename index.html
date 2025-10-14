@@ -152,7 +152,7 @@ const SCENES = {
     name: "澪",
     text: "…また同じ夢。見知らぬ誰かの声が、水底から届くように胸を震わせる。目覚めると、手のひらに残る温度だけが現実で、言葉は残らない。今日は放課後、図書館で十年前の事件を調べようと思う。何かが、そこに繋がっている気がする。",
     choices: [
-     { label: "図書館へ向かう", next: "lib1", setFlags:{wentLibrary:true} }
+     { label: "図書館へ向かう", next: "lib1" }
     ],
     onEnter: (s)=>logPush("【プロローグ】")
   },
@@ -161,8 +161,7 @@ const SCENES = {
     name: "澪",
     text: "静かな紙の匂い。古い綴じ込みの片隅に、『神ノ原 記憶消失事件』の見出しが黄ばんで眠っていた。頁をめくる手が震える。読み進めるほど、私の中の“既視感”は輪郭を得ていく。",
     choices: [
-      { label: "さらに読み進める", next: "lib1_gain", addFragment:"欠片01_古新聞" },
-      { label: "本を閉じる", next:"afterIntro" }
+      { label: "さらに読み進める", next: "lib1_gain", addFragment:"欠片01_古新聞" }
     ]
   },
   "lib1_gain": {
