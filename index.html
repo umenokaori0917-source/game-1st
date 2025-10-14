@@ -129,6 +129,9 @@
 </div>
 
 <script>
+  // 互換: structuredClone が無い環境向け
+const deepClone = (obj)=> (window.structuredClone ? structuredClone(obj)
+                                                : JSON.parse(JSON.stringify(obj)));
 /* =========================================================
    シナリオ定義（効果非表示）
    ========================================================= */
@@ -1901,7 +1904,7 @@ const DEFAULT_STATE = {
   logs: []      // ★ 追加：ログ蓄積（画面には出さない）
 };
 
-let state = loadState() || structuredClone(DEFAULT_STATE);
+let state = loadState() || deepClone(DEFAULT_STATE);
 const elSpeaker = document.getElementById("speaker");
 const elText = document.getElementById("text");
 const elChoices = document.getElementById("choices");
@@ -1932,7 +1935,7 @@ journalBackdrop && (journalBackdrop.onclick = closeJournal);
 document.addEventListener("keydown", (e)=>{ if(e.key==="Escape") closeJournal(); });
 document.getElementById("btnSave").onclick = ()=>{ saveState(); alert("セーブしました"); };
 document.getElementById("btnLoad").onclick = ()=>{ const ok=confirm("ロードしますか？未保存の進行は失われます。"); if(ok){ const s=loadState(); if(s){ state=s; render(); }}};
-document.getElementById("btnReset").onclick = ()=>{ const ok=confirm("初期化しますか？"); if(ok){ state=structuredClone(DEFAULT_STATE); saveState(); render(); }};
+document.getElementById("btnReset").onclick = ()=>{ const ok=confirm("初期化しますか？"); if(ok){ state=deepClone(DEFAULT_STATE); saveState(); render(); }};
 btnBack.onclick = back;
 btnSkipRead.onclick = skipToNextUnread;
 btnToggleSkip.onclick = ()=>{ state.flags.skipReadToggle = !state.flags.skipReadToggle; renderToggles(); render(); saveState(); };
