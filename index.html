@@ -485,16 +485,15 @@ function isHiddenUnlocked(s){
   return needED && enoughFragments;
 }
 
-/* =========================================================
-   エンジン（既読スキップ & 自動送り）
-   ========================================================= */
+// REPLACE: DEFAULT_STATE をこの内容に差し替え
 const DEFAULT_STATE = {
   sceneId: "title",
   flags: { skipReadToggle:false, autoplay:false, autoplayMs:1800 },
   affection: {},
   fragments: [],
   history: [],
-  seen: {} // {sceneId: true}
+  seen: {},     // 既読管理
+  logs: []      // ★ 追加：ログ蓄積（画面には出さない）
 };
 
 let state = loadState() || structuredClone(DEFAULT_STATE);
@@ -510,7 +509,16 @@ const btnToggleSkip = document.getElementById("btnToggleSkip");
 const btnAutoplay = document.getElementById("btnAutoplay");
 const rngSpeed = document.getElementById("speed");
 const speedVal = document.getElementById("speedVal");
+// ADD: 軌跡ポップアップ要素
+const btnJournal = document.getElementById("btnJournal");
+const journalModal = document.getElementById("journalModal");
+const journalBackdrop = document.getElementById("journalBackdrop");
+const btnJournalClose = document.getElementById("btnJournalClose");
 
+btnJournal.onclick = openJournal;
+btnJournalClose.onclick = closeJournal;
+journalBackdrop.onclick = closeJournal;
+document.addEventListener("keydown", (e)=>{ if(e.key==="Escape") closeJournal(); });
 document.getElementById("btnSave").onclick = ()=>{ saveState(); alert("セーブしました"); };
 document.getElementById("btnLoad").onclick = ()=>{ const ok=confirm("ロードしますか？未保存の進行は失われます。"); if(ok){ const s=loadState(); if(s){ state=s; render(); }}};
 document.getElementById("btnReset").onclick = ()=>{ const ok=confirm("初期化しますか？"); if(ok){ state=structuredClone(DEFAULT_STATE); saveState(); render(); }};
@@ -675,15 +683,12 @@ function autoplayStep(){
 }
 
 /* ---------- UI/状態 ---------- */
+// REPLACE: updateBadges
 function updateBadges(){
-  const fr = (state.fragments||[]).length;
-  const af = Object.entries(state.affection).map(([k,v])=>`<span class="pill">${k}:${v}</span>`).join("");
-  const eds = Object.keys(state.flags).filter(k=>k.startsWith("ED_")).map(k=>`<span class="pill">${k.replace("ED_","ED:")}</span>`).join("");
-  const hid = isHiddenUnlocked(state) ? `<span class="pill">隠し：解放済</span>` : `<span class="pill">隠し：未解放</span>`;
-  const seenCount = Object.keys(state.seen||{}).length;
-  document.getElementById("badges").innerHTML =
-    `欠片 ${fr} / ? <span class="sep">|</span> 好感度 ${af} <span class="sep">|</span> ${eds} <span class="sep">|</span> ${hid} <span class="sep">|</span> 既読 ${seenCount}`;
+  // 何も表示しない。代わりに軌跡ポップアップの内容を最新化
+  if(journalModal.style.display === "block"){ renderJournal(); }
 }
+
 function renderToggles(){
   document.getElementById("btnToggleSkip").textContent = `既読SKIP: ${state.flags.skipReadToggle ? "ON" : "OFF"}`;
   document.getElementById("btnToggleSkip").classList.toggle("toggle-on", !!state.flags.skipReadToggle);
@@ -693,12 +698,75 @@ function renderToggles(){
   document.getElementById("speedVal").textContent = ((state.flags.autoplayMs||1800)/1000).toFixed(1)+"s";
 }
 
-/* ---------- 既読ログ ---------- */
+// ADD: 軌跡（ジャーナル）描画
+function renderJournal(){
+  // 隠し開放
+  const hidden = isHiddenUnlocked(state);
+  document.getElementById("jrHidden").textContent = hidden ? "解放済" : "未解放";
+
+  // ED数
+  const edKeys = Object.keys(state.flags).filter(k=>k.startsWith("ED_"));
+  document.getElementById("jrEDCount").textContent = `${edKeys.length} 件`;
+
+  // 欠片
+  const frUl = document.getElementById("jrFragments");
+  frUl.innerHTML = "";
+  if((state.fragments||[]).length===0){
+    const li = document.createElement("li"); li.textContent = "未入手";
+    frUl.appendChild(li);
+  }else{
+    state.fragments.forEach(f=>{
+      const li = document.createElement("li"); li.textContent = f; frUl.appendChild(li);
+    });
+  }
+
+  // 好感度
+  const afTbl = document.getElementById("jrAffection");
+  afTbl.innerHTML = "";
+  const entries = Object.entries(state.affection||{});
+  if(entries.length===0){
+    const tr = document.createElement("tr"); tr.innerHTML = "<td>データなし</td><td></td>"; afTbl.appendChild(tr);
+  }else{
+    entries.forEach(([name,val])=>{
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<td>${name}</td><td style="text-align:right">${val}</td>`;
+      afTbl.appendChild(tr);
+    });
+  }
+
+  // ログ
+  const logsUl = document.getElementById("jrLogs");
+  logsUl.innerHTML = "";
+  if((state.logs||[]).length===0){
+    const li = document.createElement("li"); li.textContent = "ログはまだありません";
+    logsUl.appendChild(li);
+  }else{
+    state.logs.slice(-200).forEach(l=>{
+      const li = document.createElement("li"); li.textContent = l; logsUl.appendChild(li);
+    });
+  }
+}
+
+function openJournal(){
+  renderJournal();
+  journalBackdrop.style.display = "block";
+  journalModal.style.display = "block";
+}
+
+function closeJournal(){
+  journalBackdrop.style.display = "none";
+  journalModal.style.display = "none";
+}
+  
+// REPLACE: logPush
 function logPush(line){
-  const p = document.createElement("div");
-  p.textContent = new Date().toLocaleTimeString()+" "+line;
-  elLog.appendChild(p);
-  elLog.scrollTop = elLog.scrollHeight;
+  const stamp = new Date().toLocaleTimeString()+" "+line;
+  state.logs.push(stamp);         // ★ state に蓄積
+  // 旧#logは非表示のためDOM追記は不要だが、既存利用の互換で残すなら以下コメントアウト解除
+  // const p = document.createElement("div");
+  // p.textContent = stamp;
+  // document.getElementById("log").appendChild(p);
+  // document.getElementById("log").scrollTop = document.getElementById("log").scrollHeight;
 }
 
 /* ---------- 永続化 ---------- */
