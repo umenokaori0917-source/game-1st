@@ -168,7 +168,7 @@ const SCENES = {
     ]
   },
   "lib1_gain": {
-    name:"システム",
+    name:"",
     text:"【記憶の欠片】欠片①『古新聞：失われた学級記録』を手に入れた。",
     choices:[{label:"続ける", next:"afterIntro"}]
   },
@@ -210,7 +210,7 @@ const SCENES = {
   },
 
   "forkPrep": {
-    name: "システム",
+    name: "",
     text: "【放課後】廃部室の写真立てに触れると、遠い笑い声が一瞬流れ込む。（欠片②）",
     choices: [{ label: "写真立てを手に取る", next: "roof", addFragment: "欠片02_写真立て" }]
   },
@@ -222,7 +222,7 @@ const SCENES = {
   },
 
   "branch": {
-    name: "システム",
+    name: "",
     text: "誰の隣で、この揺らぐ世界を歩く？（個別ルート開始）",
     choices: [
       { label: "朝倉 晃のもとへ向かう", next: "A1", req:(s)=> (s.affection["朝倉"]||0) >= 2 || s.flags.wentCafe },
@@ -2043,7 +2043,7 @@ const CHOICE_SE = "select";
 /* ---------- レンダリング ---------- */
 function render(){
   const sc = SCENES[state.sceneId];
-  if(!sc){ return showText("システム","シーンが見つかりません: "+state.sceneId, []); }
+  if(!sc){ return showText("","シーンが見つかりません: "+state.sceneId, []); }
 
   // onEnter: 一度だけ
   if(!state.flags["_entered_"+state.sceneId] && typeof sc.onEnter==="function"){
