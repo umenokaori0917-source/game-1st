@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>記憶交錯 - Web乙女ノベル（既読スキップ & 自動送り対応）</title>
+<title>記憶交錯 - Web乙女ノベル（効果非表示版／既読SKIP＆自動送り）</title>
 <style>
   :root{
     --bg:#0f1116;--panel:#171a22;--ink:#e8ecf1;--sub:#a6b0be;--accent:#7aa2f7;--warn:#f7768e
@@ -37,8 +37,8 @@
 <body>
 <div id="app">
   <header>
-    <h1>記憶交錯<span class="mini"> — Web分岐ノベル（既読/自動送り対応・初稿）</span></h1>
-    <div class="mini">v1.0</div>
+    <h1>記憶交錯<span class="mini"> — 効果非表示／Web分岐ノベル</span></h1>
+    <div class="mini">v1.1</div>
   </header>
 
   <div id="stage">
@@ -72,8 +72,7 @@
 
 <script>
 /* =========================================================
-   シナリオ定義（共通＋九条→朝倉→湊→藤堂→奏→隠し）
-   ※ 前回までの二つのスクリプト内容を統合
+   シナリオ定義（効果非表示）
    ========================================================= */
 const SCENES = {
   // ───────── タイトル／共通 ─────────
@@ -90,9 +89,9 @@ const SCENES = {
     name: "澪",
     text: "…また同じ夢。見知らぬ誰かの声が、水底から届くように胸を震わせる。目覚めると、手のひらに残る温度だけが現実で、言葉は残らない。今日は放課後、図書館で十年前の事件を調べようと思う。何かが、そこに繋がっている気がする。",
     choices: [
-      { label: "図書館へ向かう（知性+／九条導線）", next: "lib1", setAffection: {"九条": +1}, setFlags:{wentLibrary:true} },
-      { label: "カフェで一息（共感+／朝倉・湊導線）", next: "cafe1", setAffection: {"朝倉": +1, "湊": +1}, setFlags:{wentCafe:true} },
-      { label: "研究協力メールに返信（理性+／藤堂導線）", next: "mail1", setAffection: {"藤堂": +1}, setFlags:{repliedMail:true} },
+      { label: "図書館へ向かう", next: "lib1", setAffection: {"九条": +1}, setFlags:{wentLibrary:true} },
+      { label: "カフェで一息つく", next: "cafe1", setAffection: {"朝倉": +1, "湊": +1}, setFlags:{wentCafe:true} },
+      { label: "研究協力のメールに返事を出す", next: "mail1", setAffection: {"藤堂": +1}, setFlags:{repliedMail:true} },
     ],
     onEnter: (s)=>logPush("【プロローグ】")
   },
@@ -101,8 +100,8 @@ const SCENES = {
     name: "澪",
     text: "静かな紙の匂い。古い綴じ込みの片隅に、『神ノ原 記憶消失事件』の見出しが黄ばんで眠っていた。頁をめくる手が震える。読み進めるほど、私の中の“既視感”は輪郭を得ていく。",
     choices: [
-      { label: "さらに読む（欠片①入手）", next: "lib1_gain", addFragment:"欠片01_古新聞" },
-      { label: "切り上げる", next:"afterIntro" }
+      { label: "さらに読み進める", next: "lib1_gain", addFragment:"欠片01_古新聞" },
+      { label: "本を閉じる", next:"afterIntro" }
     ]
   },
   "lib1_gain": {
@@ -115,15 +114,15 @@ const SCENES = {
     name: "朝倉",
     text: "「やあ。……目の下、少し赤いね。眠れてない？」冗談めかす声は軽く、けれど視線はまっすぐだ。カップに映る自分が、少しだけ他人に思えた。",
     choices: [
-      { label: "軽口を返す（朝倉+）", next:"afterIntro", setAffection:{"朝倉":+1} },
-      { label: "正直に不調を伝える（フラグ）", next:"afterIntro", setFlags:{honest:true} }
+      { label: "軽口で返す", next:"afterIntro", setAffection:{"朝倉":+1} },
+      { label: "正直に体調を伝える", next:"afterIntro", setFlags:{honest:true} }
     ]
   },
 
   "mail1": {
     name:"藤堂",
     text:"『ご返信ありがとう。無理のない範囲で構わないから、あなたの“感じたこと”を教えてほしい』柔らかな文面の奥に、沈殿する冷ややかな好奇心が見えた。",
-    choices:[{label:"丁寧に了承を返す（フラグ）", next:"afterIntro", setFlags:{agreedResearch:true}}]
+    choices:[{label:"丁寧に了承を返す", next:"afterIntro", setFlags:{agreedResearch:true}}]
   },
 
   "afterIntro": {
@@ -136,8 +135,8 @@ const SCENES = {
     name: "九条",
     text: "「柊澪さん。……あなたの“症状”について、話がある」低い声が輪郭を描く。彼の眼差しは曇りなく、だからこそ息苦しいほどに正確だった。",
     choices: [
-      { label: "話を聞く（九条+）", next: "forkPrep", setAffection: {"九条": +1} },
-      { label: "断る（奏イベントへ）", next: "meetKanade", setFlags:{defendedByKanade:true} }
+      { label: "話を聞く", next: "forkPrep", setAffection: {"九条": +1} },
+      { label: "断って立ち去る", next: "meetKanade", setFlags:{defendedByKanade:true} }
     ]
   },
 
@@ -150,24 +149,24 @@ const SCENES = {
   "forkPrep": {
     name: "システム",
     text: "【放課後】廃部室の写真立てに触れると、遠い笑い声が一瞬流れ込む。（欠片②）",
-    choices: [{ label: "欠片を拾う", next: "roof", addFragment: "欠片02_写真立て" }]
+    choices: [{ label: "写真立てを手に取る", next: "roof", addFragment: "欠片02_写真立て" }]
   },
 
   "roof": {
     name: "澪",
     text: "屋上で風に舞ったメモを追い、手すり越しに指先で掴む。（欠片③）『実験計画：被験者M-0』という活字が、紙に浅く残っていた。",
-    choices: [{ label: "メモをポケットへ", next: "branch", addFragment: "欠片03_屋上メモ" }]
+    choices: [{ label: "メモをしまう", next: "branch", addFragment: "欠片03_屋上メモ" }]
   },
 
   "branch": {
     name: "システム",
     text: "誰の隣で、この揺らぐ世界を歩く？（個別ルート開始）",
     choices: [
-      { label: "朝倉 晃ルート", next: "A1", req:(s)=> (s.affection["朝倉"]||0) >= 2 || s.flags.wentCafe },
-      { label: "九条 煌ルート", next: "K1", req:(s)=> (s.affection["九条"]||0) >= 2 || s.flags.wentLibrary },
-      { label: "神原 湊ルート", next: "M1", req:(s)=> (s.affection["湊"]||0) >= 2 || s.flags.wentCafe },
-      { label: "藤堂 理久ルート", next: "R1", req:(s)=> (s.affection["藤堂"]||0) >= 2 || s.flags.repliedMail || s.flags.agreedResearch },
-      { label: "篠宮 奏（友情）", next: "N1", req:(s)=> true }
+      { label: "朝倉 晃のもとへ向かう", next: "A1", req:(s)=> (s.affection["朝倉"]||0) >= 2 || s.flags.wentCafe },
+      { label: "九条 煌に会いに行く", next: "K1", req:(s)=> (s.affection["九条"]||0) >= 2 || s.flags.wentLibrary },
+      { label: "神原 湊を探す", next: "M1", req:(s)=> (s.affection["湊"]||0) >= 2 || s.flags.wentCafe },
+      { label: "藤堂 理久の研究室へ", next: "R1", req:(s)=> (s.affection["藤堂"]||0) >= 2 || s.flags.repliedMail || s.flags.agreedResearch },
+      { label: "篠宮 奏と過ごす（友情）", next: "N1", req:(s)=> true }
     ]
   },
 
@@ -189,10 +188,10 @@ const SCENES = {
   },
   "K4": {
     name:"システム",
-    text:"【選択】彼の手に触れるか、彼の規則を尊重するか。",
+    text:"彼の手に触れるか、彼の規則を尊重するか。",
     choices:[
-      {label:"手に触れる（恋愛ED導線）", next:"K5a"},
-      {label:"規則を守ると伝える（真実ED導線）", next:"K5b"}
+      {label:"手に触れる", next:"K5a"},
+      {label:"規則を尊重する", next:"K5b"}
     ]
   },
   "K5a": {
@@ -234,10 +233,10 @@ const SCENES = {
   },
   "A4": {
     name:"システム",
-    text:"【選択】彼の嘘を受け入れるか、本音を求めるか。",
+    text:"彼の嘘を受け入れるか、本音を求めるか。",
     choices:[
-      {label:"受け入れる（恋愛ED導線）", next:"A5a"},
-      {label:"本音を求める（友情ED導線）", next:"A5b"}
+      {label:"受け入れる", next:"A5a"},
+      {label:"本音を求める", next:"A5b"}
     ]
   },
   "A5a": {
@@ -279,10 +278,10 @@ const SCENES = {
   },
   "M4": {
     name:"システム",
-    text:"【選択】逃げずに立つか、大人の助けを借りるか。",
+    text:"逃げずに立つか、大人の助けを借りるか。",
     choices:[
-      {label:"逃げない（恋愛ED導線）", next:"M5a"},
-      {label:"大人に頼る（救済ED導線）", next:"M5b"}
+      {label:"逃げない", next:"M5a"},
+      {label:"助けを求める", next:"M5b"}
     ]
   },
   "M5a": {
@@ -324,10 +323,10 @@ const SCENES = {
   },
   "R4": {
     name:"システム",
-    text:"【選択】彼を信じて踏み込むか、距離を置くか。",
+    text:"彼を信じて踏み込むか、距離を置くか。",
     choices:[
-      {label:"信じる（崩壊ED導線／MB）", next:"R5a"},
-      {label:"距離を置く（恋愛ED導線）", next:"R5b"}
+      {label:"踏み込む", next:"R5a"},
+      {label:"距離を置く", next:"R5b"}
     ]
   },
   "R5a": {
@@ -369,10 +368,10 @@ const SCENES = {
   },
   "N4": {
     name:"システム",
-    text:"【選択】彼女を信じて送り出すか、引き止めるか。",
+    text:"彼女を信じて送り出すか、引き止めるか。",
     choices:[
-      {label:"送り出す（友情/犠牲ED導線）", next:"N5a"},
-      {label:"引き止める（別離回避）", next:"N5b"}
+      {label:"送り出す", next:"N5a"},
+      {label:"引き止める", next:"N5b"}
     ]
   },
   "N5a": {
@@ -409,10 +408,10 @@ const SCENES = {
   },
   "H3": {
     name:"システム",
-    text:"【選択】世界を修復するか、現実を受け入れるか。",
+    text:"世界を修復するか、現実を受け入れるか。",
     choices:[
-      {label:"世界を修復（トゥルーED導線）", next:"H4a"},
-      {label:"現実を受け入れる（ビターグッド）", next:"H4b"}
+      {label:"世界を修復する", next:"H4a"},
+      {label:"現実を受け入れる", next:"H4b"}
     ]
   },
   "H4a": {
@@ -443,7 +442,7 @@ function isHiddenUnlocked(s){
 }
 
 /* =========================================================
-   エンジン（既読スキップ & 自動送り対応）
+   エンジン（既読スキップ & 自動送り）
    ========================================================= */
 const DEFAULT_STATE = {
   sceneId: "title",
@@ -494,6 +493,7 @@ function render(){
 
   // 既読マーキング
   const wasSeen = !!state.seen[state.sceneId];
+
   // 表示
   showText(sc.name||"", sc.text||"", buildChoices(sc));
 
@@ -505,16 +505,15 @@ function render(){
     const validChoices = getValidChoices(sc);
     if(validChoices.length === 1){
       setTimeout(()=>choose(validChoices[0]), 0);
-      return; // ここで一旦抜ける
+      return;
     }
   }
 
-  // このタイミングで既読登録（※読むたびに登録）
+  // 既読登録
   state.seen[state.sceneId] = true;
 
   // バッジ更新
   updateBadges();
-  // トグルUI反映
   renderToggles();
 
   // 自動送り：ON時は単一選択のみ自動、複数選択は停止
@@ -554,7 +553,7 @@ function getValidChoices(sc){
 }
 
 function choose(ch){
-  // 効果適用
+  // 効果適用（内部のみ）
   if(ch.setFlags){ Object.assign(state.flags, ch.setFlags); }
   if(ch.setAffection){
     for(const k in ch.setAffection){
@@ -569,7 +568,7 @@ function choose(ch){
   }
   // 戻る用履歴
   state.history.push(state.sceneId);
-  // 進む
+  // 遷移
   state.sceneId = ch.next;
   render();
 }
@@ -620,15 +619,13 @@ function scheduleAutoplayStep(){
   autoplayTimer = setTimeout(autoplayStep, state.flags.autoplayMs||1800);
 }
 function autoplayStep(){
-  // 複数選択の場面では自動停止
   const sc = SCENES[state.sceneId];
   if(!sc){ return; }
   const valid = getValidChoices(sc);
   if(valid.length === 1){
     choose(valid[0]);
   }else{
-    // 停止（選ばせる）
-    stopAutoplay();
+    stopAutoplay(); // 分岐では停止
     renderToggles();
   }
 }
@@ -644,12 +641,12 @@ function updateBadges(){
     `欠片 ${fr} / ? <span class="sep">|</span> 好感度 ${af} <span class="sep">|</span> ${eds} <span class="sep">|</span> ${hid} <span class="sep">|</span> 既読 ${seenCount}`;
 }
 function renderToggles(){
-  btnToggleSkip.textContent = `既読SKIP: ${state.flags.skipReadToggle ? "ON" : "OFF"}`;
-  btnToggleSkip.classList.toggle("toggle-on", !!state.flags.skipReadToggle);
-  btnAutoplay.textContent = `自動送り: ${state.flags.autoplay ? "ON" : "OFF"}`;
-  btnAutoplay.classList.toggle("toggle-on", !!state.flags.autoplay);
-  rngSpeed.value = String(state.flags.autoplayMs||1800);
-  speedVal.textContent = ((state.flags.autoplayMs||1800)/1000).toFixed(1)+"s";
+  document.getElementById("btnToggleSkip").textContent = `既読SKIP: ${state.flags.skipReadToggle ? "ON" : "OFF"}`;
+  document.getElementById("btnToggleSkip").classList.toggle("toggle-on", !!state.flags.skipReadToggle);
+  document.getElementById("btnAutoplay").textContent = `自動送り: ${state.flags.autoplay ? "ON" : "OFF"}`;
+  document.getElementById("btnAutoplay").classList.toggle("toggle-on", !!state.flags.autoplay);
+  document.getElementById("speed").value = String(state.flags.autoplayMs||1800);
+  document.getElementById("speedVal").textContent = ((state.flags.autoplayMs||1800)/1000).toFixed(1)+"s";
 }
 
 /* ---------- 既読ログ ---------- */
@@ -663,7 +660,6 @@ function logPush(line){
 /* ---------- 永続化 ---------- */
 function saveState(){ localStorage.setItem("mem_novel_state", JSON.stringify(state)); }
 function loadState(){ try{ return JSON.parse(localStorage.getItem("mem_novel_state")); }catch(e){ return null; } }
-
 </script>
 </body>
 </html>
