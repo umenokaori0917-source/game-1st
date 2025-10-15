@@ -1742,8 +1742,17 @@ function playSE(id){
 }
 
 // 操作音：選択時のSE（任意）
-const CHOICE_SE = "select";
-
+const CHOICE_SE = null;
+function playSE(id){
+  if(!id) return;
+  try{
+    seEl.src = `assets/se/${id}.mp3`;
+    seEl.currentTime = 0;
+    seEl.volume = 0.9;
+    seEl.play().catch(()=>{});
+  }catch(e){}
+}
+  
 /* ---------- レンダリング ---------- */
 function render(){
   const sc = SCENES[state.sceneId];
