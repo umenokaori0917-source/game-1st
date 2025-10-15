@@ -1720,37 +1720,31 @@ async function setSprites(list){
   }
 }
 
+// ===== サウンド設定 =====
+const SFX_ENABLED = false;         // ← SEを全部オフ（404を出さない）
+const CHOICE_SE   = null;          // ← 選択音もオフ
+
 // === BGM（mp3を優先、失敗したら無音で進む） ===
 function setBgm(id){
   if(id === currentBgm) return;
   currentBgm = id;
   try{
-    bgmEl.src = `assets/bgm/${id}.mp3`;   // 後でファイルを置けば自動で鳴る
+    bgmEl.src = `assets/bgm/${id}.mp3`;
     bgmEl.volume = 0.8;
-    // ユーザー操作前は再生がブロックされることがあるので catch で握りつぶす
-    bgmEl.play().catch(()=>{});
+    bgmEl.play().catch(()=>{});    // ユーザー操作前ブロックは握りつぶす
   }catch(_){}
 }
 
+// === SE（404防止） ===
 function playSE(id){
-  try{
-    seEl.src = `assets/se/${id}.mp3`;
-    seEl.currentTime = 0;
-    seEl.volume = 0.9;
-    seEl.play().catch(()=>{});
-  }catch(e){}
-}
-
-// 操作音：選択時のSE（任意）
-const CHOICE_SE = null;
-function playSE(id){
+  if(!SFX_ENABLED) return;         // ← ここで一括ガード
   if(!id) return;
   try{
     seEl.src = `assets/se/${id}.mp3`;
     seEl.currentTime = 0;
     seEl.volume = 0.9;
     seEl.play().catch(()=>{});
-  }catch(e){}
+  }catch(_){}
 }
   
 /* ---------- レンダリング ---------- */
