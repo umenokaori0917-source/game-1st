@@ -151,7 +151,7 @@ SCENES["title"] = {
     ]
   },
 
-  "start": {
+SCENES["start"] = {
     name: "澪",
     text: "…また同じ夢。見知らぬ誰かの声が、水底から届くように胸を震わせる。\n目覚めると、手のひらに残る温度だけが現実で、言葉は残らない。\n今日は放課後、図書館で十年前の事件を調べようと思う。何かが、そこに繋がっている気がする。",
     choices: [
@@ -160,45 +160,45 @@ SCENES["title"] = {
     onEnter: (s)=>logPush("【プロローグ】")
   },
 
-  "lib1": {
+SCENES["lib1"] = {
     name: "澪",
     text: "静かな紙の匂い。\n古い綴じ込みの片隅に、『神ノ原 記憶消失事件』の見出しが黄ばんで眠っていた。\n頁をめくる手が震える。読み進めるほど、私の中の“既視感”は輪郭を得ていく。",
     choices: [
       { label: "さらに読み進める", next: "lib_gain", addFragment:"欠片01_古新聞" }
     ]
   },
-  
-  "lib_gain": {
+
+SCENES["lib_gain"] = {
     name:"",
     text:"【記憶の欠片】\n欠片①『古新聞：失われた学級記録』を手に入れた。",
     choices:[{label:"外の空気を吸いに行く", next:"roof"}]
   },
 
-  "roof": {
+SCENES["roof"] = {
     name: "澪",
     text: "外の空気を吸いに屋上へ出た。\nふと屋上で風に舞っていたメモを追い、手すり越しに指先で掴む。\n『実験計画＿被験者M-0』という活字が、紙に浅く残っていた。",
     choices: [{ label: "メモをしまう", next: "roof_gain", addFragment: "欠片02_屋上のメモ" }]
   },
 
-  "roof_gain": {
+SCENES["roof_gain"] = {
     name:"",
     text:"【記憶の欠片】\n欠片②『屋上のメモ：実験計画＿被験者M-0』を手に入れた。",
     choices:[{label:"廃部室へ向かう", next:"forkPrep"}]
   },
 
-  "forkPrep": {
+SCENES["forkPrep"] = {
     name: "",
     text: "用事を思い出し、廃部室へ向かう。\n部室に置いてある古びた写真立てに触れると、遠い笑い声が一瞬流れ込む。",
     choices: [{ label: "すぐにその場を離れる", next: "forkPrep_gain", addFragment: "欠片03_写真立て" }]
   },
 
-  "forkPrep_gain": {
+SCENES["forkPrep_gain"] = {
     name:"",
     text:"【記憶の欠片】\n欠片③『写真立て：いつかの記憶』を手に入れた。",
     choices:[{label:"外の空気を吸いに行く", next:"firstMeetHub"}]
   },
-  
-  "firstMeetHub": {
+
+SCENES["firstMeetHub"] = {
     name: "",
     text: "今日はなんだか疲れた。",
     choices: [
@@ -208,7 +208,7 @@ SCENES["title"] = {
     ]
   },
 
-  "branch": {
+SCENES["branch"] = {
     name: "",
     text: "誰の隣で、この揺らぐ世界を歩く？（個別ルート開始）",
     choices: [
