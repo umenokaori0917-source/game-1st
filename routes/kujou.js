@@ -1,6 +1,5 @@
 // routes/kujou.js
-(() => {
-  // 安全策：SCENESがなければ作る（基本はmain.jsで作られているはず）
+// 安全策：SCENESがなければ作る（基本はmain.jsで作られているはず）
 const SCENES = (window.SCENES = window.SCENES || {});
   
   SCENES["K1"] = {
