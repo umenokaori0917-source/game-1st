@@ -88,7 +88,8 @@
     next:"K1_ignore2",
 
   };
-    S["K1_ignore2"] = {
+  
+  S["K1_ignore2"] = {
     name:"",
     text:"振り向くと、そこには篠宮 奏。彼女は私と九条の間に一歩入った。",
     next:"K1_ignore3",
@@ -206,6 +207,7 @@
     text:"(観測、じゃない。これは救命の手順みたいだ)",
     choices:[{label:"さらに詳しく——夢の風景や温度を語る", next:"K2_detail"}]
   };
+  
   S["K2_detail"] = {
     name:"澪",
     text:"「水の匂いがして、床は冷たいコンクリート。誰かが窓の外で笑ってるのに、顔が思い出せない」",
@@ -372,6 +374,7 @@
     text:"フロントガラスを叩く雨が、会話の隙間を埋めた。",
     choices:[{label:"保護先へ向かう", next:"K4"}]
   };
+  
   S["K3_run"] = {
     name:"",
     text:"私は九条の手を掴み、濡れた商店街を駆けた。\n彼は規則正しく息を吐き、私の歩幅に合わせて速度を調整する。",
@@ -412,6 +415,7 @@
     text:"私は初めて彼の笑顔を見た。",
     choices:[{label:"路地を抜け、人気のない施設へ", next:"K4"}]
   };
+  
   S["K3_trust"] = {
     name:"澪",
     text:"「信じていいの？」",
@@ -496,6 +500,7 @@
     text:"(赦すのは、私？それとも彼自身？)",
     choices:[{label:"指先を重ねる", next:"K5a_prelude"}]
   };
+  
   S["K4_distance"] = {
     name:"澪",
     text:"「今は距離を置こう」",
@@ -588,6 +593,7 @@
       {label:"恥ずかしくて手を離す", next:"K5a_hesitate"}
     ]
   };
+  
   S["K5a_hesitate"] = {
     name:"",
     text:"指が離れた途端、音が遠のく。",
@@ -651,6 +657,7 @@
       {label:"匿名で投函する", next:"K5b_anon"}
     ]
   };
+  
   S["K5b_anon"] = {
     name:"",
     text:"夜のポストに封筒が吸い込まれる音は、思ったよりも軽い。",
@@ -693,6 +700,7 @@
       {label:"このまま任せるしかない。", next:"K6c", setFlags:{ED_Kujou_Collapse:true}}
     ]
   };
+  
   S["K5c_pullback"] = {
     name:"",
     text:"互いに跳ね退く。\n布が床に落ち、重たい呼吸が部屋に残る。",
@@ -757,6 +765,7 @@
     text:"世界は急に優しくならない。\nでも、呼吸は確かに軽い。",
     choices:[{label:"記録してタイトルへ", next:"ED_Collector", setFlags:{ED_Kujou_Love:true}}]
   };
+  
   S["K6b"] = {
     name:"",
     text:"【真実ED：終止報告】",
@@ -797,6 +806,7 @@
     text:"「……考えておきます」",
     choices:[{label:"記録してタイトルへ", next:"ED_Collector", setFlags:{ED_Kujou_Truth:true}}]
   };
+  
   S["K6c"] = {
     name:"",
     text:"【崩壊ED：共鳴】",
