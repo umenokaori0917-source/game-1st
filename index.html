@@ -2175,11 +2175,17 @@ function openJournal(){
   journalModal.style.display = "block";
 }
 
-function journalReplayED(sceneId){
+async function journalReplayED(sceneId){
   // モーダル閉じる
   closeJournal();
   // 戻る用ヒストリに現在を積む
   state.history.push(state.sceneId);
+  // 念のためここでもロード保証
+  const ok = await ensureSceneLoaded(sceneId);
+  if (!ok && !SCENES[sceneId]) {
+    alert("このEDシーンが未実装です");
+    return;
+  }
   // 指定EDシーンへジャンプ（ED本編の「記録してタイトルへ」で戻れる）
   state.sceneId = sceneId;
   render();
