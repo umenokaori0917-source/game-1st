@@ -1597,6 +1597,38 @@ function isHiddenUnlocked(s){
   return needED && enoughFragments;
 }
 
+// どのシーンIDがどのファイルにいるかのざっくりマップ（先頭1文字で十分）
+const ROUTE_LOADERS = {
+  "K": "routes/kujou.js",
+  "A": "routes/asakura.js",
+  "M": "routes/minato.js",
+  "R": "routes/todo.js",
+  "N": "routes/kanade.js",
+  "H": "routes/hidden.js",
+};
+const _loadedRouteFiles = new Set();
+
+function ensureSceneLoaded(sceneId){
+  if (SCENES[sceneId]) return Promise.resolve(true);
+  const key = String(sceneId).charAt(0);
+  const src = ROUTE_LOADERS[key];
+  if (!src) return Promise.resolve(false); // マップに無ければ諦める
+
+  if (_loadedRouteFiles.has(src)) {
+    // 既に読んだのに無い → シーン名のタイプミスの可能性
+    return Promise.resolve(!!SCENES[sceneId]);
+  }
+
+  return new Promise((resolve) => {
+    const s = document.createElement("script");
+    s.src = src;
+    s.defer = true;
+    s.onload = () => { _loadedRouteFiles.add(src); resolve(!!SCENES[sceneId]); };
+    s.onerror = () => { console.warn("failed to load route file:", src); resolve(false); };
+    document.head.appendChild(s);
+  });
+}
+
 // REPLACE: DEFAULT_STATE をこの内容に差し替え
 const DEFAULT_STATE = {
   sceneId: "title",
@@ -1829,9 +1861,8 @@ function getValidChoices(sc){
   return (sc.choices||[]).filter(ch=>!ch.req || ch.req(state));
 }
 
-function choose(ch){
-  playSE(CHOICE_SE); // ★ 追加：選択音
-  // 効果適用（内部のみ）
+async function choose(ch){
+  playSE(CHOICE_SE);
   if(ch.setFlags){ Object.assign(state.flags, ch.setFlags); }
   if(ch.setAffection){
     for(const k in ch.setAffection){
@@ -1844,9 +1875,15 @@ function choose(ch){
       logPush("【欠片入手】"+ch.addFragment);
     }
   }
-  // 戻る用履歴
+
+  // ★ ここがポイント：次のシーンが未定義なら対応ファイルを読み込む
+  const ok = await ensureSceneLoaded(ch.next);
+  if(!ok && !SCENES[ch.next]){
+    alert("このルートの読み込みに失敗しました: " + ch.next);
+    return;
+  }
+
   state.history.push(state.sceneId);
-  // 遷移
   state.sceneId = ch.next;
   render();
 }
