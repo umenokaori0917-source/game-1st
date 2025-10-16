@@ -5,11 +5,6 @@
   
   S["K1"] = {
     name:"",
-    bg:"school_gate_rain", music:"rain_walk", sprite:[
-      {char:"mio", pose:"neutral", pos:"center"},
-      {char:"kujyou", pose:"serious", pos:"right"}
-    ],
-    se:"chime",
     text:"放課後の校門は雨上がりの匂いで満ちていた。\n黒い手袋の男が、濡れたアスファルトの境目に立つ。\n男はまっすぐこちらを見て、微かに顎を引いた。",
     autoNext:"K2",   // ←これを追加
     autoDelay: 0              // ←ミリ秒。省略可（デフォルト0）
@@ -55,10 +50,6 @@
 
   S["K1_listen"] = {
     name:"",
-    bg:"school_gate_rain", music:"suspense", sprite:[
-      {char:"mio", pose:"think", pos:"center"},
-      {char:"kujyou", pose:"neutral", pos:"right"}
-    ],
     text:"歩道の端。\n男は鞄から透明なクリアファイルを出し、端を丁寧に揃えた。\n表紙には『神ノ原 記憶消失事件』の文字。",
     autoNext:"K1_listen1",
     autoDelay: 0
@@ -86,9 +77,6 @@
   
   S["K1_ignore"] = {
     name:"",
-    bg:"school_gate_rain", music:"rain_walk", sprite:[
-      {char:"mio", pose:"neutral", pos:"center"}
-    ],
     text:"踵を返した瞬間、肩にそっと影が差す。",
     autoNext:"K1_ignore1",
     autoDelay: 0
@@ -136,10 +124,6 @@
   
   S["K1_cautious"] = {
     name:"",
-    bg:"school_gate_rain", music:"suspense", sprite:[
-      {char:"mio", pose:"neutral", pos:"center"},
-      {char:"kujyou", pose:"serious", pos:"right"}
-    ],
     text:"二人分の距離を保ったまま、校門脇の屋根の下へ移動する。\n雨粒が看板から落ちる音が規則正しい。",
     autoNext:"K1_cautious1",
     autoDelay: 0
@@ -174,10 +158,6 @@
   
   S["K2_prelude"] = {
     name:"",
-    bg:"library", music:"calm_day", sprite:[
-      {char:"mio", pose:"think", pos:"left"},
-      {char:"kujyou", pose:"neutral", pos:"right"}
-    ],
     text:"放課後の図書館は空調の音だけが低く響いていた。\n窓際の机に向かい合って座る。\n九条は手袋を外さない。",
     autoNext:"K2_prelude1",
     autoDelay: 0
@@ -195,10 +175,6 @@
   
   S["K2_honest"] = {
     name:"澪",
-    bg:"library", music:"calm_day", sprite:[
-      {char:"mio", pose:"speak", pos:"left"},
-      {char:"kujyou", pose:"serious", pos:"right"}
-    ],
     text:"「——『誰かの代わりに生きろ』」",
     autoNext:"K2_honest1",
     autoDelay: 0
@@ -232,10 +208,6 @@
   };
   S["K2_detail"] = {
     name:"澪",
-    bg:"library", music:"truth", sprite:[
-      {char:"mio", pose:"think", pos:"left"},
-      {char:"kujyou", pose:"neutral", pos:"right"}
-    ],
     text:"「水の匂いがして、床は冷たいコンクリート。誰かが窓の外で笑ってるのに、顔が思い出せない」",
     autoNext:"K2_detail1",
     autoDelay: 0
@@ -270,10 +242,6 @@
   
   S["K2_avoid"] = {
     name:"澪",
-    bg:"library", music:"melancholy", sprite:[
-      {char:"mio", pose:"neutral", pos:"left"},
-      {char:"kujyou", pose:"soft", pos:"right"}
-    ],
     text:"「……断片的で」",
     autoNext:"K2_avoid1",
     autoDelay: 0
@@ -308,10 +276,6 @@
   
   S["K2_asktrust"] = {
     name:"澪",
-    bg:"library", music:"calm_day", sprite:[
-      {char:"mio", pose:"speak", pos:"left"},
-      {char:"kujyou", pose:"serious", pos:"right"}
-    ],
     text:"「九条さんは、私を信じますか」",
     autoNext:"K2_asktrust1",
     autoDelay: 0
@@ -353,11 +317,6 @@
   
   S["K3"] = {
     name:"",
-    bg:"street_rain", music:"rain_walk", sprite:[
-      {char:"mio", pose:"shock", pos:"center"},
-      {char:"kujyou", pose:"serious", pos:"right"}
-    ],
-    se:"whoosh",
     text:"帰り道、空は再び降り出した。\n曲がり角の向こうから黒いバンが近づく。\nスライドドアが開き、無機質な光が路面を舐めた。",
     autoNext:"K31",
     autoDelay: 0
@@ -389,10 +348,6 @@
   
   S["K3_car"] = {
     name:"",
-    bg:"car_dark", music:"suspense", sprite:[
-      {char:"mio", pose:"think", pos:"left"},
-      {char:"kujyou", pose:"neutral", pos:"right"}
-    ],
     text:"車内の空気は冷たく乾いていた。\n九条は私の隣に座り、手袋越しにシートベルトを確認する。",
     autoNext:"K3_car1",
     autoDelay: 0
@@ -419,11 +374,6 @@
   };
   S["K3_run"] = {
     name:"",
-    bg:"alley_rain", music:"run", sprite:[
-      {char:"mio", pose:"shock", pos:"center"},
-      {char:"kujyou", pose:"serious", pos:"right"}
-    ],
-    se:"run",
     text:"私は九条の手を掴み、濡れた商店街を駆けた。\n彼は規則正しく息を吐き、私の歩幅に合わせて速度を調整する。",
     autoNext:"K3_run1",
     autoDelay: 0
@@ -464,10 +414,6 @@
   };
   S["K3_trust"] = {
     name:"澪",
-    bg:"street_rain", music:"rain_walk", sprite:[
-      {char:"mio", pose:"think", pos:"center"},
-      {char:"kujyou", pose:"soft", pos:"right"}
-    ],
     text:"「信じていいの？」",
     autoNext:"K3_trust1",
     autoDelay: 0
@@ -502,10 +448,6 @@
   
   S["K4"] = {
     name:"",
-    bg:"public_hall", music:"tender", sprite:[
-      {char:"mio", pose:"neutral", pos:"left"},
-      {char:"kujyou", pose:"neutral", pos:"right"}
-    ],
     text:"辿り着いたのは閉鎖中の公民館。\n非常灯だけが薄く床を照らす。\n九条は備品室から毛布を出し、机の端に並べた。",
     autoNext:"K41",
     autoDelay: 0
@@ -537,11 +479,6 @@
   
   S["K4_touch"] = {
     name:"",
-    bg:"public_hall_dim", music:"tender", sprite:[
-      {char:"mio", pose:"think", pos:"left"},
-      {char:"kujyou", pose:"serious", pos:"right"}
-    ],
-    se:"breath",
     text:"毛布の上で向き合う。\n私が手を差し出すと、九条は長い沈黙ののち、手袋を外した。\n白い指先が震えている。",
     autoNext:"K4_touch1",
     autoDelay: 0
@@ -561,10 +498,6 @@
   };
   S["K4_distance"] = {
     name:"澪",
-    bg:"public_hall", music:"truth", sprite:[
-      {char:"mio", pose:"neutral", pos:"left"},
-      {char:"kujyou", pose:"serious", pos:"right"}
-    ],
     text:"「今は距離を置こう」",
     autoNext:"K4_distance1",
     autoDelay: 0
@@ -598,10 +531,6 @@
   };
   S["K4_test"] = {
     name:"澪",
-    bg:"public_hall", music:"suspense", sprite:[
-      {char:"mio", pose:"think", pos:"left"},
-      {char:"kujyou", pose:"serious", pos:"right"}
-    ],
     text:"「安全なテスト方法は？」",
     autoNext:"K4_test1",
     autoDelay: 0
@@ -632,10 +561,6 @@
   
   S["K5a_prelude"] = {
     name:"",
-    bg:"public_hall_dim", music:"warmth", sprite:[
-      {char:"mio", pose:"smile", pos:"left"},
-      {char:"kujyou", pose:"soft", pos:"right"}
-    ],
     text:"素肌が触れ合った瞬間、微かな熱が往復する。\n遠い笑い声、濡れた廊下、誰かの靴音——断片が波のように押し寄せた。\n九条の睫毛が震える。",
     autoNext:"K5a_prelude1",
     autoDelay: 0
@@ -665,10 +590,6 @@
   };
   S["K5a_hesitate"] = {
     name:"",
-    bg:"public_hall", music:"tender", sprite:[
-      {char:"mio", pose:"think", pos:"left"},
-      {char:"kujyou", pose:"soft", pos:"right"}
-    ],
     text:"指が離れた途端、音が遠のく。",
     autoNext:"K5a_hesitate1",
     autoDelay: 0
@@ -703,10 +624,6 @@
   
   S["K5b_prelude"] = {
     name:"",
-    bg:"public_hall", music:"truth", sprite:[
-      {char:"mio", pose:"think", pos:"left"},
-      {char:"kujyou", pose:"serious", pos:"right"}
-    ],
     text:"封筒の中には、改竄ログと署名の写しが綴じられていた。\nページの端に『M-0』のインデックス。",
     autoNext:"K5b_prelude1",
     autoDelay: 0
@@ -736,9 +653,6 @@
   };
   S["K5b_anon"] = {
     name:"",
-    bg:"post_night", music:"melancholy", sprite:[
-      {char:"mio", pose:"think", pos:"center"}
-    ],
     text:"夜のポストに封筒が吸い込まれる音は、思ったよりも軽い。",
     autoNext:"K5b_anon1",
     autoDelay: 0
@@ -766,11 +680,6 @@
   
   S["K5c_trigger"] = {
     name:"",
-    bg:"public_hall_dim", music:"suspense", sprite:[
-      {char:"mio", pose:"shock", pos:"left"},
-      {char:"kujyou", pose:"serious", pos:"right"}
-    ],
-    se:"pulse",
     text:"布越しの三秒。視界が反転し、過去と現在が互いの輪郭を侵食する。\n誰かの泣き声、手術灯の眩しさ、笑っているのに泣いている自分——――九条の指先が強張った。",
     autoNext:"K5c_trigger1",
     autoDelay: 0
@@ -786,10 +695,6 @@
   };
   S["K5c_pullback"] = {
     name:"",
-    bg:"public_hall", music:"tender", sprite:[
-      {char:"mio", pose:"think", pos:"left"},
-      {char:"kujyou", pose:"soft", pos:"right"}
-    ],
     text:"互いに跳ね退く。\n布が床に落ち、重たい呼吸が部屋に残る。",
     autoNext:"K5c_pullback1",
     autoDelay: 0
@@ -821,10 +726,6 @@
   /* ED */
   S["K6a"] = {
     name:"",
-    bg:"public_hall_dim", music:"warmth", sprite:[
-      {char:"mio", pose:"smile", pos:"left"},
-      {char:"kujyou", pose:"soft", pos:"right"}
-    ],
     text:"【恋愛ED：赦し】",
     autoNext:"K6a1",
     autoDelay: 0
@@ -858,10 +759,6 @@
   };
   S["K6b"] = {
     name:"",
-    bg:"press", music:"truth", sprite:[
-      {char:"mio", pose:"neutral", pos:"left"},
-      {char:"kujyou", pose:"serious", pos:"right"}
-    ],
     text:"【真実ED：終止報告】",
     autoNext:"K6b1",
     autoDelay: 0
@@ -902,9 +799,6 @@
   };
   S["K6c"] = {
     name:"",
-    bg:"public_hall_dark", music:"melancholy", sprite:[
-      {char:"mio", pose:"think", pos:"center"}
-    ],
     text:"【崩壊ED：共鳴】",
     autoNext:"K6c1",
     autoDelay: 0
