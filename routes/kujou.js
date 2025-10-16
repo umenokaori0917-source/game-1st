@@ -6,36 +6,36 @@
   S["K1"] = {
     name:"",
     text:"放課後の校門は雨上がりの匂いで満ちていた。\n黒い手袋の男が、濡れたアスファルトの境目に立つ。\n男はまっすぐこちらを見て、微かに顎を引いた。",
-    autoNext:"K2",   // ←これを追加
-    autoDelay: 0              // ←ミリ秒。省略可（デフォルト0）
+    next:"K2",   // ←これを追加
+
   };
   
   S["K2"] = {
     name:"？",
     text:"「柊 澪さん。——少し、お時間をいただけますか」",
-    autoNext:"K3",
-    autoDelay: 0
+    next:"K3",
+
   };
 
   S["K3"] = {
     name:"澪",
     text:"（誰だろう。なぜ私の名前を……？）",
-    autoNext:"K4",
-    autoDelay: 0
+    next:"K4",
+
   };
   
   S["K4"] = {
     name:"九条",
     text:"「怪しいものではありません。九条と申します。以後、お見知りおきを」",
-    autoNext:"K5",
-    autoDelay: 0
+    next:"K5",
+
   };
 
   S["K5"] = {
     name:"",
     text:"そう言って、九条と名乗った男は名刺を差し出してきた。私は差し出された名刺を受け取る。\nそこにはかつての研究所の名前があった。",
-    autoNext:"K6",
-    autoDelay: 0
+    next:"K6",
+
   };
   
   S["K6"] = {
@@ -51,22 +51,22 @@
   S["K1_listen"] = {
     name:"",
     text:"歩道の端。\n男は鞄から透明なクリアファイルを出し、端を丁寧に揃えた。\n表紙には『神ノ原 記憶消失事件』の文字。",
-    autoNext:"K1_listen1",
-    autoDelay: 0
+    next:"K1_listen1",
+
   };
       
   S["K1_listen1"] = {
     name:"九条",
     text:"「十年前の資料です。あなたの名は被験者M-0として記録されています」",
-    autoNext:"K1_listen2",
-    autoDelay: 0
+    next:"K1_listen2",
+
   };
   
   S["K1_listen2"] = {
     name:"",
     text:"胸の奥に冷たい指が入ってくるような感じがした。",
-    autoNext:"K1_listen3",
-    autoDelay: 0
+    next:"K1_listen3",
+
   };
 
   S["K1_listen3"] = {
@@ -78,42 +78,42 @@
   S["K1_ignore"] = {
     name:"",
     text:"踵を返した瞬間、肩にそっと影が差す。",
-    autoNext:"K1_ignore1",
-    autoDelay: 0
+    next:"K1_ignore1",
+
   };
 
   S["K1_ignore1"] = {
     name:"奏",
     text:"「無理に応じなくていい」",
-    autoNext:"K1_ignore2",
-    autoDelay: 0
+    next:"K1_ignore2",
+
   };
     S["K1_ignore2"] = {
     name:"",
     text:"振り向くと、そこには篠宮 奏。彼女は私と九条の間に一歩入った。",
-    autoNext:"K1_ignore3",
-    autoDelay: 0
+    next:"K1_ignore3",
+
   };
 
   S["K1_ignore3"] = {
     name:"奏",
     text:"「彼女は疲れてます」",
-    autoNext:"K1_ignore4",
-    autoDelay: 0
+    next:"K1_ignore4",
+
   };
 
   S["K1_ignore4"] = {
     name:"",
     text:"九条は短く頷く。",
-    autoNext:"K1_ignore5",
-    autoDelay: 0
+    next:"K1_ignore5",
+
   };
 
   S["K1_ignore5"] = {
     name:"九条",
     text:"「では、別の機会に」",
-    autoNext:"K1_ignore6",
-    autoDelay: 0
+    next:"K1_ignore6",
+
   };
 
   S["K1_ignore6"] = {
@@ -125,29 +125,29 @@
   S["K1_cautious"] = {
     name:"",
     text:"二人分の距離を保ったまま、校門脇の屋根の下へ移動する。\n雨粒が看板から落ちる音が規則正しい。",
-    autoNext:"K1_cautious1",
-    autoDelay: 0
+    next:"K1_cautious1",
+
   };
 
   S["K1_cautious1"] = {
     name:"九条",
     text:"「仮説は一つ。あなたの“欠落”は誘発型の可能性がある」",
-    autoNext:"K1_cautious2",
-    autoDelay: 0
+    next:"K1_cautious2",
+
   };
 
   S["K1_cautious2"] = {
     name:"澪",
     text:"(誘発……私のせいで誰かに何かが起こる？)",
-    autoNext:"K1_cautious3",
-    autoDelay: 0
+    next:"K1_cautious3",
+
   };
 
   S["K1_cautious3"] = {
     name:"",
     text:"九条は言葉を選ぶように続けた。",
-    autoNext:"K1_cautious4",
-    autoDelay: 0
+    next:"K1_cautious4",
+
   };
 
   S["K1_cautious4"] = {
@@ -159,8 +159,8 @@
   S["K2_prelude"] = {
     name:"",
     text:"放課後の図書館は空調の音だけが低く響いていた。\n窓際の机に向かい合って座る。\n九条は手袋を外さない。",
-    autoNext:"K2_prelude1",
-    autoDelay: 0
+    next:"K2_prelude1",
+
   };
 
   S["K2_prelude1"] = {
@@ -176,29 +176,29 @@
   S["K2_honest"] = {
     name:"澪",
     text:"「——『誰かの代わりに生きろ』」",
-    autoNext:"K2_honest1",
-    autoDelay: 0
+    next:"K2_honest1",
+
   };
 
   S["K2_honest1"] = {
     name:"",
     text:"言葉にした瞬間、胸の奥で砂が落ちる音がした。\n九条は短く息を整える。",
-    autoNext:"K2_honest2",
-    autoDelay: 0
+    next:"K2_honest2",
+
   };
 
   S["K2_honest2"] = {
     name:"九条",
     text:"「誘導ではありません。あなたの記述です」",
-    autoNext:"K2_honest3",
-    autoDelay: 0
+    next:"K2_honest3",
+
   };
 
   S["K2_honest3"] = {
     name:"",
     text:"ノートに走るペン先は一定のリズム。",
-    autoNext:"K2_honest4",
-    autoDelay: 0
+    next:"K2_honest4",
+
   };
 
   S["K2_honest4"] = {
@@ -209,29 +209,29 @@
   S["K2_detail"] = {
     name:"澪",
     text:"「水の匂いがして、床は冷たいコンクリート。誰かが窓の外で笑ってるのに、顔が思い出せない」",
-    autoNext:"K2_detail1",
-    autoDelay: 0
+    next:"K2_detail1",
+
   };
 
   S["K2_detail1"] = {
     name:"",
     text:"九条は目を伏せ、静かに頷いた。",
-    autoNext:"K2_detail2",
-    autoDelay: 0
+    next:"K2_detail2",
+
   };
 
   S["K2_detail2"] = {
     name:"九条",
     text:"「確認できました。あなたは“つぎ目”に触れている」",
-    autoNext:"K2_detail3",
-    autoDelay: 0
+    next:"K2_detail3",
+
   };
 
   S["K2_detail3"] = {
     name:"澪",
     text:"「つぎ目？」",
-    autoNext:"K2_detail4",
-    autoDelay: 0
+    next:"K2_detail4",
+
   };
 
   S["K2_detail4"] = {
@@ -243,29 +243,29 @@
   S["K2_avoid"] = {
     name:"澪",
     text:"「……断片的で」",
-    autoNext:"K2_avoid1",
-    autoDelay: 0
+    next:"K2_avoid1",
+
   };
 
   S["K2_avoid1"] = {
     name:"",
     text:"曖昧な返事をすると、九条はそれ以上追及しなかった。",
-    autoNext:"K2_avoid2",
-    autoDelay: 0
+    next:"K2_avoid2",
+
   };
 
   S["K2_avoid2"] = {
     name:"九条",
     text:"「分かりました。強要はしません」",
-    autoNext:"K2_avoid3",
-    autoDelay: 0
+    next:"K2_avoid3",
+
   };
 
   S["K2_avoid3"] = {
     name:"",
     text:"彼はノートを閉じ、窓の外に視線を逸らす。\nその横顔は、思ったより年相応だった。",
-    autoNext:"K2_avoid4",
-    autoDelay: 0
+    next:"K2_avoid4",
+
   };
 
   S["K2_avoid4"] = {
@@ -277,36 +277,36 @@
   S["K2_asktrust"] = {
     name:"澪",
     text:"「九条さんは、私を信じますか」",
-    autoNext:"K2_asktrust1",
-    autoDelay: 0
+    next:"K2_asktrust1",
+
   };
 
   S["K2_asktrust1"] = {
     name:"",
     text:"問いかけに、彼は一拍置いてから答えた。",
-    autoNext:"K2_asktrust2",
-    autoDelay: 0
+    next:"K2_asktrust2",
+
   };
 
   S["K2_asktrust2"] = {
     name:"九条",
     text:"「信じる/信じないは任務に含まれません」",
-    autoNext:"K2_asktrust3",
-    autoDelay: 0
+    next:"K2_asktrust3",
+
   };
 
   S["K2_asktrust3"] = {
     name:"九条",
     text:"「ただ、記録には責任がある」",
-    autoNext:"K2_asktrust4",
-    autoDelay: 0
+    next:"K2_asktrust4",
+
   };
 
   S["K2_asktrust4"] = {
     name:"澪",
     text:"(それは、私を守るって意味？)",
-    autoNext:"K2_asktrust5",
-    autoDelay: 0
+    next:"K2_asktrust5",
+
   };
 
   S["K2_asktrust5"] = {
@@ -318,22 +318,22 @@
   S["K3"] = {
     name:"",
     text:"帰り道、空は再び降り出した。\n曲がり角の向こうから黒いバンが近づく。\nスライドドアが開き、無機質な光が路面を舐めた。",
-    autoNext:"K3_1",
-    autoDelay: 0
+    next:"K3_1",
+
   };
 
   S["K3_1"] = {
     name:"",
     text:"九条が前に出る。",
-    autoNext:"K3_2",
-    autoDelay: 0
+    next:"K3_2",
+
   };
 
   S["K3_2"] = {
     name:"九条",
     text:"「乗らないで。——危険です」",
-    autoNext:"K3_3",
-    autoDelay: 0
+    next:"K3_3",
+
   };
 
   S["K3_3"] = {
@@ -349,22 +349,22 @@
   S["K3_car"] = {
     name:"",
     text:"車内の空気は冷たく乾いていた。\n九条は私の隣に座り、手袋越しにシートベルトを確認する。",
-    autoNext:"K3_car1",
-    autoDelay: 0
+    next:"K3_car1",
+
   };
 
   S["K3_car1"] = {
     name:"九条",
     text:"「一時的な保護です」",
-    autoNext:"K3_car2",
-    autoDelay: 0
+    next:"K3_car2",
+
   };
 
   S["K3_car2"] = {
     name:"澪",
     text:"(守られてるのか、監視されてるのか)",
-    autoNext:"K3_car3",
-    autoDelay: 0
+    next:"K3_car3",
+
   };
 
   S["K3_car3"] = {
@@ -375,36 +375,36 @@
   S["K3_run"] = {
     name:"",
     text:"私は九条の手を掴み、濡れた商店街を駆けた。\n彼は規則正しく息を吐き、私の歩幅に合わせて速度を調整する。",
-    autoNext:"K3_run1",
-    autoDelay: 0
+    next:"K3_run1",
+
   };
 
   S["K3_run1"] = {
     name:"九条",
     text:"「この選択は、報告書に書かれません」",
-    autoNext:"K3_run2",
-    autoDelay: 0
+    next:"K3_run2",
+
   };
 
   S["K3_run2"] = {
     name:"",
     text:"彼は今、規則を破っているのだ。",
-    autoNext:"K3_run3",
-    autoDelay: 0
+    next:"K3_run3",
+
   };
 
   S["K3_run3"] = {
     name:"澪",
     text:"「呑気にそんなことを言っている場合ですか？！」", 
-    autoNext:"K3_run4",
-    autoDelay: 0
+    next:"K3_run4",
+
   };
 
   S["K3_run4"] = {
     name:"九条",
     text:"「――――はは、君は思っていたよりずっと面白い人だな」",
-    autoNext:"K3_run5",
-    autoDelay: 0
+    next:"K3_run5",
+
   };
 
   S["K3_run5"] = {
@@ -415,29 +415,29 @@
   S["K3_trust"] = {
     name:"澪",
     text:"「信じていいの？」",
-    autoNext:"K3_trust1",
-    autoDelay: 0
+    next:"K3_trust1",
+
   };
 
   S["K3_trust1"] = {
     name:"",
     text:"問いは雨に紛れず届いた。\n九条は短く頷く。",
-    autoNext:"K3_trust2",
-    autoDelay: 0
+    next:"K3_trust2",
+
   };
 
   S["K3_trust2"] = {
     name:"九条",
     text:"「私を信じる必要はない。君が勝手に判断すればいい」",
-    autoNext:"K3_trust3",
-    autoDelay: 0
+    next:"K3_trust3",
+
   };
 
   S["K3_trust3"] = {
     name:"澪",
     text:"(それ、ずるい)",
-    autoNext:"K3_trust4",
-    autoDelay: 0
+    next:"K3_trust4",
+
   };
 
   S["K3_trust4"] = {
@@ -449,22 +449,22 @@
   S["K4"] = {
     name:"",
     text:"辿り着いたのは閉鎖中の公民館。\n非常灯だけが薄く床を照らす。\n九条は備品室から毛布を出し、机の端に並べた。",
-    autoNext:"K4_1",
-    autoDelay: 0
+    next:"K4_1",
+
   };
 
   S["K4_1"] = {
     name:"九条",
     text:"「触れ方について、先に伝えておきます」",
-    autoNext:"K4_2",
-    autoDelay: 0
+    next:"K4_2",
+
   };
 
   S["K4_2"] = {
     name:"",
     text:"彼は手袋を少し持ち上げる。",
-    autoNext:"K43",
-    autoDelay: 0
+    next:"K43",
+
   };
 
   S["K4_3"] = {
@@ -480,15 +480,15 @@
   S["K4_touch"] = {
     name:"",
     text:"毛布の上で向き合う。\n私が手を差し出すと、九条は長い沈黙ののち、手袋を外した。\n白い指先が震えている。",
-    autoNext:"K4_touch1",
-    autoDelay: 0
+    next:"K4_touch1",
+
   };
 
   S["K4_touch1"] = {
     name:"九条",
     text:"「——儀式です。過去を赦すための」",
-    autoNext:"K4_touch2",
-    autoDelay: 0
+    next:"K4_touch2",
+
   };
 
   S["K4_touch2"] = {
@@ -499,29 +499,29 @@
   S["K4_distance"] = {
     name:"澪",
     text:"「今は距離を置こう」",
-    autoNext:"K4_distance1",
-    autoDelay: 0
+    next:"K4_distance1",
+
   };
 
   S["K4_distance1"] = {
     name:"",
     text:"そう告げると、九条はわずかに目尻を緩めた。",
-    autoNext:"K4_distance2",
-    autoDelay: 0
+    next:"K4_distance2",
+
   };
 
   S["K4_distance2"] = {
     name:"九条",
     text:"「分別ある判断です」",
-    autoNext:"K4_distance3",
-    autoDelay: 0
+    next:"K4_distance3",
+
   };
 
   S["K4_distance3"] = {
     name:"",
     text:"彼は封筒を差し出す。",
-    autoNext:"K4_distance4",
-    autoDelay: 0
+    next:"K4_distance4",
+
   };
 
   S["K4_distance4"] = {
@@ -532,22 +532,22 @@
   S["K4_test"] = {
     name:"澪",
     text:"「安全なテスト方法は？」",
-    autoNext:"K4_test1",
-    autoDelay: 0
+    next:"K4_test1",
+
   };
 
   S["K4_test1"] = {
     name:"",
     text:"九条はハンカチを取り出し、手のひらに二重に重ねた。",
-    autoNext:"K4_test2",
-    autoDelay: 0
+    next:"K4_test2",
+
   };
 
   S["K4_test2"] = {
     name:"九条",
     text:"「布越しに、三秒だけ。無理ならすぐ離れてください」",
-    autoNext:"K4_test3",
-    autoDelay: 0
+    next:"K4_test3",
+
   };
 
   S["K4_test3"] = {
@@ -562,22 +562,22 @@
   S["K5a_prelude"] = {
     name:"",
     text:"素肌が触れ合った瞬間、微かな熱が往復する。\n遠い笑い声、濡れた廊下、誰かの靴音——断片が波のように押し寄せた。\n九条の睫毛が震える。",
-    autoNext:"K5a_prelude1",
-    autoDelay: 0
+    next:"K5a_prelude1",
+
   };
 
   S["K5a_prelude1"] = {
     name:"九条",
     text:"「……あなたは、よく頑張りました」",
-    autoNext:"K5a_prelude2",
-    autoDelay: 0
+    next:"K5a_prelude2",
+
   };
 
   S["K5a_prelude2"] = {
     name:"澪",
     text:"(涙が出そう)",
-    autoNext:"K5a_prelude3",
-    autoDelay: 0
+    next:"K5a_prelude3",
+
   };
 
   S["K5a_prelude3"] = {
@@ -591,29 +591,29 @@
   S["K5a_hesitate"] = {
     name:"",
     text:"指が離れた途端、音が遠のく。",
-    autoNext:"K5a_hesitate1",
-    autoDelay: 0
+    next:"K5a_hesitate1",
+
   };
 
   S["K5a_hesitate1"] = {
     name:"九条",
     text:"「すみません、急ぎすぎましたね」",
-    autoNext:"K5a_hesitate2",
-    autoDelay: 0
+    next:"K5a_hesitate2",
+
   };
 
   S["K5a_hesitate2"] = {
     name:"",
     text:"九条は手袋を戻さず、距離だけを戻した。",
-    autoNext:"K5a_hesitate3",
-    autoDelay: 0
+    next:"K5a_hesitate3",
+
   };
 
   S["K5a_hesitate3"] = {
     name:"九条",
     text:"「時間をかけてもいい」",
-    autoNext:"K5a_hesitate4",
-    autoDelay: 0
+    next:"K5a_hesitate4",
+
   };
 
   S["K5a_hesitate4"] = {
@@ -625,22 +625,22 @@
   S["K5b_prelude"] = {
     name:"",
     text:"封筒の中には、改竄ログと署名の写しが綴じられていた。\nページの端に『M-0』のインデックス。",
-    autoNext:"K5b_prelude1",
-    autoDelay: 0
+    next:"K5b_prelude1",
+
   };
 
   S["K5b_prelude1"] = {
     name:"澪",
     text:"「……私の名前は、この書類の中で記号だった」",
-    autoNext:"K5b_prelude2",
-    autoDelay: 0
+    next:"K5b_prelude2",
+
   };
 
   S["K5b_prelude2"] = {
     name:"",
     text:"九条は言う。",
-    autoNext:"K5b_prelude3",
-    autoDelay: 0
+    next:"K5b_prelude3",
+
   };
 
   S["K5b_prelude3"] = {
@@ -654,22 +654,22 @@
   S["K5b_anon"] = {
     name:"",
     text:"夜のポストに封筒が吸い込まれる音は、思ったよりも軽い。",
-    autoNext:"K5b_anon1",
-    autoDelay: 0
+    next:"K5b_anon1",
+
   };
 
   S["K5b_anon1"] = {
     name:"九条",
     text:"「——ありがとう」",
-    autoNext:"K5b_anon2",
-    autoDelay: 0
+    next:"K5b_anon2",
+
   };
 
   S["K5b_anon2"] = {
     name:"",
     text:"九条の声は、ほとんど聞こえないほど小さかった。",
-    autoNext:"K5b_anon3",
-    autoDelay: 0
+    next:"K5b_anon3",
+
   };
 
   S["K5b_anon3"] = {
@@ -681,8 +681,8 @@
   S["K5c_trigger"] = {
     name:"",
     text:"布越しの三秒。視界が反転し、過去と現在が互いの輪郭を侵食する。\n誰かの泣き声、手術灯の眩しさ、笑っているのに泣いている自分——――九条の指先が強張った。",
-    autoNext:"K5c_trigger1",
-    autoDelay: 0
+    next:"K5c_trigger1",
+
   };
 
   S["K5c_trigger1"] = {
@@ -696,22 +696,22 @@
   S["K5c_pullback"] = {
     name:"",
     text:"互いに跳ね退く。\n布が床に落ち、重たい呼吸が部屋に残る。",
-    autoNext:"K5c_pullback1",
-    autoDelay: 0
+    next:"K5c_pullback1",
+
   };
 
   S["K5c_pullback1"] = {
     name:"九条",
     text:"「——無理は、しないでください」",
-    autoNext:"K5c_pullback2",
-    autoDelay: 0
+    next:"K5c_pullback2",
+
   };
 
   S["K5c_pullback2"] = {
     name:"",
     text:" 九条は額に汗をにじませ、しかし微笑んだ。",
-    autoNext:"K5c_pullback3",
-    autoDelay: 0
+    next:"K5c_pullback3",
+
   };
 
   S["K5c_pullback3"] = {
@@ -727,29 +727,29 @@
   S["K6a"] = {
     name:"",
     text:"【恋愛ED：赦し】",
-    autoNext:"K6a1",
-    autoDelay: 0
+    next:"K6a1",
+
   };
 
   S["K6a1"] = {
     name:"",
     text:"非常灯の薄い明かりの下、二人は練習するように何度も指を確かめた。\n触れるたび、過去のざらつきが細かく砕けていく。",
-    autoNext:"K6a2",
-    autoDelay: 0
+    next:"K6a2",
+
   };
 
   S["K6a2"] = {
     name:"九条",
     text:"「これからも、あなたの現在を記録させてください」",
-    autoNext:"K6a3",
-    autoDelay: 0
+    next:"K6a3",
+
   };
 
   S["K6a3"] = {
     name:"澪",
     text:"「……はい」",
-    autoNext:"K6a4",
-    autoDelay: 0
+    next:"K6a4",
+
   };
 
   S["K6a4"] = {
@@ -760,36 +760,36 @@
   S["K6b"] = {
     name:"",
     text:"【真実ED：終止報告】",
-    autoNext:"K6b1",
-    autoDelay: 0
+    next:"K6b1",
+
   };
 
   S["K6b1"] = {
     name:"",
     text:"提出印の押された紙は、やけに薄く見えた。\n記者会見で九条は『個人より倫理を守る』と短く語る。\n私は客席から拍手をした。",
-    autoNext:"K6b2",
-    autoDelay: 0
+    next:"K6b2",
+
   };
 
   S["K6b2"] = {
     name:"澪",
     text:"(私たちは同じ方向を見て歩く。でも並び方は選べる)",
-    autoNext:"K6b3",
-    autoDelay: 0
+    next:"K6b3",
+
   };
 
   S["K6b3"] = {
     name:"",
     text:"帰り道、彼は遠慮がちに微笑む。",
-    autoNext:"K6b4",
-    autoDelay: 0
+    next:"K6b4",
+
   };
 
   S["K6b4"] = {
     name:"九条",
     text:"「いつか、仕事抜きでコーヒーでも」",
-    autoNext:"K6b5",
-    autoDelay: 0
+    next:"K6b5",
+
   };
 
   S["K6b5"] = {
@@ -800,22 +800,22 @@
   S["K6c"] = {
     name:"",
     text:"【崩壊ED：共鳴】",
-    autoNext:"K6c1",
-    autoDelay: 0
+    next:"K6c1",
+
   };
 
   S["K6c1"] = {
     name:"",
     text:"境界は破れ、九条は私の“つぎ目”に沈んだ。\n朝、テーブルには黒い手袋だけが残る。\n触れると、微かな熱がまだ宿っている。",
-    autoNext:"K6c2",
-    autoDelay: 0
+    next:"K6c2",
+
   };
 
   S["K6c2"] = {
     name:"澪",
     text:"(赦しは届いたのかもしれない。ただ、もう確かめる方法がない)",
-    autoNext:"K6c3",
-    autoDelay: 0
+    next:"K6c3",
+
   };
 
   S["K6c3"] = {
