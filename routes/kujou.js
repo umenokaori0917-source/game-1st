@@ -318,25 +318,25 @@
   S["K3"] = {
     name:"",
     text:"帰り道、空は再び降り出した。\n曲がり角の向こうから黒いバンが近づく。\nスライドドアが開き、無機質な光が路面を舐めた。",
-    autoNext:"K31",
+    autoNext:"K3_1",
     autoDelay: 0
   };
 
-  S["K31"] = {
+  S["K3_1"] = {
     name:"",
     text:"九条が前に出る。",
-    autoNext:"K32",
+    autoNext:"K3_2",
     autoDelay: 0
   };
 
-  S["K32"] = {
+  S["K3_2"] = {
     name:"九条",
     text:"「乗らないで。——危険です」",
-    autoNext:"K33",
+    autoNext:"K3_3",
     autoDelay: 0
   };
 
-  S["K33"] = {
+  S["K3_3"] = {
     name:"澪",
     text:"(選ばなきゃ――――)",
     choices:[
@@ -449,25 +449,25 @@
   S["K4"] = {
     name:"",
     text:"辿り着いたのは閉鎖中の公民館。\n非常灯だけが薄く床を照らす。\n九条は備品室から毛布を出し、机の端に並べた。",
-    autoNext:"K41",
+    autoNext:"K4_1",
     autoDelay: 0
   };
 
-  S["K41"] = {
+  S["K4_1"] = {
     name:"九条",
     text:"「触れ方について、先に伝えておきます」",
-    autoNext:"K42",
+    autoNext:"K4_2",
     autoDelay: 0
   };
 
-  S["K42"] = {
+  S["K4_2"] = {
     name:"",
     text:"彼は手袋を少し持ち上げる。",
     autoNext:"K43",
     autoDelay: 0
   };
 
-  S["K43"] = {
+  S["K4_3"] = {
     name:"九条",
     text:"「私が素手であなたに触れると、あなたの記憶へ侵入する可能性がある」",
     choices:[
