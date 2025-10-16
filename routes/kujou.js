@@ -929,4 +929,4 @@
     text:"窓の外で、昨日と同じ雨が降り始めた。",
     choices:[{label:"記録してタイトルへ", next:"ED_Collector", setFlags:{ED_Kujou_Collapse:true}}]
   };
-());
+});
