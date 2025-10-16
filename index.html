@@ -228,16 +228,10 @@ SCENES["branch"] = {
   SCENES[src="routes/Minato.js"]
   SCENES[src="routes/Todo.js"]
   SCENES[src="routes/Kanade.js"]
-  SCENES[src="routes/Hidden.js"]
   
   /* ───────── 隠し：東雲 悠真 ルート（詳細＋演出） ───────── */
   SCENES["H1"] = {
     name:"",
-    bg:"dream_void", music:"melancholy", sprite:[
-      {char:"mio", pose:"think", pos:"center"},
-      {char:"yuma", pose:"soft", pos:"right"}
-    ],
-    se:"chime",
     text:"白い無音に、足音だけが生まれては消える。「やっと来たね」男は微笑む。光の粒が肩口でほどけ、輪郭に戻る。「ここは記憶の“外側”。君が選んだどの結末も否定しない、静かな場所」(夢の声と同じ温度——東雲 悠真)",
     choices:[
       {label:"「あなたは誰？」", next:"H1_who"},
@@ -248,30 +242,18 @@ SCENES["branch"] = {
   
   SCENES["H1_who"] = {
     name:"",
-    bg:"dream_void", music:"melancholy", sprite:[
-      {char:"mio", pose:"speak", pos:"center"},
-      {char:"yuma", pose:"serious", pos:"right"}
-    ],
     text:"「東雲 悠真。——“守護者”だと自称してる」自嘲の笑み。「十年前、世界は一度だけ綺麗な嘘で縫われた。君は被験者M-0、私は調整役。縫い目がほどけるたび、君を呼んで繕ってきた」",
     choices:[{label:"「次へ」", next:"H2"}]
   };
   
   SCENES["H1_voice"] = {
     name:"",
-    bg:"dream_void", music:"tender", sprite:[
-      {char:"mio", pose:"think", pos:"center"},
-      {char:"yuma", pose:"soft", pos:"right"}
-    ],
     text:"「『誰かの代わりに生きろ』は、命令じゃない。救命の合図だった」彼は手を胸に当てる。「君が沈むたび、浮かぶ言葉を探した。間違っていたら、ごめん」(謝る声がいちばん、現実に近い)",
     choices:[{label:"「続けて」", next:"H2"}]
   };
   
   SCENES["H2"] = {
     name:"",
-    bg:"memory_gallery", music:"truth", sprite:[
-      {char:"mio", pose:"think", pos:"left"},
-      {char:"yuma", pose:"serious", pos:"right"}
-    ],
     text:"回廊に額装が並ぶ。写真、ログ、鍵、契約書——私が集めた欠片が、壁で静かに呼吸する。「ここでは、選び直せる。修復か、受容か。その前に——見たいものを見て」",
     choices:[
       {label:"学級写真の“右下”を見る", next:"H3_photo"},
@@ -283,11 +265,6 @@ SCENES["branch"] = {
   
   SCENES["H3_photo"] = {
     name:"",
-    bg:"classroom_past", music:"melancholy", sprite:[
-      {char:"mio", pose:"shock", pos:"left"},
-      {char:"yuma", pose:"soft", pos:"right"}
-    ],
-    se:"paper",
     text:"集合写真の右下——切り取られていた位置に、薄い像が重なる。笑い皺、少し曲がった名札。『SHINONOME』(やっぱり、ここに——) 「僕だよ」悠真は淡く笑った。「君の隣にいた」",
     choices:[
       {label:"「どうして消えたの」", next:"H3_photo_why"},
@@ -296,21 +273,12 @@ SCENES["branch"] = {
   };
   SCENES["H3_photo_why"] = {
     name:"",
-    bg:"classroom_past", music:"melancholy", sprite:[
-      {char:"mio", pose:"speak", pos:"left"},
-      {char:"yuma", pose:"pained", pos:"right"}
-    ],
     text:"「事故の日、僕は代わりに“責任者”になった。君の記録を守るために、僕の位置を切り離す。それがプロトコルだった」(右下の空白は、盾だった)",
     choices:[{label:"回廊に戻る", next:"H2"}]
   };
   
   SCENES["H3_pool"] = {
     name:"",
-    bg:"pool_corridor_dark", music:"suspense", sprite:[
-      {char:"mio", pose:"think", pos:"left"},
-      {char:"yuma", pose:"serious", pos:"right"}
-    ],
-    se:"pulse",
     text:"濡れた廊下、等間隔の雫。錆びた鍵が掌で冷える。「ここで世界は縫われた。笑い声は、君を落ち着かせるための音響データ」(優しさの形が、時々刃になる)",
     choices:[
       {label:"「鍵は、何の扉」", next:"H3_pool_key"},
@@ -319,20 +287,12 @@ SCENES["branch"] = {
   };
   SCENES["H3_pool_key"] = {
     name:"",
-    bg:"pool_corridor_dark", music:"truth", sprite:[
-      {char:"mio", pose:"speak", pos:"left"},
-      {char:"yuma", pose:"soft", pos:"right"}
-    ],
     text:"「最初の縫合室。もう開けない。——開けなくていい」彼は静かに言う。(それでも、持っていたい。選ぶために)",
     choices:[{label:"回廊に戻る", next:"H2"}]
   };
   
   SCENES["H3_protocol"] = {
     name:"",
-    bg:"lab_white", music:"truth", sprite:[
-      {char:"mio", pose:"think", pos:"left"},
-      {char:"yuma", pose:"serious", pos:"right"}
-    ],
     text:"『縫合プロトコル v0.9』。黒塗りの署名の下に、消し残った走り書きがある。——“守るのは現在”。「君の現在を守るための嘘。それがこの世界の骨組み」",
     choices:[
       {label:"「じゃあ、今を壊さず直せる？」", next:"H3_protocol_fix"},
@@ -341,10 +301,6 @@ SCENES["branch"] = {
   };
   SCENES["H3_protocol_fix"] = {
     name:"",
-    bg:"lab_white", music:"tender", sprite:[
-      {char:"mio", pose:"speak", pos:"left"},
-      {char:"yuma", pose:"soft", pos:"right"}
-    ],
     text:"「可能かもしれない。痛みは出る。けど、前よりは優しくできる」(“優しく”直す。そんな選択肢があるなら——)",
     choices:[{label:"回廊に戻る", next:"H2"}]
   };
@@ -352,53 +308,33 @@ SCENES["branch"] = {
   /* 4章：アンカー選択（各ルートで得た現在を参照） */
   SCENES["H4_anchor"] = {
     name:"",
-    bg:"memory_gallery", music:"calm_day", sprite:[
-      {char:"mio", pose:"think", pos:"left"},
-      {char:"yuma", pose:"serious", pos:"right"}
-    ],
     text:"「修復にも受容にも、“現在”を固定する錘が要る」悠真は手を差し出す。「君が選んできた誰かの現在——その在り方を、言葉にして」",
     choices:[
-      {label:"九条：距離が守る優しさ", next:"H4_k", req:(s)=>!!s.flags.ED_Kujou_Love},
-      {label:"朝倉：守るための嘘", next:"H4_a", req:(s)=>!!s.flags.ED_Asakura_Love},
-      {label:"湊：小さな生活の誇り", next:"H4_m", req:(s)=>!!s.flags.ED_Minato_Love},
-      {label:"藤堂：同じ速度で歩く", next:"H4_r", req:(s)=>!!s.flags.ED_Todo_Love},
+      {label:"距離が守る優しさ", next:"H4_k", req:(s)=>!!s.flags.ED_Kujou_Love},
+      {label:"守るための嘘", next:"H4_a", req:(s)=>!!s.flags.ED_Asakura_Love},
+      {label:"小さな生活の誇り", next:"H4_m", req:(s)=>!!s.flags.ED_Minato_Love},
+      {label:"同じ速度で歩く", next:"H4_r", req:(s)=>!!s.flags.ED_Todo_Love},
       {label:"アンカーは決めた。最終選択へ", next:"H5_choice"}
     ]
   };
   
   SCENES["H4_k"] = {
     name:"",
-    bg:"public_hall_dim", music:"tender", sprite:[
-      {char:"mio", pose:"smile", pos:"left"},
-      {char:"yuma", pose:"soft", pos:"right"}
-    ],
     text:"「触れない距離が、守るための形になる」言葉にすると胸が軽くなる。「うん。距離は欠落じゃない。設計だ」",
     choices:[{label:"回廊へ戻る", next:"H4_anchor"}]
   };
   SCENES["H4_a"] = {
     name:"",
-    bg:"cafe_night", music:"warmth", sprite:[
-      {char:"mio", pose:"smile", pos:"left"},
-      {char:"yuma", pose:"soft", pos:"right"}
-    ],
     text:"「嘘は盾。合言葉で意味を共有する」悠真は頷く。「共有された嘘は、もう孤独じゃない」",
     choices:[{label:"回廊へ戻る", next:"H4_anchor"}]
   };
   SCENES["H4_m"] = {
     name:"",
-    bg:"shop_morning", music:"warmth", sprite:[
-      {char:"mio", pose:"smile", pos:"left"},
-      {char:"yuma", pose:"soft", pos:"right"}
-    ],
     text:"「働いて、笑って、眠る。小さいけど、確かな誇り」「世界の大工事より、生活のネジを締める方が難しいんだ」",
     choices:[{label:"回廊へ戻る", next:"H4_anchor"}]
   };
   SCENES["H4_r"] = {
     name:"",
-    bg:"lab_evening", music:"tender", sprite:[
-      {char:"mio", pose:"smile", pos:"left"},
-      {char:"yuma", pose:"soft", pos:"right"}
-    ],
     text:"「ブレーキを持ち合うと、同じ速度で歩ける」悠真は小さく笑う。「じゃあ、急がない処置を選べるね」",
     choices:[{label:"回廊へ戻る", next:"H4_anchor"}]
   };
@@ -406,11 +342,6 @@ SCENES["branch"] = {
   /* 5章：最終選択（修復 or 受容） */
   SCENES["H5_choice"] = {
     name:"",
-    bg:"dream_void", music:"truth", sprite:[
-      {char:"mio", pose:"think", pos:"center"},
-      {char:"yuma", pose:"serious", pos:"right"}
-    ],
-    se:"pulse",
     text:"「選んで。世界を修復するか、現実を受け入れるか」白い空間に、二つの扉が静かに立つ。(どちらを選んでも、私の現在は私が決める)",
     choices:[
       {label:"世界を修復する（トゥルー）", next:"H6a", setFlags:{ED_Hidden_True:true}},
@@ -421,21 +352,12 @@ SCENES["branch"] = {
   /* 6章：ED */
   SCENES["H6a"] = {
     name:"",
-    bg:"rooftop_dawn", music:"warmth", sprite:[
-      {char:"mio", pose:"smile", pos:"left"},
-      {char:"yuma", pose:"soft", pos:"right"}
-    ],
-    se:"breath",
     text:"【トゥルーED：縫合の完了】欠片は矛盾なく繋がり、右下の“空白”は空白のまま“役割”を得た。誰も上書きされず、物語は収束する。「正しい眠り方を、やっと覚えたね」「うん」朝の風は、やさしい重さで私たちを押した。",
     choices:[{label:"タイトルへ", next:"title"}]
   };
   
   SCENES["H6b"] = {
     name:"",
-    bg:"starfield", music:"melancholy", sprite:[
-      {char:"mio", pose:"think", pos:"center"},
-      {char:"yuma", pose:"soft", pos:"right"}
-    ],
     text:"【ビターグッド】継ぎ目はそのまま、しかし手当ては施された。ほつれを知っている者だけが見つけられる、静かな幸福。「君が見つけた現在を、僕は見失わない」「私も」遠くで、昨日と同じ雨が降りはじめる。",
     choices:[{label:"タイトルへ", next:"title"}]
   };
