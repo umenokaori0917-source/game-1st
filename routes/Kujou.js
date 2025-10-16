@@ -263,7 +263,7 @@
   S["K2_detail4"] = {
     name:"九条",
     text:"「世界の記録が継ぎ合わされた箇所、という意味です」",
-    choices:[{label:"意味を飲み込み、続きを促す", next:"K3"}]
+    choices:[{label:"意味を飲み込む", next:"K3"}]
   };
   
   S["K2_avoid"] = {
