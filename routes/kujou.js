@@ -338,7 +338,7 @@
 
   S["K3_3"] = {
     name:"澪",
-    text:"(選ばなきゃ――――)",
+    text:"(選ばなきゃ――)",
     choices:[
       {label:"促されるままに車へ乗る", next:"K3_car"},
       {label:"九条の手を掴んで走る", next:"K3_run", setAffection:{"九条":+1}},
