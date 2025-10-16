@@ -52,6 +52,8 @@
   #log{display:none}
   /* === 背景＆立ち絵レイヤ === */
   #stage{position:relative}
+  /* クリックで進める状態の見た目 */
+  #stage.advance { cursor: pointer; }
   #bgLayer{position:absolute;inset:0;background:#000 center/cover no-repeat;opacity:.95;z-index:0;transition:opacity .45s ease, filter .45s ease}
   #spriteLayer{position:absolute;inset:0;pointer-events:none;z-index:1}
   .sprite{position:absolute;bottom:0;transform:translateX(-50%);background-size:contain;background-repeat:no-repeat;width:38%;height:90%;opacity:1;transition:opacity .3s ease, transform .3s ease}
@@ -1777,6 +1779,55 @@ function playSE(id){
     seEl.play().catch(()=>{});
   }catch(_){}
 }
+
+/* ---------- どこでも進む（テキスト/背景クリック → 次へ） ---------- */
+// 「次に進める対象」を返す（単一選択 or scene.next）
+function getAdvanceChoice(sc){
+  // 1) 有効な選択肢が1つだけ
+  const valid = getValidChoices(sc);
+  if (valid.length === 1) return valid[0];
+
+  // 2) 選択肢が無い & シーンに next 指定がある（オートなし運用用）
+  if ((!sc.choices || sc.choices.length === 0) && sc.next) {
+    return { label: "", next: sc.next }; // 疑似選択肢として扱う
+  }
+  return null; // 進めない（分岐 or 要手動）
+}
+
+// ステージクリックで前進（選択肢クリックは除外）
+function onStageClick(e){
+  // クリックが選択肢ボタン上なら無視
+  if (e.target.closest("#choices")) return;
+  // モーダル開いてる時も無視
+  if (journalModal && journalModal.style.display === "block") return;
+
+  const sc = SCENES[state.sceneId];
+  const adv = getAdvanceChoice(sc);
+  if (adv) choose(adv);
+}
+
+// キー操作（Enter / Space）で前進
+function onKeyAdvance(e){
+  // 入力欄操作やモーダル中は無視
+  if (["INPUT","TEXTAREA","SELECT","BUTTON"].includes((e.target.tagName||"").toUpperCase())) return;
+  if (journalModal && journalModal.style.display === "block") return;
+
+  if (e.key === "Enter" || e.key === " ") {
+    const sc = SCENES[state.sceneId];
+    const adv = getAdvanceChoice(sc);
+    if (adv) {
+      e.preventDefault();
+      choose(adv);
+    }
+  }
+}
+
+// 一度だけイベントを張る
+(function setupAdvanceHandlers(){
+  const stage = document.getElementById("stage");
+  if (stage) stage.addEventListener("click", onStageClick);
+  document.addEventListener("keydown", onKeyAdvance);
+})();
   
 /* ---------- レンダリング ---------- */
 function render(){
@@ -1824,6 +1875,41 @@ function render(){
   // バッジ更新
   updateBadges();
   renderToggles();
+
+  function render(){
+  const sc = SCENES[state.sceneId];
+  if(!sc){ return showText("","シーンが見つかりません: "+state.sceneId, []); }
+
+  // onEnter 一回だけ
+  if(!state.flags["_entered_"+state.sceneId] && typeof sc.onEnter==="function"){
+    sc.onEnter(state);
+    state.flags["_entered_"+state.sceneId] = true;
+  }
+
+  // 表示
+  showText(sc.name||"", sc.text||"", buildChoices(sc));
+  applyVisual(sc);
+
+  // ★ “クリックで進める”状態の見た目（カーソル）
+  const stage = document.getElementById("stage");
+  if (stage) {
+    const adv = getAdvanceChoice(sc);
+    stage.classList.toggle("advance", !!adv);
+  }
+
+  // 既読マークなど既存処理…
+  const wasSeen = !!state.seen[state.sceneId];
+  elReadmark.innerHTML = wasSeen ? "既読" : '<span class="unread">未読</span>';
+  state.seen[state.sceneId] = true;
+
+  updateBadges();
+  renderToggles();
+
+  // 自動送り（ON時は単一選択のみ）既存ロジック…
+  if(state.flags.autoplay){ scheduleAutoplayStep(); }
+
+  saveState();
+}
 
   // 自動送り：ON時は単一選択のみ自動、複数選択は停止
   if(state.flags.autoplay){
