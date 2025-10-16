@@ -2147,12 +2147,15 @@ function renderJournal(){
         btn.style.border = "1px solid #2f3950";
         btn.style.background = "#263146";
         btn.style.color = "var(--ink)";
-        btn.onclick = () => journalReplayED(ed.scene);
-        // SCENES未定義の安全策（未実装を無効化）
-        if (!SCENES[ed.scene]) {
-          btn.disabled = true;
-          btn.title = "このEDシーンが未実装です";
-        }
+        btn.onclick = async () => {
+          // 必要なら対応ルートファイルを読み込む
+          const ok = await ensureSceneLoaded(ed.scene);
+          if (!ok && !SCENES[ed.scene]) {
+            alert("このEDシーンが未実装です");
+            return;
+          }
+          journalReplayED(ed.scene);
+        };
         li.appendChild(btn);
       } else {
         // 未達：？で表示
