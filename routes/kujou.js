@@ -1,7 +1,4 @@
 // routes/kujou.js
-// 安全策：SCENESがなければ作る（基本はmain.jsで作られているはず）
-const SCENES = (window.SCENES = window.SCENES || {});
-  
   SCENES["K1"] = {
     name:"",
     bg:"school_gate_rain", music:"rain_walk", sprite:[
