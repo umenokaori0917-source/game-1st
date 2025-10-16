@@ -7,11 +7,6 @@
   
   N["N1"] = {
     name:"",
-    bg:"classroom_evening", music:"calm_day", sprite:[
-      {char:"mio", pose:"think", pos:"left"},
-      {char:"kanade", pose:"serious", pos:"right"}
-    ],
-    se:"chime",
     text:"放課後の教室。窓の外に薄い雲。篠宮 奏はノートを閉じ、まっすぐこちらを見る。「大丈夫。私が基準になる」(その言葉だけで、体温が少し下がる)",
     choices:[
       {label:"「今、ここにいて」頼む", next:"N1_stay", setAffection:{"奏":+1}},
@@ -22,30 +17,18 @@
   
   N["N1_stay"] = {
     name:"",
-    bg:"classroom_evening", music:"tender", sprite:[
-      {char:"mio", pose:"speak", pos:"left"},
-      {char:"kanade", pose:"soft", pos:"right"}
-    ],
     text:"「今はここにいて」言うと、奏は席を引き寄せ、私の机に横付けにした。「はい。隣の椅子、予約済み」(頼らせ方が、うまい)",
     choices:[{label:"一息ついてから移動する", next:"N2_bus"}]
   };
   
   N["N1_honest"] = {
     name:"",
-    bg:"classroom_evening", music:"calm_day", sprite:[
-      {char:"mio", pose:"speak", pos:"left"},
-      {char:"kanade", pose:"serious", pos:"right"}
-    ],
     text:"「強がってるだけ」そう言うと、奏は頷いた。「強がりは悪くない。歩幅を守る道具だから」(道具、か) 彼女は鞄を肩に掛ける。「帰り、バス停まで一緒に」",
     choices:[{label:"頷く", next:"N2_bus"}]
   };
   
   N["N1_tough"] = {
     name:"",
-    bg:"classroom_evening", music:"melancholy", sprite:[
-      {char:"mio", pose:"neutral", pos:"left"},
-      {char:"kanade", pose:"soft", pos:"right"}
-    ],
     text:"「平気」反射で口にすると、奏は少しだけ目を細めた。「じゃあ、平気の定義を一緒に作ろう」(逃げ道じゃなく、足場を作られる感じ)",
     choices:[{label:"並んで教室を出る", next:"N2_bus"}]
   };
@@ -53,10 +36,6 @@
   /* 2章：バス停で“期限のある約束” */
   N["N2_bus"] = {
     name:"",
-    bg:"bus_stop_evening", music:"rain_walk", sprite:[
-      {char:"mio", pose:"think", pos:"left"},
-      {char:"kanade", pose:"serious", pos:"right"}
-    ],
     text:"雨上がりのバス停。アスファルトがまだ濡れている。奏は広告板の影に立ち、息を整えてから切り出した。「私、期限のある約束をしてる」",
     choices:[
       {label:"「どんな約束？」訊く", next:"N2_ask"},
@@ -67,30 +46,18 @@
   
   N["N2_ask"] = {
     name:"",
-    bg:"bus_stop_evening", music:"truth", sprite:[
-      {char:"mio", pose:"speak", pos:"left"},
-      {char:"kanade", pose:"serious", pos:"right"}
-    ],
     text:"「保証人」奏は言った。「——あなたのための」(息が止まる) 「もしあなたの“症状”が制御不能になったら、私が責任を引き取る契約」",
     choices:[{label:"「そんなの、間違ってる」", next:"N3_reject"}]
   };
   
   N["N2_skip"] = {
     name:"",
-    bg:"bus_stop_evening", music:"tender", sprite:[
-      {char:"mio", pose:"neutral", pos:"left"},
-      {char:"kanade", pose:"soft", pos:"right"}
-    ],
     text:"「ありがとう」奏は微笑む。けれど少しだけ首を振る。「話す。隠すと、あなたが余計に背負うから」(気づかれている)",
     choices:[{label:"続けて聞く", next:"N2_ask"}]
   };
   
   N["N2_wait"] = {
     name:"",
-    bg:"bus_stop_evening", music:"melancholy", sprite:[
-      {char:"mio", pose:"think", pos:"left"},
-      {char:"kanade", pose:"serious", pos:"right"}
-    ],
     text:"「怖がらないで聞いて」奏は広告板の角を指でなぞる。「期限まで、あとわずか」(終わりの足音が、近い)",
     choices:[{label:"詳細を聞く", next:"N2_ask"}]
   };
@@ -98,10 +65,6 @@
   /* 3章：支えるか、引き止めるか */
   N["N3_reject"] = {
     name:"",
-    bg:"footbridge_night", music:"melancholy", sprite:[
-      {char:"mio", pose:"speak", pos:"left"},
-      {char:"kanade", pose:"serious", pos:"right"}
-    ],
     text:"歩道橋の上、車の光が川みたいに流れる。「そんなの、間違ってる」言うと、奏は揺れない声で返す。「間違ってる。でも、必要だった」",
     choices:[
       {label:"「私も一緒に背負う」共同を提案", next:"N3_share", setAffection:{"奏":+1}},
@@ -112,30 +75,18 @@
   
   N["N3_share"] = {
     name:"",
-    bg:"footbridge_night", music:"tender", sprite:[
-      {char:"mio", pose:"speak", pos:"left"},
-      {char:"kanade", pose:"soft", pos:"right"}
-    ],
     text:"「分け合えるなら、軽くなる」奏は小さく笑う。「具体案、作ろう」(実務モードの目だ)",
     choices:[{label:"明日、事務局に同行する", next:"N4_office"}]
   };
   
   N["N3_stop"] = {
     name:"",
-    bg:"footbridge_night", music:"truth", sprite:[
-      {char:"mio", pose:"speak", pos:"left"},
-      {char:"kanade", pose:"serious", pos:"right"}
-    ],
     text:"「捨てるのは簡単じゃない」奏は首を振る。「約束は、誰かの安全のための錘」(私のための) 「でも、方法は他にもある。探そう」",
     choices:[{label:"具体策を一緒に考える", next:"N4_office"}]
   };
   
   N["N3_hold"] = {
     name:"",
-    bg:"footbridge_night", music:"warmth", sprite:[
-      {char:"mio", pose:"think", pos:"left"},
-      {char:"kanade", pose:"soft", pos:"right"}
-    ],
     text:"手を握ると、奏は少し目を伏せた。「温度で決めるの、嫌いじゃない」(言葉よりも早く伝わる)",
     choices:[{label:"明日、事務局に同行する", next:"N4_office"}]
   };
@@ -143,11 +94,6 @@
   /* 4章：事務局—欠片N入手 */
   N["N4_office"] = {
     name:"",
-    bg:"city_office", music:"truth", sprite:[
-      {char:"mio", pose:"think", pos:"left"},
-      {char:"kanade", pose:"serious", pos:"right"}
-    ],
-    se:"paper",
     text:"古い庁舎。蛍光灯の白さが目に刺さる。窓口の奥で書類が綴じられ、判が乾く音がした。奏は封筒を受け取り、中身を私に見せる。「保証人契約の控え。連絡先だけ——手書き」(滲んだインクの癖、どこかで見た字だ)",
     choices:[
       {label:"控えのコピーをもらう（欠片入手）", next:"N4_fragment", addFragment:"欠片N_保証人契約の控え（連絡先だけ手書き）"},
@@ -157,30 +103,18 @@
   
   N["N4_fragment"] = {
     name:"",
-    bg:"city_office", music:"truth", sprite:[
-      {char:"mio", pose:"smile", pos:"left"},
-      {char:"kanade", pose:"soft", pos:"right"}
-    ],
     text:"紙の軽さに反して、手が少し重くなる。「重かったら、私に預けて」奏は当然のように言う。(重さを量らせてくれる人)",
     choices:[{label:"次の一手を相談する", next:"N4_plan"}]
   };
   
   N["N4_guess"] = {
     name:"",
-    bg:"city_office", music:"melancholy", sprite:[
-      {char:"mio", pose:"think", pos:"left"},
-      {char:"kanade", pose:"serious", pos:"right"}
-    ],
     text:"「ここ、黒塗りになる前、別の名前があった」奏は低く言う。「——SHI……まで読めた」(東雲。気づきたくなかった確信が、形を持つ)",
     choices:[{label:"控えを受け取り、動く", next:"N4_fragment", addFragment:"欠片N_保証人契約の控え（連絡先だけ手書き）"}]
   };
   
   N["N4_plan"] = {
     name:"",
-    bg:"city_office", music:"calm_day", sprite:[
-      {char:"mio", pose:"speak", pos:"left"},
-      {char:"kanade", pose:"serious", pos:"right"}
-    ],
     text:"窓口脇のベンチで小さな会議。「選択肢は三つ」奏は指を折る。「A：私が約束を履行して離れる／B：第三者保証へ切替／C：条件変更（監視から伴走へ）」(どれも痛い。けど選ぶ)",
     choices:[
       {label:"A：覚悟を受け入れ、彼女を送り出す", next:"N5_away"},
@@ -192,30 +126,18 @@
   /* 5章：分岐 */
   N["N5_away"] = {
     name:"",
-    bg:"rooftop_dusk", music:"melancholy", sprite:[
-      {char:"mio", pose:"think", pos:"left"},
-      {char:"kanade", pose:"serious", pos:"right"}
-    ],
     text:"校舎の屋上。風の層が入れ替わる。「送り出すって、残酷な優しさだよ」奏は笑い、まっすぐ前を見る。「でも、あなたが前を向けるなら、正解」(喉の奥に熱が残る)",
     choices:[{label:"握った手を放す", next:"N6a", setFlags:{ED_Kanade_Friend:true}}]
   };
   
   N["N5_third"] = {
     name:"",
-    bg:"city_office", music:"truth", sprite:[
-      {char:"mio", pose:"speak", pos:"left"},
-      {char:"kanade", pose:"serious", pos:"right"}
-    ],
     text:"倫理委宛の申請書。必要な添付は、関係者の同意書と観測ログ。「朝倉の“光”の証言、藤堂の“停止合図”ログ——揃えれば、道が開く」(みんなで支える仕組みに変える)",
     choices:[{label:"書類を整え、提出へ", next:"N6b", setFlags:{ED_Kanade_Friend2:true}}]
   };
   
   N["N5_partner"] = {
     name:"",
-    bg:"meeting_room", music:"tender", sprite:[
-      {char:"mio", pose:"speak", pos:"left"},
-      {char:"kanade", pose:"soft", pos:"right"}
-    ],
     text:"条件変更案。「監視」から「伴走」へ。リスク時の一次停止権を奏が持ち、決定は本人同意を前提にする。「あなたの“現在”を、あなたが決めるための仕組み」(それが欲しかった言葉)",
     choices:[{label:"合意書に署名する", next:"N6b", setFlags:{ED_Kanade_Friend2:true}}]
   };
@@ -223,19 +145,12 @@
   /* 6章：ED */
   N["N6a"] = {
     name:"",
-    bg:"bus_stop_morning", music:"melancholy", sprite:[
-      {char:"mio", pose:"think", pos:"center"}
-    ],
     text:"【犠牲ED：】始発の風。バスのドアが開き、閉じる。奏は振り返らない。強い人の歩き方だ。(代わりに笑うって、こういうことかもしれない) 私は、残された日々をちゃんと選ぶ。",
     choices:[{label:"EDを記録してタイトルへ", next:"ED_Collector", setFlags:{ED_Kanade_Friend:true}}]
   };
   
   N["N6b"] = {
     name:"",
-    bg:"arcade_evening", music:"warmth", sprite:[
-      {char:"mio", pose:"smile", pos:"left"},
-      {char:"kanade", pose:"smile", pos:"right"}
-    ],
     text:"【友情ED】別離は回避された。約束は延長線に置かれ、規約は「伴走」へ書き換わる。夕方のアーケードで、私たちは同じ速度で歩く。(恋とは違うけれど、いちばん近い) 明日も、この歩幅で。",
     choices:[{label:"EDを記録してタイトルへ", next:"ED_Collector", setFlags:{ED_Kanade_Friend2:true}}]
   };
