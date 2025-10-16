@@ -1,4 +1,4 @@
-  // routes/Asakura.js
+// routes/Asakura.js
 (function () {
   // ここで必ず用意する（あれば流用、無ければ作る）
   const A = (window.SCENES = window.SCENES || {});
