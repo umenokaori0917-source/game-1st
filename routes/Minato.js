@@ -1,6 +1,9 @@
-  /* ───────── 湊ルート：詳細＋演出 ───────── */
+// routes/Minato.js
+(function () {
+  // ここで必ず用意する（あれば流用、無ければ作る）
+  const M = (window.SCENES = window.SCENES || {});
   
-  SCENES["M1"] = {
+  M["M1"] = {
     name:"",
     bg:"alley_back", music:"melancholy", sprite:[
       {char:"mio", pose:"think", pos:"left"},
@@ -14,7 +17,7 @@
     ]
   };
   
-  SCENES["M1_help"] = {
+  M["M1_help"] = {
     name:"",
     bg:"alley_back", music:"melancholy", sprite:[
       {char:"mio", pose:"speak", pos:"left"},
@@ -24,7 +27,7 @@
     choices:[{label:"店の中へ案内してもらう", next:"M2_kitchen"}]
   };
   
-  SCENES["M1_inside"] = {
+  M["M1_inside"] = {
     name:"",
     bg:"ramen_kitchen", music:"calm_day", sprite:[
       {char:"mio", pose:"think", pos:"left"},
@@ -34,7 +37,7 @@
     choices:[{label:"消毒と包帯をする", next:"M2_kitchen", setAffection:{"湊":+1}}]
   };
   
-  SCENES["M1_leave"] = {
+  M["M1_leave"] = {
     name:"",
     bg:"street_rain", music:"rain_walk", sprite:[
       {char:"mio", pose:"think", pos:"center"}
@@ -44,7 +47,7 @@
   };
   
   /* 2章：台所の湯気と本音 */
-  SCENES["M2_kitchen"] = {
+  M["M2_kitchen"] = {
     name:"",
     bg:"ramen_kitchen", music:"calm_day", sprite:[
       {char:"mio", pose:"smile", pos:"left"},
@@ -58,7 +61,7 @@
     ]
   };
   
-  SCENES["M2_reason"] = {
+  M["M2_reason"] = {
     name:"",
     bg:"ramen_kitchen", music:"melancholy", sprite:[
       {char:"mio", pose:"think", pos:"left"},
@@ -68,7 +71,7 @@
     choices:[{label:"黙って横に立つ", next:"M3_front"}]
   };
   
-  SCENES["M2_offer"] = {
+  M["M2_offer"] = {
     name:"",
     bg:"ramen_kitchen", music:"calm_day", sprite:[
       {char:"mio", pose:"speak", pos:"left"},
@@ -78,7 +81,7 @@
     choices:[{label:"店先に戻る", next:"M3_front"}]
   };
   
-  SCENES["M2_dream"] = {
+  M["M2_dream"] = {
     name:"",
     bg:"ramen_kitchen", music:"melancholy", sprite:[
       {char:"mio", pose:"speak", pos:"left"},
@@ -89,7 +92,7 @@
   };
   
   /* 3章：店先の圧力 */
-  SCENES["M3_front"] = {
+  M["M3_front"] = {
     name:"",
     bg:"ramen_front", music:"suspense", sprite:[
       {char:"mio", pose:"think", pos:"left"},
@@ -103,7 +106,7 @@
     ]
   };
   
-  SCENES["M3_stand"] = {
+  M["M3_stand"] = {
     name:"",
     bg:"ramen_front", music:"run", sprite:[
       {char:"mio", pose:"shock", pos:"left"},
@@ -114,7 +117,7 @@
     choices:[{label:"大きく息を吐く", next:"M4_calm"}]
   };
   
-  SCENES["M3_call"] = {
+  M["M3_call"] = {
     name:"",
     bg:"ramen_front", music:"truth", sprite:[
       {char:"mio", pose:"speak", pos:"left"},
@@ -124,7 +127,7 @@
     choices:[{label:"案内された場所へ向かう", next:"M4_support"}]
   };
   
-  SCENES["M3_move"] = {
+  M["M3_move"] = {
     name:"",
     bg:"street_rain", music:"rain_walk", sprite:[
       {char:"mio", pose:"think", pos:"left"},
@@ -135,7 +138,7 @@
   };
   
   /* 4章：余韻と導線（旧プール側棟へ） */
-  SCENES["M4_calm"] = {
+  M["M4_calm"] = {
     name:"",
     bg:"street_twilight", music:"calm_day", sprite:[
       {char:"mio", pose:"think", pos:"left"},
@@ -148,7 +151,7 @@
     ]
   };
   
-  SCENES["M4_support"] = {
+  M["M4_support"] = {
     name:"",
     bg:"support_center", music:"truth", sprite:[
       {char:"mio", pose:"neutral", pos:"left"},
@@ -158,7 +161,7 @@
     choices:[{label:"帰り道、湊の提案を聞く", next:"M4_calm"}]
   };
   
-  SCENES["M4_tomorrow"] = {
+  M["M4_tomorrow"] = {
     name:"",
     bg:"street_twilight", music:"melancholy", sprite:[
       {char:"mio", pose:"neutral", pos:"left"},
@@ -168,7 +171,7 @@
     choices:[{label:"翌日、現地へ向かう", next:"M4_toRuins"}]
   };
   
-  SCENES["M4_toRuins"] = {
+  M["M4_toRuins"] = {
     name:"",
     bg:"pool_ruins", music:"suspense", sprite:[
       {char:"mio", pose:"think", pos:"left"},
@@ -181,7 +184,7 @@
     ]
   };
   
-  SCENES["M5_observe"] = {
+  M["M5_observe"] = {
     name:"",
     bg:"pool_ruins", music:"suspense", sprite:[
       {char:"mio", pose:"think", pos:"left"},
@@ -191,7 +194,7 @@
     choices:[{label:"鍵を受け取る", next:"M5_getkey", addFragment:"欠片M_錆びたマスターキー"}]
   };
   
-  SCENES["M5_corridor"] = {
+  M["M5_corridor"] = {
     name:"",
     bg:"pool_corridor_dark", music:"melancholy", sprite:[
       {char:"mio", pose:"shock", pos:"left"},
@@ -201,7 +204,7 @@
     choices:[{label:"その鍵を手に取る", next:"M5_getkey", addFragment:"欠片M_錆びたマスターキー"}]
   };
   
-  SCENES["M5_getkey"] = {
+  M["M5_getkey"] = {
     name:"",
     bg:"pool_corridor_dark", music:"truth", sprite:[
       {char:"mio", pose:"think", pos:"left"},
@@ -212,7 +215,7 @@
   };
   
   /* 5章：選択（恋愛／救済） */
-  SCENES["M5_bridge"] = {
+  M["M5_bridge"] = {
     name:"",
     bg:"river_overpass_night", music:"calm_day", sprite:[
       {char:"mio", pose:"think", pos:"left"},
@@ -226,7 +229,7 @@
     ]
   };
   
-  SCENES["M5_delay"] = {
+  M["M5_delay"] = {
     name:"",
     bg:"river_overpass_night", music:"melancholy", sprite:[
       {char:"mio", pose:"neutral", pos:"left"},
@@ -240,7 +243,7 @@
   };
   
   /* 6章：ED */
-  SCENES["M6a"] = {
+  M["M6a"] = {
     name:"",
     bg:"shop_morning", music:"warmth", sprite:[
       {char:"mio", pose:"smile", pos:"left"},
@@ -250,7 +253,7 @@
     choices:[{label:"EDを記録してタイトルへ", next:"ED_Collector", setFlags:{ED_Minato_Love:true}}]
   };
   
-  SCENES["M6b"] = {
+  M["M6b"] = {
     name:"",
     bg:"support_center", music:"truth", sprite:[
       {char:"mio", pose:"smile", pos:"left"},
