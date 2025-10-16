@@ -1364,7 +1364,7 @@ SCENES["branch"] = {
     bg:"bus_stop_morning", music:"melancholy", sprite:[
       {char:"mio", pose:"think", pos:"center"}
     ],
-    text:"【友情/犠牲ED】始発の風。バスのドアが開き、閉じる。奏は振り返らない。強い人の歩き方だ。(代わりに笑うって、こういうことかもしれない) 私は、残された日々をちゃんと選ぶ。",
+    text:"【犠牲ED：】始発の風。バスのドアが開き、閉じる。奏は振り返らない。強い人の歩き方だ。(代わりに笑うって、こういうことかもしれない) 私は、残された日々をちゃんと選ぶ。",
     choices:[{label:"EDを記録してタイトルへ", next:"ED_Collector", setFlags:{ED_Kanade_Friend:true}}]
   };
   
@@ -2063,20 +2063,20 @@ const ED_CATALOG = [
   { flag:"ED_Asakura_Friend",label:"【友情ED：素顔の交換】",          scene:"A6b" },
 
   // 湊
-  { flag:"ED_Minato_Love",   label:"【恋愛ED】",                     scene:"M6a" },
-  { flag:"ED_Minato_Save",   label:"【救済ED】",                     scene:"M6b" },
+  { flag:"ED_Minato_Love",   label:"【恋愛ED：湯気の朝】",                     scene:"M6a" },
+  { flag:"ED_Minato_Save",   label:"【救済ED：救いの手】",                     scene:"M6b" },
 
   // 藤堂
-  { flag:"ED_Todo_Love",     label:"【恋愛ED】",                     scene:"R6b" },
-  { flag:"ED_Todo_Collapse", label:"【崩壊ED（メリーバッド）】",     scene:"R6a" },
+  { flag:"ED_Todo_Love",     label:"【恋愛ED：同速の約束】",                     scene:"R6b" },
+  { flag:"ED_Todo_Collapse", label:"【崩壊ED（メリーバッド）：白い飽和】",     scene:"R6a" },
 
   // 奏
-  { flag:"ED_Kanade_Friend",  label:"【友情/犠牲ED】",               scene:"N6a" },
-  { flag:"ED_Kanade_Friend2", label:"【友情ED】",                    scene:"N6b" },
+  { flag:"ED_Kanade_Friend",  label:"【犠牲ED：送り出す朝】",               scene:"N6a" },
+  { flag:"ED_Kanade_Friend2", label:"【友情ED：伴走の規約】",                    scene:"N6b" },
 
   // 隠し
   { flag:"ED_Hidden_True",   label:"【トゥルーED：縫合の完了】",      scene:"H6a" },
-  { flag:"ED_Hidden_Bitter", label:"【ビターグッド】",                scene:"H6b" },
+  { flag:"ED_Hidden_Bitter", label:"【ビターグッド：継ぎ目の静けさ】",                scene:"H6b" },
 ];
   
 // ADD: 軌跡（ジャーナル）描画
