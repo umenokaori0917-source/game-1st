@@ -77,6 +77,10 @@
       <div class="row"><strong>ED達成状況</strong><span id="jrEDCount"></span></div>
     </section>
     <section>
+      <strong>ED一覧</strong>
+      <ul id="jrEDList" style="margin-top:6px"></ul>
+    </section>
+    <section>
       <strong>入手した「記憶の欠片」</strong>
       <ul id="jrFragments"></ul>
     </section>
@@ -2047,6 +2051,32 @@ function renderToggles(){
   document.getElementById("speedVal").textContent = ((state.flags.autoplayMs||1800)/1000).toFixed(1)+"s";
 }
 
+// すべてのEDを一覧化（flag は達成判定・scene はリプレイ開始シーンID）
+const ED_CATALOG = [
+  // 九条（例：あなたのK6aをリプレイ開始に）
+  { flag:"ED_Kujou_Love",    label:"【恋愛ED：赦し】",              scene:"K6a" },
+
+  // 朝倉
+  { flag:"ED_Asakura_Love",  label:"【恋愛ED：守るための嘘】",      scene:"A6a" },
+  { flag:"ED_Asakura_Friend",label:"【友情ED：素顔の交換】",          scene:"A6b" },
+
+  // 湊
+  { flag:"ED_Minato_Love",   label:"【恋愛ED】",                     scene:"M6a" },
+  { flag:"ED_Minato_Save",   label:"【救済ED】",                     scene:"M6b" },
+
+  // 藤堂
+  { flag:"ED_Todo_Love",     label:"【恋愛ED】",                     scene:"R6b" },
+  { flag:"ED_Todo_Collapse", label:"【崩壊ED（メリーバッド）】",     scene:"R6a" },
+
+  // 奏
+  { flag:"ED_Kanade_Friend",  label:"【友情/犠牲ED】",               scene:"N6a" },
+  { flag:"ED_Kanade_Friend2", label:"【友情ED】",                    scene:"N6b" },
+
+  // 隠し
+  { flag:"ED_Hidden_True",   label:"【トゥルーED：縫合の完了】",      scene:"H6a" },
+  { flag:"ED_Hidden_Bitter", label:"【ビターグッド】",                scene:"H6b" },
+];
+  
 // ADD: 軌跡（ジャーナル）描画
 function renderJournal(){
   // 隠し開放
@@ -2096,10 +2126,58 @@ function renderJournal(){
   }
 }
 
+  // --- ED一覧 ---
+  const edUl = document.getElementById("jrEDList");
+  if (edUl) {
+    edUl.innerHTML = "";
+    ED_CATALOG.forEach(ed => {
+      const li = document.createElement("li");
+      const achieved = !!state.flags[ed.flag];
+
+      if (achieved) {
+        // 達成済み：クリックでED再生（シーンがあればボタン）
+        const btn = document.createElement("button");
+        btn.textContent = ed.label;
+        btn.className = "edlink";
+        btn.style.margin = "2px 0";
+        btn.style.padding = "6px 10px";
+        btn.style.borderRadius = "8px";
+        btn.style.border = "1px solid #2f3950";
+        btn.style.background = "#263146";
+        btn.style.color = "var(--ink)";
+        btn.onclick = () => journalReplayED(ed.scene);
+        // SCENES未定義の安全策（未実装を無効化）
+        if (!SCENES[ed.scene]) {
+          btn.disabled = true;
+          btn.title = "このEDシーンが未実装です";
+        }
+        li.appendChild(btn);
+      } else {
+        // 未達：？で表示
+        const span = document.createElement("span");
+        span.textContent = "？";
+        span.style.opacity = ".7";
+        span.title = ed.label; // ヒントにラベル（不要なら消してOK）
+        li.appendChild(span);
+      }
+      edUl.appendChild(li);
+    });
+  }
+  
 function openJournal(){
   renderJournal();
   journalBackdrop.style.display = "block";
   journalModal.style.display = "block";
+}
+
+function journalReplayED(sceneId){
+  // モーダル閉じる
+  closeJournal();
+  // 戻る用ヒストリに現在を積む
+  state.history.push(state.sceneId);
+  // 指定EDシーンへジャンプ（ED本編の「記録してタイトルへ」で戻れる）
+  state.sceneId = sceneId;
+  render();
 }
 
 function closeJournal(){
