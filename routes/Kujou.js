@@ -1,4 +1,4 @@
-// routes/kujou.js
+// routes/Kujou.js
 (function () {
   // ここで必ず用意する（あれば流用、無ければ作る）
   const S = (window.SCENES = window.SCENES || {});
